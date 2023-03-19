@@ -216,12 +216,12 @@ public class Player {
 
 	}
 
-	public void addEcoPoints() {
-		ecoPoints++;
+	public void addEcoPoints(int ecoPoints) {
+		this.ecoPoints += ecoPoints; 
 	}
 
-	public void minusEcoPoints() {
-		ecoPoints--;
+	public void minusEcoPoints(int ecoPoints) {
+		this.ecoPoints -= ecoPoints; 
 
 		if (ecoPoints <= 0) {
 			System.out.println("You have run of ecoPoints! The game has ended.");
@@ -233,12 +233,12 @@ public class Player {
 		// CALL END GAME
 	}
 
-	public void addPowerPoints() {
-		powerPoints++;
+	public void addPowerPoints(int powerPoints) {
+		this.powerPoints += powerPoints; 
 	}
 
-	public void minusPowerPoints() {
-		powerPoints--;
+	public void minusPowerPoints(int powerPoints) {
+		this.powerPoints -= powerPoints; 
 
 		if (powerPoints <= 0) {
 			System.out.println("You have run of powerPoints! The game has ended.");
@@ -249,9 +249,22 @@ public class Player {
 		// CALL WINNER
 		// CALL END GAME
 	}
+	
+	public void addDays(int days) {
+		this.days += days; 
 
-	public void minusDays() {
-		days--;
+		if (days <= 0) {
+			System.out.println("You have run of days! The game has ended.");
+			System.out.println("Let's see the final scores!");
+		}
+
+		// CALL LEADERBOARD
+		// CALL WINNER
+		// CALL END GAME
+	}
+
+	public void minusDays(int days) {
+		this.days -= days; 
 
 		if (days <= 0) {
 			System.out.println("You have run of days! The game has ended.");
