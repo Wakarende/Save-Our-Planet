@@ -1,9 +1,0 @@
-/**
- * 
- */
-/**
- * @author joyki
- *
- */
-module SaveOurPlanet {
-}
