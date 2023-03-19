@@ -3,8 +3,6 @@
  */
 package saveourplanet;
 
-import save.our.planet.Tile;
-
 /**
  * @author phil
  *
