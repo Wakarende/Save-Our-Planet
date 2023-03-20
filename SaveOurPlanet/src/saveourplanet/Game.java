@@ -31,6 +31,11 @@ public class Game {
 		
 	}
 	
+	/**
+	 * Method to display Main Menu. 
+	 * Gives user option to create New Game or Quit application. 
+	 * If New Game is selected, user is moved on to tutorial screen -- not yet implemented. 
+	 */
 	public static void mainMenu() {
 		
 		try {
