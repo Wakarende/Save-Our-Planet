@@ -82,7 +82,7 @@ public class Game {
 			do {
 				
 				// Main Menu
-				System.out.println("Welcome to Save Our Planet.");
+				System.out.println("Welcome to Save Our Planet!");
 				System.out.println("Main Menu: \n");
 				System.out.println("1. New Game");
 				System.out.println("2. Quit \n");
@@ -146,7 +146,7 @@ public class Game {
 	
 	public static void tutorial() {
 		
-		System.out.println("Tutorial");
+		
 		
 	}
 	
