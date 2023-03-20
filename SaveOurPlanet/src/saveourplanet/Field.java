@@ -8,7 +8,10 @@ package saveourplanet;
  *
  */
 public abstract class Field {
-	String fieldName, fieldDescription;
+	
+	// instance variables
+	private String fieldName; 
+	private String fieldDescription;
 	boolean isOwned;
 	
 	
