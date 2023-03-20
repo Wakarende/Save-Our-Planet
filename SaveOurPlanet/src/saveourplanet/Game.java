@@ -27,15 +27,54 @@ public class Game {
 	 */
 	public static void main(String[] args) {
 		
+		//Ascii art
+		asciiArt();
+		
+		//Start menu
 		mainMenu();
+		
+		//tutorial
+		
 		
 	}
 	
 	/**
+<<<<<<< HEAD
 	 * Method to display Main Menu. 
 	 * Gives user option to create New Game or Quit application. 
 	 * If New Game is selected, user is moved on to tutorial screen -- not yet implemented. 
 	 */
+	/**
+	 * Create Ascii art at beginning of game
+	 */
+	public static void asciiArt() {
+		try {
+
+			String text = "\r\n" + "\r\n"
+					+ " ________  ________  ___      ___ _______           ________  ___  ___  ________          ________  ___       ________  ________   _______  _________   \r\n"
+					+ "|\\   ____\\|\\   __  \\|\\  \\    /  /|\\  ___ \\         |\\   __  \\|\\  \\|\\  \\|\\   __  \\        |\\   __  \\|\\  \\     |\\   __  \\|\\   ___  \\|\\  ___ \\|\\___   ___\\ \r\n"
+					+ "\\ \\  \\___|\\ \\  \\|\\  \\ \\  \\  /  / | \\   __/|        \\ \\  \\|\\  \\ \\  \\\\\\  \\ \\  \\|\\  \\       \\ \\  \\|\\  \\ \\  \\    \\ \\  \\|\\  \\ \\  \\\\ \\  \\ \\   __/\\|___ \\  \\_| \r\n"
+					+ " \\ \\_____  \\ \\   __  \\ \\  \\/  / / \\ \\  \\_|/__       \\ \\  \\\\\\  \\ \\  \\\\\\  \\ \\   _  _\\       \\ \\   ____\\ \\  \\    \\ \\   __  \\ \\  \\\\ \\  \\ \\  \\_|/__  \\ \\  \\  \r\n"
+					+ "  \\|____|\\  \\ \\  \\ \\  \\ \\    / /   \\ \\  \\_|\\ \\       \\ \\  \\\\\\  \\ \\  \\\\\\  \\ \\  \\\\  \\|       \\ \\  \\___|\\ \\  \\____\\ \\  \\ \\  \\ \\  \\\\ \\  \\ \\  \\_|\\ \\  \\ \\  \\ \r\n"
+					+ "    ____\\_\\  \\ \\__\\ \\__\\ \\__/ /     \\ \\_______\\       \\ \\_______\\ \\_______\\ \\__\\\\ _\\        \\ \\__\\    \\ \\_______\\ \\__\\ \\__\\ \\__\\\\ \\__\\ \\_______\\  \\ \\__\\\r\n"
+					+ "   |\\_________\\|__|\\|__|\\|__|/       \\|_______|        \\|_______|\\|_______|\\|__|\\|__|        \\|__|     \\|_______|\\|__|\\|__|\\|__| \\|__|\\|_______|   \\|__|\r\n"
+					+ "   \\|_________|                                                                                                                                         \r\n"
+					+ "                                                                                                                                                        \r\n"
+					+ "                                                                                                                                                        \r\n"
+					+ "\r\n" + "";
+
+			for (int i = 0; i < text.length(); i++) {
+				System.out.print(text.charAt(i));
+				Thread.sleep(2); // adjust delay time as needed
+			}
+
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+
 	public static void mainMenu() {
 		
 		try {

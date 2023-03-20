@@ -1,5 +1,12 @@
 package saveourplanet;
 
+/**
+ * Class to represent a Tile .
+ * 
+ * @author Joy
+ *
+ */
+
 public class Tile extends Field{
     
 	// instance variables
