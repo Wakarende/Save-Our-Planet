@@ -6,8 +6,12 @@
  *
  */
 public abstract class Field {
-	//instance vars
-	String fieldName, fieldDescription;
+
+
+	// instance variables
+	private String fieldName; 
+	private String fieldDescription;
+
 	boolean isOwned;
 	
 	
