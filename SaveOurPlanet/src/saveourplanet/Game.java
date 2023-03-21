@@ -28,7 +28,7 @@ public class Game {
 	public static void main(String[] args) {
 		
 		//Ascii art
-		asciiArt();
+		// asciiArt();
 		
 		//Start menu
 		mainMenu();
@@ -74,87 +74,97 @@ public class Game {
 	}
 	
 	
-
+	/**
+	 * Method to call the opening main menu.
+	 * User is given choice to start New Game (1) or Quit (2). 
+	 * If choosing to start a New Game, the user is brought to the tutorial level. 
+	 * If choosing to Quit the game, the user exits the application. 
+	 * At each stage in their decision, the user is asked to confirm their choice. 
+	 */
 	public static void mainMenu() {
-		
+
 		try {
-			
+
 			// Scanner to record user input
-			Scanner menuScanner = new Scanner(System.in);
-			
+			Scanner scanner = new Scanner(System.in);
+
 			// variables to store user input
 			String userConfirmation = "no";
-			int userInput; 
-			
+			int userInput;
+
+			// boolean to record the player's choice
+			boolean tutorial = false;
+
 			do {
-				
-				// Main Menu
+
+				// Main Menu text
 				System.out.println("Welcome to Save Our Planet.");
 				System.out.println("Main Menu: \n");
 				System.out.println("1. New Game");
 				System.out.println("2. Quit \n");
 				System.out.println("Please enter either 1 or 2: \n");
-				
-				userInput = menuScanner.nextInt(); 
-				 
-				
+
+				// record the user's decision in the scanner
+				userInput = scanner.nextInt();
+
 				switch (userInput) {
 
-				// if user has decided to create a new game
-				case 1:
-					
-					// asks user for confirmation
+				case 1: // New Game
+					// asks for confirmation
 					System.out.println("You have chosen to create a new game. Is this correct? (yes/no)");
-					userConfirmation = menuScanner.next();
-					
-					if (userConfirmation.equalsIgnoreCase("yes") || userConfirmation.equalsIgnoreCase("no")) {
-						// moves user on to tutorial
-						if (userConfirmation.equalsIgnoreCase("yes")) {
-							menuScanner.close(); 
-							tutorial();
-						}
-					} else {
-						System.out.println("Wrong input! Try again...");
-					}
-					break; 
-				
-				// if user has decided to quit game
-				case 2:
-					
-					// asks user for confirmation
-					System.out.println("You have chosen to quit game. Is this correct? (yes/no)");
-					userConfirmation = menuScanner.next(); 
-					
+					userConfirmation = scanner.next();
 					// user leaves the application
 					if (userConfirmation.equalsIgnoreCase("yes")) {
-						System.out.println("Goodbye!");
-					} 
+						tutorial = true;
+					}
 					break;
-				
+
+				case 2: // Quit Game
+					// asks for confirmation
+					System.out.println("You have chosen to quit game. Is this correct? (yes/no)");
+					userConfirmation = scanner.next();
+					// user leaves the application
+					if (userConfirmation.equalsIgnoreCase("yes")) {
+						tutorial = false;
+					}
+					break;
+
 				// default statement
 				default:
 					System.out.println("Wrong input! Please try again...\n");
 					break;
 				}
 
-			} while (userConfirmation.equalsIgnoreCase("no")); 
-			
-			menuScanner.close(); 
-			
-			
+			} while (userConfirmation.equalsIgnoreCase("no"));
+
+			// close scanner
+			scanner.close();
+
+			// use the boolean to decide which module of the game the player is moving on to
+			if (tutorial == true) {
+				tutorial();
+			} else {
+				quit();
+			}
+
 		} catch (InputMismatchException wrongInput) {
 			System.out.println("Sorry, wrong input.\n");
-			mainMenu(); 
 		}
-		
-		
-		
+
 	}
 	
 	public static void tutorial() {
 		
 		System.out.println("Tutorial");
 		
+	}
+	
+	/**
+	 * Quits the game/application. 
+	 */
+	public static void quit() {
+		// inform the user they have quit the game
+		System.out.println("You have quit the game. Thank you for playing 'Save Our Planet'.");
 	}
 	
 	/**
