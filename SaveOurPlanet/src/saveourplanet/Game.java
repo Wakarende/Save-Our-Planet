@@ -38,7 +38,7 @@ public class Game {
 		asciiArt();
 
 		// Start menu
-//		mainMenu();
+		mainMenu();
 
 		// tutorial
 		tutorial();
@@ -75,73 +75,73 @@ public class Game {
 	}
 
 	public static void mainMenu() {
-		// Scanner to record user input
-		Scanner menuScanner = new Scanner(System.in);
+
 		try {
+
+			// Scanner to record user input
+			Scanner scanner = new Scanner(System.in);
 
 			// variables to store user input
 			String userConfirmation = "no";
 			int userInput;
 
+			// boolean to record the player's choice
+			boolean tutorial = false;
+
 			do {
 
-				// Main Menu
-				System.out.println("Welcome to Save Our Planet!");
+				// Main Menu text
+				System.out.println("Welcome to Save Our Planet.");
 				System.out.println("Main Menu: \n");
 				System.out.println("1. New Game");
 				System.out.println("2. Quit \n");
 				System.out.println("Please enter either 1 or 2: \n");
 
-				userInput = menuScanner.nextInt();
+				// record the user's decision in the scanner
+				userInput = scanner.nextInt();
 
 				switch (userInput) {
 
-				// if user has decided to create a new game
-				case 1:
-
-					// asks user for confirmation
+				case 1: // New Game
+					// asks for confirmation
 					System.out.println("You have chosen to create a new game. Is this correct? (yes/no)");
-					userConfirmation = menuScanner.next();
-
-					if (userConfirmation.equalsIgnoreCase("yes")) {
-						// moves user on to tutorial
-//						tutorial();
-						break;
-					} else if (userConfirmation.equalsIgnoreCase("no")) {
-						System.out.println("Choose an option");
-					} else {
-						System.out.println("Wrong input! Try again...");
-					}
-					break;
-
-				// if user has decided to quit game
-				case 2:
-
-					// asks user for confirmation
-					System.out.println("You have chosen to quit game. Is this correct? (yes/no)");
-					userConfirmation = menuScanner.next();
-
+					userConfirmation = scanner.next();
 					// user leaves the application
 					if (userConfirmation.equalsIgnoreCase("yes")) {
-						System.out.println("Goodbye!");
-//						menuScanner.close();
-						break;
+						tutorial = true;
 					}
 					break;
+
+				case 2: // Quit Game
+					// asks for confirmation
+					System.out.println("You have chosen to quit game. Is this correct? (yes/no)");
+					userConfirmation = scanner.next();
+					// user leaves the application
+					if (userConfirmation.equalsIgnoreCase("yes")) {
+						tutorial = false;
+					}
+					break;
+
 				// default statement
 				default:
 					System.out.println("Wrong input! Please try again...\n");
 					break;
 				}
 
-			} while (true);
-		} catch (
+			} while (userConfirmation.equalsIgnoreCase("no"));
 
-		InputMismatchException wrongInput) {
+			// close scanner
+			scanner.close();
+
+			// use the boolean to decide which module of the game the player is moving on to
+			if (tutorial == true) {
+				tutorial();
+			} else {
+				quit();
+			}
+
+		} catch (InputMismatchException wrongInput) {
 			System.out.println("Sorry, wrong input.\n");
-			mainMenu();
-		} finally {
-			menuScanner.close();
 		}
 
 	}
@@ -150,18 +150,18 @@ public class Game {
 	 * Displays tutorial for user
 	 */
 	public static void tutorial() {
-		Scanner tutorialScanner = new Scanner(System.in);
+		Scanner scanner = new Scanner(System.in);
 
 		int choice;
 
-		while (true) {
+		do {
 			System.out.println("Menu:");
 			System.out.println("1. Rules");
 			System.out.println("2. Start game");
 			System.out.println("3. Exit");
 
 			System.out.print("Enter your choice: ");
-			choice = tutorialScanner.nextInt();
+			choice = scanner.nextInt();
 
 			switch (choice) {
 			case 1:
@@ -176,10 +176,24 @@ public class Game {
 			default:
 				System.out.println("Invalid choice. Please try again.");
 			}
-//		tutorialScanner.close();
+		} while (choice != 3);
+			
+//			scanner.close();
 		}
+	
+	
+	/**
+	 * Quits the game/application. 
+	 */
+	public static void quit() {
+		// inform the user they have quit the game
+		System.out.println("You have quit the game. Thank you for playing 'Save Our Planet'.");
 	}
 
+
+	/**
+	 * Displays game rules
+	 */
 	private static void displayRules() {
 		try {
 			FileReader fileReader = new FileReader("tutorial.txt");
@@ -210,7 +224,7 @@ public class Game {
 	private static void slowPrint(String str) throws InterruptedException {
 		for (char c : str.toCharArray()) {
 			System.out.print(c);
-			Thread.sleep(10); // pause  between characters
+			Thread.sleep(10); // pause between characters
 		}
 		System.out.print(" ");
 	}
