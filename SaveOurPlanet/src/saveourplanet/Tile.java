@@ -1,9 +1,18 @@
 package saveourplanet;
 
+/**
+ * Class to represent a Tile .
+ * 
+ * @author Joy
+ *
+ */
+
 public class Tile extends Field{
-    // instance variables
-    int number;
-    String name, description;
+    
+	// instance variables
+    private int number;
+    private String name; 
+    private String description;
 
     // Default Constructor
 

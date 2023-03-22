@@ -21,7 +21,6 @@ public class Player {
 	private int ecoPoints;
 	private int powerPoints;
 
-
 	/**
 	 * Default Constructor
 	 */
@@ -144,8 +143,9 @@ public class Player {
 	 */
 
 	public void displayPlayerInfo() {
-		System.out.println("Player Info:\n Username: " + this.getUsername() + "\nPlayer Number: " + this.getPlayerNumber() + "\nEcoPoints Balance: " + this.getEcoPoints()
-				+ "\nPowerPoints Balance: " + this.getPowerPoints()); 
+		System.out.println("Player Info:\n Username: " + this.getUsername() + "\nPlayer Number: "
+				+ this.getPlayerNumber() + "\nEcoPoints Balance: " + this.getEcoPoints() + "\nPowerPoints Balance: "
+				+ this.getPowerPoints());
 	}
 
 	public void displayBalance() {
@@ -153,7 +153,7 @@ public class Player {
 		System.out.println("Your EcoPoints resource balance is " + this.getEcoPoints());
 		System.out.println("Your PowerPoints resource balance is " + this.getPowerPoints());
 
-		if (this.getEcoPoints() <= 0) {
+		if (ecoPoints <= 0) {
 			System.out.println("You have run of ecoPoints! The game has ended.");
 			System.out.println("Let's see the final scores!");
 		} else if (powerPoints <= 0) {
@@ -169,7 +169,6 @@ public class Player {
 
 	public void minusEcoPoints(int ecoPoints) {
 		this.ecoPoints -= ecoPoints;
-
 	}
 
 	public void addPowerPoints(int powerPoints) {
@@ -178,7 +177,6 @@ public class Player {
 
 	public void minusPowerPoints(int powerPoints) {
 		this.powerPoints -= powerPoints;
-
 	}
 
 }
