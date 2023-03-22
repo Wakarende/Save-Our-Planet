@@ -230,8 +230,11 @@ public class Game {
 	}
 
 	
+	/**
+	 * Method Start game method
+	 */
 	public static void startGame() {
-		
+		System.out.println("Start game");
 	}
 	/**
 	 * 
