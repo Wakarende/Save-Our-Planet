@@ -28,7 +28,7 @@ public class Game {
 	public static void main(String[] args) {
 		
 		//Ascii art
-		// asciiArt();
+		asciiArt();
 		
 		//Start menu
 		mainMenu();
@@ -73,6 +73,14 @@ public class Game {
 		}
 	}
 	
+	/**
+	 * This method creates the areas through which the game will be played. 
+	 */
+	public static void createBoard() {
+		
+		
+		
+	}
 	
 	/**
 	 * Method to call the opening main menu.
@@ -138,8 +146,8 @@ public class Game {
 			} while (userConfirmation.equalsIgnoreCase("no"));
 
 			// close scanner
-			scanner.close();
-
+//		scanner.close();
+			
 			// use the boolean to decide which module of the game the player is moving on to
 			if (tutorial == true) {
 				tutorial();
@@ -155,8 +163,41 @@ public class Game {
 	
 	public static void tutorial() {
 		
-		System.out.println("Tutorial");
+		Scanner scanner2 = new Scanner(System.in);
+
+		int choice;
+
+		do {
+			System.out.println("Menu:");
+			System.out.println("1. Rules");
+			System.out.println("2. Start game");
+			System.out.println("3. Exit");
+
+			System.out.print("Enter your choice: ");
+			choice = scanner2.nextInt();
+
+			switch (choice) {
+			case 1:
+				displayRules();
+				break;
+			case 2:
+//	          startGame();
+				break;
+			case 3:
+				System.out.println("Exiting Tutorial!");
+				return;
+			default:
+				System.out.println("Invalid choice. Please try again.");
+			}
+		} while (choice != 3);
+			
+//			scanner.close();
 		
+		
+	}
+	
+	public static void displayRules() {
+		System.out.println("You have left tutorial and are in display rules.");
 	}
 	
 	/**
