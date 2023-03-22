@@ -41,7 +41,7 @@ public class Game {
 		mainMenu();
 
 		// tutorial
-		tutorial();
+//		tutorial();
 
 	}
 
@@ -131,7 +131,7 @@ public class Game {
 			} while (userConfirmation.equalsIgnoreCase("no"));
 
 			// close scanner
-			scanner.close();
+//			scanner.close();
 
 			// use the boolean to decide which module of the game the player is moving on to
 			if (tutorial == true) {
@@ -160,7 +160,7 @@ public class Game {
 			System.out.println("2. Start game");
 			System.out.println("3. Exit");
 
-			System.out.print("Enter your choice: ");
+			System.out. print("Enter your choice: ");
 			choice = scanner.nextInt();
 
 			switch (choice) {
@@ -168,7 +168,7 @@ public class Game {
 				displayRules();
 				break;
 			case 2:
-//	          startGame();
+	          startGame();
 				break;
 			case 3:
 				System.out.println("Exiting Tutorial!");
@@ -229,6 +229,10 @@ public class Game {
 		System.out.print(" ");
 	}
 
+	
+	public static void startGame() {
+		
+	}
 	/**
 	 * 
 	 * @param players
