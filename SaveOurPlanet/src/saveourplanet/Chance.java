@@ -4,7 +4,7 @@
 package saveourplanet;
 
 /**
- * @author phil
+ * @author phil <3
  *
  */
 public class Chance extends Tile {

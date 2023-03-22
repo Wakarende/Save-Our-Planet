@@ -1,14 +1,17 @@
-/**
- * 
- */
-package saveourplanet;
+ package saveourplanet;
 
 /**
+ * Class that represent the Field
  * @author joyki
  *
  */
 public abstract class Field {
-	String fieldName, fieldDescription;
+
+
+	// instance variables
+	private String fieldName; 
+	private String fieldDescription;
+
 	boolean isOwned;
 	
 	
@@ -27,7 +30,6 @@ public abstract class Field {
 	 * @param isOwned
 	 */
 	public Field(String fieldName, String fieldDescription, boolean isOwned) {
-		super();
 		this.fieldName = fieldName;
 		this.fieldDescription = fieldDescription;
 		this.isOwned = isOwned;
