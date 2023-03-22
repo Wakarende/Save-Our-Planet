@@ -20,9 +20,7 @@ public class Player {
 	private int playerNumber;
 	private int ecoPoints;
 	private int powerPoints;
-	private int days;
 
-	List<Player> players = new ArrayList<Player>();
 
 	/**
 	 * Default Constructor
@@ -40,13 +38,13 @@ public class Player {
 	 * @param powerPoints
 	 * @param days
 	 */
-	public Player(String username, int playerNumber, int ecoPoints, int powerPoints, int days) {
+	public Player(String username, int playerNumber, int ecoPoints, int powerPoints) {
 		super();
 		this.username = username;
 		this.playerNumber = playerNumber;
 		this.ecoPoints = ecoPoints;
 		this.powerPoints = powerPoints;
-		this.days = days;
+
 	}
 
 	// Getters & Setters Methods
@@ -99,17 +97,7 @@ public class Player {
 	 */
 	public void setPlayerNumber(int playerNumber) {
 
-		Scanner noOfPlayers = new Scanner(System.in);
-
-		do {
-			if (playerNumber >= 2 && playerNumber <= 4) {
-				playerNumber = noOfPlayers.nextInt();
-				this.playerNumber = playerNumber;
-			} else {
-				System.out.println("Number of players not allowed. Please try again.");
-				this.playerNumber = 0;
-			}
-		} while (playerNumber == 0);
+		this.playerNumber = playerNumber;
 
 	}
 
@@ -154,25 +142,10 @@ public class Player {
 	 * 
 	 * @return
 	 */
-	public int getDays() {
-		return days;
-	}
 
-	/**
-	 * Setter method to set the number of days he player has left throughout the
-	 * game
-	 * 
-	 * @param days
-	 */
-	public void setDays(int days) {
-		this.days = days;
-
-	}
-
-	public void displayName() {
-
-		System.out.println("Your username is " + this.getUsername());
-
+	public void displayPlayerInfo() {
+		System.out.println("Player Info:\n Username: " + this.getUsername() + "\nPlayer Number: " + this.getPlayerNumber() + "\nEcoPoints Balance: " + this.getEcoPoints()
+				+ "\nPowerPoints Balance: " + this.getPowerPoints()); 
 	}
 
 	public void displayBalance() {
