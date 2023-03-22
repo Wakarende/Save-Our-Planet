@@ -22,7 +22,7 @@ public class Player {
 	private int powerPoints;
 	private int days;
 
-	List<String> players = new ArrayList<String>();
+	List<Player> players = new ArrayList<Player>();
 
 	/**
 	 * Default Constructor
@@ -65,7 +65,20 @@ public class Player {
 	 * @param username
 	 */
 	public void setUsername(String username) {
-		this.username = username;
+		Scanner name = new Scanner(System.in);
+		String nameHolder;
+		nameHolder = name.nextLine();
+
+		do {
+			if (nameHolder.length() <= 0 || nameHolder.length() > 15) {
+				this.username = nameHolder;
+				System.out.println("Your name has been registered as " + username + ".");
+			} else {
+				System.out.println("The username must be more than 0 characters and less than 15 characters.");
+				this.username = null;
+			}
+		} while (username == null);
+
 	}
 
 	/**
@@ -74,6 +87,7 @@ public class Player {
 	 * @return
 	 */
 	public int getPlayerNumber() {
+
 		return playerNumber;
 	}
 
@@ -84,7 +98,19 @@ public class Player {
 	 * @param playerNumber
 	 */
 	public void setPlayerNumber(int playerNumber) {
-		this.playerNumber = playerNumber;
+
+		Scanner noOfPlayers = new Scanner(System.in);
+
+		do {
+			if (playerNumber >= 2 && playerNumber <= 4) {
+				playerNumber = noOfPlayers.nextInt();
+				this.playerNumber = playerNumber;
+			} else {
+				System.out.println("Number of players not allowed. Please try again.");
+				this.playerNumber = 0;
+			}
+		} while (playerNumber == 0);
+
 	}
 
 	/**
@@ -140,140 +166,46 @@ public class Player {
 	 */
 	public void setDays(int days) {
 		this.days = days;
-	}
-
-	public void enterName() {
-		String nameHolder; // to hold name before confirmed
-		String confirmation = null; // to hold confirmation from user of name
-
-		Scanner name = new Scanner(System.in);
-		Scanner confirm = new Scanner(System.in);
-
-		do {
-			do {
-				System.out.println("Please enter a username between 1 and 15 characters to play the game:");
-				nameHolder = name.nextLine();
-
-				if (nameHolder == "") {
-					System.out.println("You must enter a username to play this game.");
-					username = null;
-				} else if (nameHolder.length() > 15) {
-					System.out.println("The username you entered is too long.");
-					username = null;
-				} else { // NEED TO INCLUDE FILE READING HERE!
-					username = nameHolder;
-					System.out.println("Your name has been registered as " + username + ".");
-
-					do {
-						System.out
-								.println("Is this correct? Type 'yes' if correct or 'no' if incorrect to enter again.");
-						confirmation = confirm.nextLine();
-
-						if (confirmation.equalsIgnoreCase("yes")) {
-							System.out.println("Thank you, your name has been confirmed as " + username + ".");
-						} else if (confirmation.equalsIgnoreCase("no")) {
-							System.out.println("Please try again and write your name below.");
-							nameHolder = name.nextLine();
-							confirmation = null;
-						} else if (!confirmation.equalsIgnoreCase("yes") || !confirmation.equalsIgnoreCase("no")) {
-							confirmation = null;
-							System.out.println("That is not an accepted response, please try again.");
-						}
-					} while (confirmation == null);
-				}
-			} while (confirmation.equalsIgnoreCase("no"));
-
-		} while (username == null);
-
-		players.add(username);
 
 	}
 
-	public void displayPlayerNum() { // ISSUES GOING FROM 0-5?!
+	public void displayName() {
 
-		for (int num = 1; num < players.size(); num++) {
-			playerNumber = num;
-		}
-
-		System.out.println("You are player number: " + playerNumber);
+		System.out.println("Your username is " + this.getUsername());
 
 	}
 
-	public void confirmAllPlayersEntered() {
+	public void displayBalance() {
 
-		System.out.println(
-				"A minimum of 2 players and a maximum of 4 players is allowed to play this game. Please enter information for the next player.");
+		System.out.println("Your EcoPoints resource balance is " + this.getEcoPoints());
+		System.out.println("Your PowerPoints resource balance is " + this.getPowerPoints());
 
-		do {
-			enterName();
-			displayPlayerNum();
-
-		} while (playerNumber <= 4);
-
-		System.out.println("This is the final player. No more players can be entered.");
-
-		// CALL START GAME METHOD HERE);
-
-	}
-
-	public void addEcoPoints(int ecoPoints) {
-		this.ecoPoints += ecoPoints; 
-	}
-
-	public void minusEcoPoints(int ecoPoints) {
-		this.ecoPoints -= ecoPoints; 
-
-		if (ecoPoints <= 0) {
+		if (this.getEcoPoints() <= 0) {
 			System.out.println("You have run of ecoPoints! The game has ended.");
 			System.out.println("Let's see the final scores!");
-		}
-
-		// CALL LEADERBOARD
-		// CALL WINNER
-		// CALL END GAME
-	}
-
-	public void addPowerPoints(int powerPoints) {
-		this.powerPoints += powerPoints; 
-	}
-
-	public void minusPowerPoints(int powerPoints) {
-		this.powerPoints -= powerPoints; 
-
-		if (powerPoints <= 0) {
+		} else if (powerPoints <= 0) {
 			System.out.println("You have run of powerPoints! The game has ended.");
 			System.out.println("Let's see the final scores!");
 		}
 
-		// CALL LEADERBOARD
-		// CALL WINNER
-		// CALL END GAME
-	}
-	
-	public void addDays(int days) {
-		this.days += days; 
-
-		if (days <= 0) {
-			System.out.println("You have run of days! The game has ended.");
-			System.out.println("Let's see the final scores!");
-		}
-
-		// CALL LEADERBOARD
-		// CALL WINNER
-		// CALL END GAME
 	}
 
-	public void minusDays(int days) {
-		this.days -= days; 
-
-		if (days <= 0) {
-			System.out.println("You have run of days! The game has ended.");
-			System.out.println("Let's see the final scores!");
-		}
-
-		// CALL LEADERBOARD
-		// CALL WINNER
-		// CALL END GAME
+	public void addEcoPoints(int ecoPoints) {
+		this.ecoPoints += ecoPoints;
 	}
+
+	public void minusEcoPoints(int ecoPoints) {
+		this.ecoPoints -= ecoPoints;
+
+	}
+
+	public void addPowerPoints(int powerPoints) {
+		this.powerPoints += powerPoints;
+	}
+
+	public void minusPowerPoints(int powerPoints) {
+		this.powerPoints -= powerPoints;
+
+	}
+
 }
-
