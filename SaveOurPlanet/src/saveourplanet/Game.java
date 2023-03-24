@@ -25,30 +25,40 @@ public class Game {
 	 * Public ArrayList to store the players of the game Used to access the
 	 * Leaderboard
 	 */
-	public static List<Player> players = new ArrayList<>();
+	private List<Player> players = new ArrayList<>();
 
-	/**
-	 * Game class used to play the game Contains main method
-	 * 
-	 * @param args
-	 */
-	public static void main(String[] args) {
+	private List<String> playerUsernames = new ArrayList<>();
 
-		// Ascii art
-		asciiArt();
+	private List<Tile> allTiles = new ArrayList<>();
 
-		// Start menu
-		mainMenu();
+	public List<Player> getPlayers() {
+		return players;
+	}
 
-		// tutorial
-//		tutorial();
+	public void setPlayers(List<Player> players) {
+		this.players = players;
+	}
 
+	public List<String> getPlayerUsernames() {
+		return playerUsernames;
+	}
+
+	public void addToPlayerUsernames(String newUsername) {
+		this.playerUsernames.add(newUsername);
+	}
+
+	public List<Tile> getAllTiles() {
+		return allTiles;
+	}
+
+	public void setAllTiles(List<Tile> allTiles) {
+		this.allTiles = allTiles;
 	}
 
 	/**
 	 * Create Ascii art at beginning of game
 	 */
-	public static void asciiArt() {
+	public void asciiArt() {
 		try {
 
 			String text = "\r\n" + "\r\n"
@@ -74,12 +84,9 @@ public class Game {
 		}
 	}
 
-	public static void mainMenu() {
+	public void mainMenu(Scanner scanner) {
 
 		try {
-
-			// Scanner to record user input
-			Scanner scanner = new Scanner(System.in);
 
 			// variables to store user input
 			String userConfirmation = "no";
@@ -95,14 +102,15 @@ public class Game {
 				System.out.println("Main Menu: \n");
 				System.out.println("1. New Game");
 				System.out.println("2. Quit \n");
-				System.out.println("Please enter either 1 or 2: \n");
+				System.out.print("Please enter either 1 or 2: ");
 
 				// record the user's decision in the scanner
 				userInput = scanner.nextInt();
 
 				switch (userInput) {
 
-				case 1: // New Game
+				// New Game
+				case 1:
 					// asks for confirmation
 					System.out.println("You have chosen to create a new game. Is this correct? (yes/no)");
 					userConfirmation = scanner.next();
@@ -112,7 +120,8 @@ public class Game {
 					}
 					break;
 
-				case 2: // Quit Game
+				// Quit Game
+				case 2:
 					// asks for confirmation
 					System.out.println("You have chosen to quit game. Is this correct? (yes/no)");
 					userConfirmation = scanner.next();
@@ -122,7 +131,7 @@ public class Game {
 					}
 					break;
 
-				// default statement
+				// Default statement
 				default:
 					System.out.println("Wrong input! Please try again...\n");
 					break;
@@ -130,12 +139,9 @@ public class Game {
 
 			} while (userConfirmation.equalsIgnoreCase("no"));
 
-			// close scanner
-//			scanner.close();
-
 			// use the boolean to decide which module of the game the player is moving on to
 			if (tutorial == true) {
-				tutorial();
+				tutorial(scanner);
 			} else {
 				quit();
 			}
@@ -143,14 +149,12 @@ public class Game {
 		} catch (InputMismatchException wrongInput) {
 			System.out.println("Sorry, wrong input.\n");
 		}
-
 	}
 
 	/**
 	 * Displays tutorial for user
 	 */
-	public static void tutorial() {
-		Scanner scanner = new Scanner(System.in);
+	private void tutorial(Scanner scanner) {
 
 		int choice;
 
@@ -160,7 +164,7 @@ public class Game {
 			System.out.println("2. Start game");
 			System.out.println("3. Exit");
 
-			System.out. print("Enter your choice: ");
+			System.out.print("\nEnter your choice: ");
 			choice = scanner.nextInt();
 
 			switch (choice) {
@@ -168,7 +172,7 @@ public class Game {
 				displayRules();
 				break;
 			case 2:
-	          startGame();
+				startGame(scanner);
 				break;
 			case 3:
 				System.out.println("Exiting Tutorial!");
@@ -177,24 +181,21 @@ public class Game {
 				System.out.println("Invalid choice. Please try again.");
 			}
 		} while (choice != 3);
-			
-//			scanner.close();
-		}
-	
-	
-	/**
-	 * Quits the game/application. 
-	 */
-	public static void quit() {
-		// inform the user they have quit the game
-		System.out.println("You have quit the game. Thank you for playing 'Save Our Planet'.");
+
 	}
 
+	/**
+	 * Quits the game/application.
+	 */
+	private void quit() {
+		// inform the user they have quit the game
+		System.out.println("You have quit the game. Thank you for playing 'Save Our Planet'!");
+	}
 
 	/**
 	 * Displays game rules
 	 */
-	private static void displayRules() {
+	private void displayRules() {
 		try {
 			FileReader fileReader = new FileReader("tutorial.txt");
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -221,7 +222,7 @@ public class Game {
 	 * @param str
 	 * @throws InterruptedException
 	 */
-	private static void slowPrint(String str) throws InterruptedException {
+	private void slowPrint(String str) throws InterruptedException {
 		for (char c : str.toCharArray()) {
 			System.out.print(c);
 			Thread.sleep(10); // pause between characters
@@ -229,116 +230,156 @@ public class Game {
 		System.out.print(" ");
 	}
 
-	
 	/**
-	 * Method Start game method
-	 */
-	public static void startGame() {
-		System.out.println("Start game");
-	}
-	/**
+	 * Shows players scores and sorts them accordingly
 	 * 
 	 * @param players
 	 */
-	public static void displayLeaderboard(List<Player> players) {
+	private void displayLeaderboard(List<Player> players) {
 
 	}
-	
 
-	public static void setUpPlayer() {
+	/**
+	 * Method Start game method
+	 */
+	private void startGame(Scanner scanner) {
+		System.out.println("\nStart game!");
+		setUpPlayer(scanner);
+		showAllPlayersInfo();
+		this.initialisGameTiles();
+		List<Tile> allTiles = this.getAllTiles();
+
+		for (Player player : this.getPlayers()) {
+			player.landsOnTile(allTiles.get(0), scanner, this);
+		}
+	}
+
+	/**
+	 * Sets up the players for the game. Prompts the user to give the amount of
+	 * players and uses a for loop to create these players
+	 * 
+	 * @param scanner
+	 */
+	private void setUpPlayer(Scanner scanner) {
+
+		int playerTot = this.chooseAmountOfPlayers(scanner);
+
+		// Use playerTot int to decide how many times user can enter a name for a player
+		// and to determine their player number.
+		for (int loop = 1; loop <= playerTot; loop++) {
+
+			System.out.println("\nCreating a new player...");
+			this.createPlayer(scanner, loop);
+		}
+	}
+
+	/**
+	 * Prompts user to choose amount of players and keeps them in a loop until they
+	 * choose the right amount of players
+	 * 
+	 * @return amount of players chosen
+	 */
+	private int chooseAmountOfPlayers(Scanner scanner) {
 
 		// Confirm there are enough players to meet requirements for game (between 2 and
 		// 4)
+		int playerTot = 0;
 
-		int playerTot;
-		boolean allowedNum;
-
-		Scanner playersTotal = new Scanner(System.in);
+		boolean correctAmountOfPlayers = false;
 
 		do {
 
 			// Ask user for number of players and save to int playerTot
-			System.out.println(
-					"A minimum of 2 players and a maximum of 4 players is allowed to play this game. Please enter the number of players you have for this game:");
-			playerTot = playersTotal.nextInt();
+			System.out.print(
+					"\nA minimum of 2 players and a maximum of 4 players is allowed to play this game.\nPlease enter the number of players you have for this game: ");
+			playerTot = scanner.nextInt();
 
 			if (playerTot >= 2 && playerTot <= 4) {
-				System.out.println("You have chosen "+playerTot+" players. Now let's set your usernames.");
+				System.out.println("\nYou have chosen " + playerTot + " players. Now let's set the usernames.");
+				correctAmountOfPlayers = true;
 			} else {
-				System.out.println("Number of players not allowed. Please try again.");
-				allowedNum = false;
+				System.out.println("\nNumber of players not allowed. Please try again.");
 			}
 
-		} while (allowedNum = false);
-		playersTotal.close();
+		} while (correctAmountOfPlayers == false);
 
-		// Use playerTot int to decide how many times user can enter a name for a player
-		// and to determine thier player number.
-		for (int loop = 1; loop <= playerTot; loop++) {
-
-			// Declaring a new player for each rotation
-			Player newPlayer = new Player();
-
-			String nameHolder; // to hold name before confirmed
-			String confirmation = null; // to hold confirmation from user of name
-
-			Scanner name = new Scanner(System.in); // To read in user name
-			Scanner confirm = new Scanner(System.in); // To read in user confirmation of name
-
-			do { // Repeat if user says name is incorrect
-
-				do {
-					System.out.println("Please enter a username between 1 and 15 characters to play the game:");
-					nameHolder = name.nextLine();
-
-					if (players.contains(nameHolder)) {
-						System.out.println("This name has already been used. Please enter a different name.");
-						nameHolder = null;
-					} else {
-						System.out.println("Your name has been registered as " + nameHolder + ".");
-					}
-
-				} while (nameHolder == null);
-
-				do { // Repeat if user response to confirmation prompt is not applicable
-					System.out.println("Is this correct? Type 'yes' if correct or 'no' if incorrect to enter again.");
-					confirmation = confirm.nextLine();
-
-					if (confirmation.equalsIgnoreCase("yes")) {
-						newPlayer.setUsername(nameHolder); // Officially set username
-						newPlayer.setPlayerNumber(loop); // Officially assign a playernumber to thier name
-						System.out
-								.println("Thank you, your name has been confirmed as " + newPlayer.getUsername() + ".");
-					} else if (confirmation.equalsIgnoreCase("no")) {
-						System.out.println("Please try again and write your name below.");
-					} else {
-						System.out.println("That is not an accepted response, please try again.");
-						confirmation = null;
-					}
-				} while (confirmation == null);
-
-			} while (confirmation.equalsIgnoreCase("no"));
-
-			System.out.println("You are player number: " + newPlayer.getPlayerNumber());
-
-			// Set starting points
-			newPlayer.setEcoPoints(100);
-			newPlayer.setPowerPoints(100);
-
-			newPlayer.displayBalance();
-
-			// Add as a complete player in the array list
-			players.add(newPlayer);
-
-		}
+		return playerTot;
 
 	}
 
-	public static void showAllPlayersInfo(ArrayList<Player> players) {
+	/**
+	 * Creates a player, validating that their username - making sure it's within
+	 * the character limits and hasn't been chosen yet. Also sets the player's
+	 * initial score
+	 * 
+	 * @return
+	 */
+	private void createPlayer(Scanner scanner, int playerNumber) {
+
+		// Needs to be calculated each new loop
+		List<String> currentPlayerUsernames = this.getPlayerUsernames();
+
+		// Setting userName, validation is inside setter method
+		String newUsername = Player.createUsername(currentPlayerUsernames, scanner);
+
+		// And add to the list of existing player names
+		this.addToPlayerUsernames(newUsername);
+
+		System.out.println("\nYou are player number: " + playerNumber);
+
+		// Finally creating the player
+		Player newPlayer = new Player(newUsername, playerNumber, 100, 100);
+
+		newPlayer.displayBalance();
+
+		// Add as a complete player in the array list
+		players.add(newPlayer);
+
+	}
+
+	private void showAllPlayersInfo() {
 
 		for (Player player : players) {
 			player.displayPlayerInfo();
 		}
 	}
 
+	private void initialisGameTiles() {
+
+		List<Tile> gameTiles = new ArrayList();
+
+		gameTiles.add(new Tile(1, "First", "first tile", 20, 20, 5, 5));
+		this.setAllTiles(gameTiles);
+	}
+
+	public void auctionTile(Tile tile, Player currentPlayer, Scanner scanner) {
+
+		int highestBid = 0;
+		boolean newPlayerHighestBid = false;
+
+		do {
+			for (Player player : this.getPlayers()) {
+
+				newPlayerHighestBid = false;
+
+				if (!(player.getUsername() == currentPlayer.getUsername())) {
+
+					boolean playerCanAffordTile = (player.getEcoPoints() > tile.getEcoPointsBuy()
+							|| player.getPowerPoints() > tile.getPowerPointsBuy());
+
+					if (playerCanAffordTile) {
+
+						int playerBid = player.buyTileInAuction(tile, scanner);
+
+						if (playerBid > highestBid) {
+							playerBid = highestBid;
+							newPlayerHighestBid = true;
+						}
+
+					}
+
+				}
+			}
+		} while (newPlayerHighestBid == false);
+	}
 }
