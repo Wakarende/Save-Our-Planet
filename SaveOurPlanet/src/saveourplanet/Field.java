@@ -2,10 +2,10 @@
 
 /**
  * Class that represent the Field
- * @author joyki
+ * @author Joy
  *
  */
-public abstract class Field {
+public class Field {
 
 
 	// instance variables
