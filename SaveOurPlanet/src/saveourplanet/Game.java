@@ -31,6 +31,12 @@ public class Game {
 
 	private List<Tile> allTiles = new ArrayList<>();
 
+		// create board
+//		createBoard();
+		
+		// Ascii art
+//		asciiArt();
+
 	public List<Player> getPlayers() {
 		return players;
 	}
@@ -53,8 +59,14 @@ public class Game {
 
 	public void setAllTiles(List<Tile> allTiles) {
 		this.allTiles = allTiles;
+
 	}
 
+	/**
+	 * Method to display Main Menu. 
+	 * Gives user option to create New Game or Quit application. 
+	 * If New Game is selected, user is moved on to tutorial screen -- not yet implemented. 
+	 */
 	/**
 	 * Create Ascii art at beginning of game
 	 */
@@ -84,7 +96,51 @@ public class Game {
 		}
 	}
 
-	public void mainMenu(Scanner scanner) {
+
+	
+	/**
+	 * This method creates the areas and tiles through which the game will be played. 
+	 */
+	private void createBoard() {
+		
+		// technology, recycling, energy and conservation
+		
+//		// Tiles belonging to the Technology field - least expensive
+//		Area clothesApp = new Area("Technology", false, 3, "2nd-Hand Clothes App", "Invest in this start-up and become a champion for vintage fashionistas.", false, null, 0, 20, 30); 
+//		Area socialMediaCampaign = new Area("Technology", false, 5, "Social-Media Campaign", "Use this social media campaign to spread awareness about the climate.", false, null, 0, 15, 20); 
+//		
+//		
+//		// Tiles belonging to the Recycling field
+//		
+//		
+//		// Tiles belonging to the Energy field - most expensive
+//		
+//		
+//		// Tiles belonging to the Conservation field
+//		
+//		// tech is supposed to be cheapest
+//		// renewable energy the most expensive. 
+//		
+//		
+//		// creating instances of the Chance tiles
+//		Chance rest = new Chance("Chance", false, 2, "Rest", "You have landed on the Rest tile! Take a breather..."); 
+//		Chance governmentGrant = new Chance("Chance", false, 4, "Government Grant", "To award you for your excellent work in the climate sector, the government is giving you a one-off grant. Enjoy!"); 
+//		Chance governmentTax = new Chance("Chance", false, 7, "Government Tax", "To help fund climate projects elsewhere in the world, the Government is collecting tax. Sorry (not sorry)"); 
+//		Chance give = new Chance("Chance", false, 10, "Sharing is Caring", "What is 'Our Planet' without eachother? Celebrate your differences by giving a fellow player some resources."); 
+//		Chance take = new Chance("Chance", false, 12, "Make them Pay", "Your enemies deserve punishment. Take some hard-earned resources from them. Mwah-ha-ha-ha-haaaaaa..."); 
+//		Chance skipAGo = new Chance("Chance", false, 16, "Skip-A-Go", "It's your favourite part of the game! Not playing. Skip-a-Go!"); 
+		
+	}
+	
+	/**
+	 * Method to call the opening main menu.
+	 * User is given choice to start New Game (1) or Quit (2). 
+	 * If choosing to start a New Game, the user is brought to the tutorial level. 
+	 * If choosing to Quit the game, the user exits the application. 
+	 * At each stage in their decision, the user is asked to confirm their choice. 
+	 */
+	private void mainMenu(Scanner scanner) {
+
 
 		try {
 
@@ -113,7 +169,7 @@ public class Game {
 				case 1:
 					// asks for confirmation
 					System.out.println("You have chosen to create a new game. Is this correct? (yes/no)");
-					userConfirmation = scanner.next();
+					userConfirmation = scanner.nextLine();
 					// user leaves the application
 					if (userConfirmation.equalsIgnoreCase("yes")) {
 						tutorial = true;
@@ -124,7 +180,7 @@ public class Game {
 				case 2:
 					// asks for confirmation
 					System.out.println("You have chosen to quit game. Is this correct? (yes/no)");
-					userConfirmation = scanner.next();
+					userConfirmation = scanner.nextLine();
 					// user leaves the application
 					if (userConfirmation.equalsIgnoreCase("yes")) {
 						tutorial = false;
@@ -154,7 +210,12 @@ public class Game {
 	/**
 	 * Displays tutorial for user
 	 */
+
+//	private void tutorial(Scanner scanner) {
+
 	private void tutorial(Scanner scanner) {
+		
+//		Scanner scanner = new Scanner(System.in);
 
 		int choice;
 
@@ -164,15 +225,17 @@ public class Game {
 			System.out.println("2. Start game");
 			System.out.println("3. Exit");
 
-			System.out.print("\nEnter your choice: ");
+			System.out.print("Enter your choice: ");
+
 			choice = scanner.nextInt();
+
 
 			switch (choice) {
 			case 1:
 				displayRules();
 				break;
 			case 2:
-				startGame(scanner);
+	          startGame(scanner);
 				break;
 			case 3:
 				System.out.println("Exiting Tutorial!");
@@ -181,16 +244,22 @@ public class Game {
 				System.out.println("Invalid choice. Please try again.");
 			}
 		} while (choice != 3);
+  
+			
+//			scanner.close();
 
-	}
-
+		}
+	
+	
 	/**
-	 * Quits the game/application.
+	 * Quits the game/application. 
 	 */
 	private void quit() {
 		// inform the user they have quit the game
-		System.out.println("You have quit the game. Thank you for playing 'Save Our Planet'!");
+		System.out.println("You have quit the game. Thank you for playing 'Save Our Planet'.");
+
 	}
+
 
 	/**
 	 * Displays game rules
@@ -214,6 +283,7 @@ public class Game {
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}
+
 	}
 
 	/**
@@ -230,6 +300,8 @@ public class Game {
 		System.out.print(" ");
 	}
 
+	
+
 	/**
 	 * Shows players scores and sorts them accordingly
 	 * 
@@ -245,12 +317,12 @@ public class Game {
 	private void startGame(Scanner scanner) {
 		System.out.println("\nStart game!");
 		setUpPlayer(scanner);
-		showAllPlayersInfo();
+		showAllPlayersInfo();  
 		this.initialisGameTiles();
 		List<Tile> allTiles = this.getAllTiles();
 
 		for (Player player : this.getPlayers()) {
-			player.landsOnTile(allTiles.get(0), scanner, this);
+//			player.landsOnTile(allTiles.get(0), scanner, this);
 		}
 	}
 
@@ -280,7 +352,7 @@ public class Game {
 	 * @return amount of players chosen
 	 */
 	private int chooseAmountOfPlayers(Scanner scanner) {
-
+  
 		// Confirm there are enough players to meet requirements for game (between 2 and
 		// 4)
 		int playerTot = 0;
@@ -348,38 +420,38 @@ public class Game {
 
 		List<Tile> gameTiles = new ArrayList();
 
-		gameTiles.add(new Tile(1, "First", "first tile", 20, 20, 5, 5));
+//		gameTiles.add(new Tile(1, "First", "first tile", 20, 20, 5, 5));
 		this.setAllTiles(gameTiles);
 	}
 
-	public void auctionTile(Tile tile, Player currentPlayer, Scanner scanner) {
-
-		int highestBid = 0;
-		boolean newPlayerHighestBid = false;
-
-		do {
-			for (Player player : this.getPlayers()) {
-
-				newPlayerHighestBid = false;
-
-				if (!(player.getUsername() == currentPlayer.getUsername())) {
-
-					boolean playerCanAffordTile = (player.getEcoPoints() > tile.getEcoPointsBuy()
-							|| player.getPowerPoints() > tile.getPowerPointsBuy());
-
-					if (playerCanAffordTile) {
-
-						int playerBid = player.buyTileInAuction(tile, scanner);
-
-						if (playerBid > highestBid) {
-							playerBid = highestBid;
-							newPlayerHighestBid = true;
-						}
-
-					}
-
-				}
-			}
-		} while (newPlayerHighestBid == false);
-	}
+//	public void auctionTile(Tile tile, Player currentPlayer, Scanner scanner) {
+//
+//		int highestBid = 0;
+//		boolean newPlayerHighestBid = false;
+//
+//		do {
+//			for (Player player : this.getPlayers()) {
+//
+//				newPlayerHighestBid = false;
+//
+//				if (!(player.getUsername() == currentPlayer.getUsername())) {
+//
+//					boolean playerCanAffordTile = (player.getEcoPoints() > tile.getEcoPointsBuy()
+//							|| player.getPowerPoints() > tile.getPowerPointsBuy());
+//
+//					if (playerCanAffordTile) {
+//
+//						int playerBid = player.buyTileInAuction(tile, scanner);
+//
+//						if (playerBid > highestBid) {
+//							playerBid = highestBid;
+//							newPlayerHighestBid = true;
+//						}
+//
+//					}
+//
+//				}
+//			}
+//		} while (newPlayerHighestBid == false);
+//	}
 }
