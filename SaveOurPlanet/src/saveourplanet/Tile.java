@@ -7,16 +7,17 @@ package saveourplanet;
  *
  */
 
-public class Tile extends Field{
+public class Tile {
     
 	// instance variables
     private int number;
     private String name; 
     private String description;
 
+
     // Default Constructor
 
-    /*
+	/*
      * Default Constructor
      */
     public Tile() {
@@ -30,15 +31,16 @@ public class Tile extends Field{
      * @param description
      */
     public Tile(int number, String name, String description) {
+
         this.number = number;
         this.name = name;
         this.description = description;
+
     }
 
-
-    // Getters and Setters
-
-    /**
+	// GETTERS AND SETTERS
+	
+	/**
      *
      * @return
      */
@@ -87,5 +89,6 @@ public class Tile extends Field{
     public void setDescription(String description) {
         this.description = description;
     }
-
 }
+	
+	
