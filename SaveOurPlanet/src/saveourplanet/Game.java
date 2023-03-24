@@ -34,6 +34,9 @@ public class Game {
 	 */
 	public static void main(String[] args) {
 
+		// create board
+		createBoard();
+		
 		// Ascii art
 		asciiArt();
 
@@ -43,7 +46,6 @@ public class Game {
 	}
 
 	/**
-<<<<<<< HEAD
 	 * Method to display Main Menu. 
 	 * Gives user option to create New Game or Quit application. 
 	 * If New Game is selected, user is moved on to tutorial screen -- not yet implemented. 
@@ -78,11 +80,36 @@ public class Game {
 	}
 	
 	/**
-	 * This method creates the areas through which the game will be played. 
+	 * This method creates the areas and tiles through which the game will be played. 
 	 */
 	public static void createBoard() {
 		
+		// technology, recycling, energy and conservation
 		
+		// Tiles belonging to the Technology field - least expensive
+		Area clothesApp = new Area("Technology", false, 3, "2nd-Hand Clothes App", "Invest in this start-up and become a champion for vintage fashionistas.", false, null, 0, 20, 30); 
+		Area socialMediaCampaign = new Area("Technology", false, 5, "Social-Media Campaign", "Use this social media campaign to spread awareness about the climate.", false, null, 0, 15, 20); 
+		
+		
+		// Tiles belonging to the Recycling field
+		
+		
+		// Tiles belonging to the Energy field - most expensive
+		
+		
+		// Tiles belonging to the Conservation field
+		
+		// tech is supposed to be cheapest
+		// renewable energy the most expensive. 
+		
+		
+		// creating instances of the Chance tiles
+		Chance rest = new Chance("Chance", false, 2, "Rest", "You have landed on the Rest tile! Take a breather..."); 
+		Chance governmentGrant = new Chance("Chance", false, 4, "Government Grant", "To award you for your excellent work in the climate sector, the government is giving you a one-off grant. Enjoy!"); 
+		Chance governmentTax = new Chance("Chance", false, 7, "Government Tax", "To help fund climate projects elsewhere in the world, the Government is collecting tax. Sorry (not sorry)"); 
+		Chance give = new Chance("Chance", false, 10, "Sharing is Caring", "What is 'Our Planet' without eachother? Celebrate your differences by giving a fellow player some resources."); 
+		Chance take = new Chance("Chance", false, 12, "Make them Pay", "Your enemies deserve punishment. Take some hard-earned resources from them. Mwah-ha-ha-ha-haaaaaa..."); 
+		Chance skipAGo = new Chance("Chance", false, 16, "Skip-A-Go", "It's your favourite part of the game! Not playing. Skip-a-Go!"); 
 		
 	}
 	

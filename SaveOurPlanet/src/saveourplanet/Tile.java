@@ -14,8 +14,6 @@ public class Tile extends Field{
     private String name; 
     private String description;
 
-    // Default Constructor
-
     /*
      * Default Constructor
      */
@@ -23,22 +21,25 @@ public class Tile extends Field{
 
     }
 
-    /**
-     * Constructor with args
-     * @param number
-     * @param name
-     * @param description
-     */
-    public Tile(int number, String name, String description) {
-        this.number = number;
-        this.name = name;
-        this.description = description;
-    }
+	/**
+	 * Constructor with arguments for the Tile class. 
+	 * Uses the Field class as a super class
+	 * @param fieldName
+	 * @param isFieldOwned
+	 * @param number
+	 * @param name
+	 * @param description
+	 */
+	public Tile(String fieldName, boolean isFieldOwned, int number, String name, String description) {
+		super(fieldName, isFieldOwned);
+		this.number = number;
+		this.name = name;
+		this.description = description;
+	}
 
-
-    // Getters and Setters
-
-    /**
+	// GETTERS AND SETTERS
+	
+	/**
      *
      * @return
      */

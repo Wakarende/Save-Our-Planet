@@ -10,10 +10,7 @@ public abstract class Field {
 
 	// instance variables
 	private String fieldName; 
-	private String fieldDescription;
-
-	boolean isOwned;
-	
+	boolean isFieldOwned;
 	
 	//Constructors
 	
@@ -23,16 +20,16 @@ public abstract class Field {
 	public Field() {
 		
 	}
+	
 	/**
 	 * constructor with args
 	 * @param fieldName
 	 * @param fieldDescription
-	 * @param isOwned
+	 * @param isFieldOwned
 	 */
-	public Field(String fieldName, String fieldDescription, boolean isOwned) {
+	public Field(String fieldName, boolean isFieldOwned) {
 		this.fieldName = fieldName;
-		this.fieldDescription = fieldDescription;
-		this.isOwned = isOwned;
+		this.isFieldOwned = isFieldOwned;
 	}
 	
 	
@@ -46,37 +43,19 @@ public abstract class Field {
 	}
 	
 	
-	
-
-
 	/**
 	 * @return
 	 */
-	public String getFieldDescription() {
-		return fieldDescription;
+	public boolean isFieldOwned() {
+		return isFieldOwned;
 	}
 	
 	
 	/**
-	 * @param fieldDescription
+	 * @param isFieldOwned
 	 */
-	public void setFieldDescription(String fieldDescription) {
-		this.fieldDescription = fieldDescription;
-	}
-	
-	/**
-	 * @return
-	 */
-	public boolean isOwned() {
-		return isOwned;
-	}
-	
-	
-	/**
-	 * @param isOwned
-	 */
-	public void setOwned(boolean isOwned) {
-		this.isOwned = isOwned;
+	public void setOwned(boolean isFieldOwned) {
+		this.isFieldOwned = isFieldOwned;
 	}
 	
 	

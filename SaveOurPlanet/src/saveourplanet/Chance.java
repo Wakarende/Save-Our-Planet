@@ -16,18 +16,19 @@ public class Chance extends Tile {
 		
 	}
 
+	// METHODS
+	
 	/**
-	 * Constructor with arguments
+	 * @param fieldName
+	 * @param isFieldOwned
 	 * @param number
 	 * @param name
 	 * @param description
 	 */
-	public Chance(int number, String name, String description) {
-		super(number, name, description);
+	public Chance(String fieldName, boolean isFieldOwned, int number, String name, String description) {
+		super(fieldName, isFieldOwned, number, name, description);
 	}
-	
-	// METHODS
-	
+
 	/**
 	 * Method for printing information of the Chance tile, including its number, name and description.
 	 */
@@ -98,6 +99,7 @@ public class Chance extends Tile {
 		// showing their updated balance
 		System.out.println(p1.getUsername() + " now has " + ecoPoints + " EcoPoints and " + powerPoints + " PowerPoints!");
 		System.out.println(p2.getUsername() + " now has " + ecoPoints + " EcoPoints and " + powerPoints + " PowerPoints!");
+		System.out.println("Didn't that feel good?");
 	}
 	
 	/**

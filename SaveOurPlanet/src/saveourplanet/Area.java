@@ -6,89 +6,64 @@ package saveourplanet;
 import java.util.Scanner;
 
 /**
- * @author kudzaivellem
+ * @author kudzaivellem, phil
  *
  */
 public class Area extends Tile {
 
-	private String areaName;
-	private String areaDescription;
-//	private boolean isOwned;
+	// instance variables
+	private boolean isAreaOwned;
 	private String ownerName;
 	private int developmentLevel;
 	private int buyingPrice;
 	private int developmentPrice;
 
+	// CONSTRUCTORS
+	
 	/**
 	 * default constructor
 	 */
 	public Area() {
 
 	}
-
+	
 	/**
-	 * constructor with args
-	 * 
-	 * @param areaName
-	 * @param areaDescription
-	 * @param isOwned
+	 * Constructor with arguments for Area tile. 
+	 * Uses Tile as superclass - inherited from Field as a result. 
+	 * @param fieldName
+	 * @param isFieldOwned
+	 * @param number
+	 * @param name
+	 * @param description
+	 * @param isAreaOwned
+	 * @param ownerName
 	 * @param developmentLevel
 	 * @param buyingPrice
 	 * @param developmentPrice
 	 */
-	public Area(String areaName, String areaDescription, String ownerName, int developmentLevel, int buyingPrice,
-			int developmentPrice) {
-		super();
-		this.areaName = areaName;
-		this.areaDescription = areaDescription;
+	public Area(String fieldName, boolean isFieldOwned, int number, String name, String description,
+			boolean isAreaOwned, String ownerName, int developmentLevel, int buyingPrice, int developmentPrice) {
+		super(fieldName, isFieldOwned, number, name, description);
+		this.isAreaOwned = isAreaOwned;
 		this.ownerName = ownerName;
-//		this.isOwned = isOwned;
 		this.developmentLevel = developmentLevel;
 		this.buyingPrice = buyingPrice;
 		this.developmentPrice = developmentPrice;
 	}
 
 	/**
-	 * @return the areaName
+	 * @return the isAreaOwned
 	 */
-	public String getAreaName() {
-		return areaName;
+	public boolean isAreaOwned() {
+		return isAreaOwned;
 	}
 
 	/**
-	 * @param areaName the areaName to set
+	 * @param isAreaOwned the isAreaOwned to set
 	 */
-	public void setAreaName(String areaName) {
-		this.areaName = areaName;
+	public void setAreaOwned(boolean isAreaOwned) {
+		this.isAreaOwned = isAreaOwned;
 	}
-
-	/**
-	 * @return the areaDescription
-	 */
-	public String getAreaDescription() {
-		return areaDescription;
-	}
-
-	/**
-	 * @param areaDescription the areaDescription to set
-	 */
-	public void setAreaDescription(String areaDescription) {
-		this.areaDescription = areaDescription;
-	}
-
-	/**
-	 * @return the isOwned
-	 */
-//	public boolean isOwned() {
-//		return isOwned;
-//	}
-
-	/**
-	 * @param isOwned the isOwned to set
-	 */
-//	public void setOwned(boolean isOwned) {
-//		this.isOwned = isOwned;
-//	}
 
 	/**
 	 * @return the developmentLevel
@@ -146,16 +121,32 @@ public class Area extends Tile {
 		this.ownerName = ownerName;
 	}
 
+	/**
+	 * Method to display info about the area. Changes depending on whether or not the area is owned by another player. 
+	 */
 	public void displayInfo() {
-		System.out.println("Area name: " + this.areaName);
-		System.out.println("Area description: " + this.areaDescription);
-//		System.out.println("Area owned?: " + this.isOwned);
-		System.out.println("Buying price: " + this.buyingPrice);
-		System.out.println("Development level: " + this.developmentLevel);
-		System.out.println("Development price: " + this.developmentPrice);
+		
+		// displays info about the area
+		System.out.println("Area name: " + this.getName());
+		System.out.println("Area description: " + this.getDescription());
+		
+		// displays dynamic message depending on if the area is owned
+		if (this.isAreaOwned == false) {
+			System.out.println("This area has not been purchased.");
+			System.out.println("Buying price: " + this.buyingPrice);
+		} else {
+			System.out.println("This area is owned by " + this.getOwnerName());
+			System.out.println("Development level: " + this.developmentLevel);
+			System.out.println("Development price: " + this.developmentPrice);
+		}
+		
 	}
 
+	/**
+	 * Method to purchase and own an area.
+	 */
 	public void ownArea() {
+		
 		Player player = new Player();
 		Scanner scanner = new Scanner(System.in);
 		String playerResponse;
@@ -190,3 +181,4 @@ public class Area extends Tile {
 	}
 
 } // end of class
+
