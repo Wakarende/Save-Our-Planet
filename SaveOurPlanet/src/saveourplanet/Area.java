@@ -12,11 +12,14 @@ import java.util.Scanner;
 public class Area extends Tile {
 
 	// instance variables
-	private boolean isAreaOwned;
 	private String ownerName;
-	private int developmentLevel;
-	private int buyingPrice;
-	private int developmentPrice;
+	private int buyingPrice; // with power points MEDIUM
+	private int developmentPrice; // with power points LARGE
+	private int rentPrice; // with power points SMALL
+	private int buyingReward; // with eco-points MEDIUM
+	private int developmentReward; // with eco-points LARGE
+	private int rentReward; // with eco-points SMALL
+	
 
 	// CONSTRUCTORS
 	
@@ -28,55 +31,42 @@ public class Area extends Tile {
 	}
 	
 	/**
-	 * Constructor with arguments for Area tile. 
-	 * Uses Tile as superclass - inherited from Field as a result. 
-	 * @param fieldName
-	 * @param isFieldOwned
+	 * Constructor with arguments
 	 * @param number
 	 * @param name
 	 * @param description
-	 * @param isAreaOwned
 	 * @param ownerName
-	 * @param developmentLevel
 	 * @param buyingPrice
 	 * @param developmentPrice
+	 * @param rentPrice
+	 * @param buyingReward
+	 * @param developmentReward
+	 * @param rentReward
 	 */
-	public Area(String fieldName, boolean isFieldOwned, int number, String name, String description,
-			boolean isAreaOwned, String ownerName, int developmentLevel, int buyingPrice, int developmentPrice) {
-		super(fieldName, isFieldOwned, number, name, description);
-		this.isAreaOwned = isAreaOwned;
+	public Area(int number, String name, String description, String ownerName, int buyingPrice, int developmentPrice,
+			int rentPrice, int buyingReward, int developmentReward, int rentReward) {
+		super(number, name, description);
 		this.ownerName = ownerName;
-		this.developmentLevel = developmentLevel;
 		this.buyingPrice = buyingPrice;
 		this.developmentPrice = developmentPrice;
+		this.rentPrice = rentPrice;
+		this.buyingReward = buyingReward;
+		this.developmentReward = developmentReward;
+		this.rentReward = rentReward;
 	}
 
 	/**
-	 * @return the isAreaOwned
+	 * @return the ownerName
 	 */
-	public boolean isAreaOwned() {
-		return isAreaOwned;
+	public String getOwnerName() {
+		return ownerName;
 	}
 
 	/**
-	 * @param isAreaOwned the isAreaOwned to set
+	 * @param ownerName the ownerName to set
 	 */
-	public void setAreaOwned(boolean isAreaOwned) {
-		this.isAreaOwned = isAreaOwned;
-	}
-
-	/**
-	 * @return the developmentLevel
-	 */
-	public int getDevelopmentLevel() {
-		return developmentLevel;
-	}
-
-	/**
-	 * @param developmentLevel the developmentLevel to set
-	 */
-	public void setDevelopmentLevel(int developmentLevel) {
-		this.developmentLevel = developmentLevel;
+	public void setOwnerName(String ownerName) {
+		this.ownerName = ownerName;
 	}
 
 	/**
@@ -108,17 +98,59 @@ public class Area extends Tile {
 	}
 
 	/**
-	 * @return the ownerName
+	 * @return the rentPrice
 	 */
-	public String getOwnerName() {
-		return ownerName;
+	public int getRentPrice() {
+		return rentPrice;
 	}
 
 	/**
-	 * @param ownerName the ownerName to set
+	 * @param rentPrice the rentPrice to set
 	 */
-	public void setOwnerName(String ownerName) {
-		this.ownerName = ownerName;
+	public void setRentPrice(int rentPrice) {
+		this.rentPrice = rentPrice;
+	}
+
+	/**
+	 * @return the buyingReward
+	 */
+	public int getBuyingReward() {
+		return buyingReward;
+	}
+
+	/**
+	 * @param buyingReward the buyingReward to set
+	 */
+	public void setBuyingReward(int buyingReward) {
+		this.buyingReward = buyingReward;
+	}
+
+	/**
+	 * @return the developmentReward
+	 */
+	public int getDevelopmentReward() {
+		return developmentReward;
+	}
+
+	/**
+	 * @param developmentReward the developmentReward to set
+	 */
+	public void setDevelopmentReward(int developmentReward) {
+		this.developmentReward = developmentReward;
+	}
+
+	/**
+	 * @return the rentReward
+	 */
+	public int getRentReward() {
+		return rentReward;
+	}
+
+	/**
+	 * @param rentReward the rentReward to set
+	 */
+	public void setRentReward(int rentReward) {
+		this.rentReward = rentReward;
 	}
 
 	/**
@@ -131,12 +163,11 @@ public class Area extends Tile {
 		System.out.println("Area description: " + this.getDescription());
 		
 		// displays dynamic message depending on if the area is owned
-		if (this.isAreaOwned == false) {
+		if (this.ownerName == null) {
 			System.out.println("This area has not been purchased.");
 			System.out.println("Buying price: " + this.buyingPrice);
 		} else {
-			System.out.println("This area is owned by " + this.getOwnerName());
-			System.out.println("Development level: " + this.developmentLevel);
+			System.out.println("This area is owned by " + this.ownerName);
 			System.out.println("Development price: " + this.developmentPrice);
 		}
 		
@@ -145,7 +176,7 @@ public class Area extends Tile {
 	/**
 	 * Method to purchase and own an area.
 	 */
-	public void ownArea() {
+	public void buyArea() {
 		
 		Player player = new Player();
 		Scanner scanner = new Scanner(System.in);
@@ -172,9 +203,6 @@ public class Area extends Tile {
 		scanner.close();
 	}
 
-	public void increaseDevelopmentLevel() {
-
-	}
 
 	public void develop() {
 

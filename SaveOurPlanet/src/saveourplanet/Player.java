@@ -20,9 +20,7 @@ public class Player {
 	private int playerNumber;
 	private int ecoPoints;
 	private int powerPoints;
-	private int days;
-
-	List<String> players = new ArrayList<String>();
+	private int position;
 
 	/**
 	 * Default Constructor
@@ -40,13 +38,13 @@ public class Player {
 	 * @param powerPoints
 	 * @param days
 	 */
-	public Player(String username, int playerNumber, int ecoPoints, int powerPoints, int days) {
+	public Player(String username, int playerNumber, int ecoPoints, int powerPoints) {
 		super();
 		this.username = username;
 		this.playerNumber = playerNumber;
 		this.ecoPoints = ecoPoints;
 		this.powerPoints = powerPoints;
-		this.days = days;
+
 	}
 
 	// Getters & Setters Methods
@@ -60,12 +58,52 @@ public class Player {
 	}
 
 	/**
-	 * Setter method for setting the username of the player as a String
+	 * Creates the username of the player as a String, takes the game as a parameter
+	 * so that we can add this new player's name to the list of playerNames in the
+	 * game
 	 * 
 	 * @param username
 	 */
-	public void setUsername(String username) {
-		this.username = username;
+	public static String createUsername(List<String> currentPlayerUsernames, Scanner scanner) {
+		boolean validUsername = false;
+		String newUsername;
+		System.out.print("\nPlease enter a username: ");
+		do {
+
+			newUsername = scanner.next();
+			if (newUsername.length() == 0 || newUsername.length() > 15) {
+				System.out.println("\nThe username must be more than 0 characters and less than 15 characters.");
+
+			} else if (currentPlayerUsernames.contains(newUsername)) {
+				System.out.println("\nThis name has already been used. Please enter a different name.");
+
+			} else {
+				System.out.println("Your name has been registered as " + newUsername + ".");
+				validUsername = true;
+			}
+
+			if (validUsername == true) {
+
+				System.out.print("Is this correct? Type 'yes' if correct, or 'no' if incorrect to enter again: ");
+				String answer = scanner.next();
+				if (answer.equalsIgnoreCase("yes")) {
+
+					System.out.println("Thank you, your name has been confirmed as " + newUsername + ".");
+
+				} else if (answer.equalsIgnoreCase("no")) {
+					System.out.println("Please try again and write your name below.");
+					validUsername = false;
+				} else {
+					System.out.println("That is not an accepted response, please try again.");
+					validUsername = false;
+				}
+			}
+
+		} while (validUsername == false);
+
+		// Finally set the userName if validation above is passed
+		return newUsername;
+
 	}
 
 	/**
@@ -74,6 +112,7 @@ public class Player {
 	 * @return
 	 */
 	public int getPlayerNumber() {
+
 		return playerNumber;
 	}
 
@@ -84,7 +123,9 @@ public class Player {
 	 * @param playerNumber
 	 */
 	public void setPlayerNumber(int playerNumber) {
+
 		this.playerNumber = playerNumber;
+
 	}
 
 	/**
@@ -128,164 +169,141 @@ public class Player {
 	 * 
 	 * @return
 	 */
-	public int getDays() {
-		return days;
+	public void displayPlayerInfo() {
+		System.out.println("\nPlayer Info:\n" + "Username: " + this.getUsername() + "\nPlayer Number: "
+				+ this.getPlayerNumber() + "\nEcoPoints Balance: " + this.getEcoPoints() + "\nPowerPoints Balance: "
+				+ this.getPowerPoints());
 	}
 
-	/**
-	 * Setter method to set the number of days he player has left throughout the
-	 * game
-	 * 
-	 * @param days
-	 */
-	public void setDays(int days) {
-		this.days = days;
-	}
+	public void displayBalance() {
 
-	
-	public void addEcoPoints(int ecoPoints) {
-		this.ecoPoints += ecoPoints; 
-	}
-
-	public void minusEcoPoints(int ecoPoints) {
-		this.ecoPoints -= ecoPoints; 
+		System.out.println("Your EcoPoints resource balance is " + this.getEcoPoints());
+		System.out.println("Your PowerPoints resource balance is " + this.getPowerPoints());
 
 		if (ecoPoints <= 0) {
 			System.out.println("You have run of ecoPoints! The game has ended.");
 			System.out.println("Let's see the final scores!");
-		}
-		
-		// CALL LEADERBOARD
-		// CALL WINNER
-		// CALL END GAME
-	}
-
-	public void addPowerPoints(int powerPoints) {
-		this.powerPoints += powerPoints; 
-	}
-
-	public void minusPowerPoints(int powerPoints) {
-		this.powerPoints -= powerPoints; 
-
-		if (powerPoints <= 0) {
+		} else if (powerPoints <= 0) {
 			System.out.println("You have run of powerPoints! The game has ended.");
 			System.out.println("Let's see the final scores!");
 		}
 
-		// CALL LEADERBOARD
-		// CALL WINNER
-		// CALL END GAME
-	}
-	
-	public void addDays(int days) {
-		this.days += days; 
-
-		if (days <= 0) {
-			System.out.println("You have run of days! The game has ended.");
-			System.out.println("Let's see the final scores!");
-		}
-
-		// CALL LEADERBOARD
-		// CALL WINNER
-		// CALL END GAME
 	}
 
-	public void minusDays(int days) {
-		this.days -= days; 
-
-		if (days <= 0) {
-			System.out.println("You have run of days! The game has ended.");
-			System.out.println("Let's see the final scores!");
-		}
-
-		// CALL LEADERBOARD
-		// CALL WINNER
-		// CALL END GAME
-	}
-	
-	/**
-	 * Method for entering the name of each player
-	 */
-	public void enterName() {
-		
-		String nameHolder; // to hold name before confirmed
-		String confirmation = null; // to hold confirmation from user of name
-
-		Scanner name = new Scanner(System.in);
-		Scanner confirm = new Scanner(System.in);
-
-		do {
-			
-			do {
-				
-				System.out.println("Please enter a username between 1 and 15 characters to play the game:");
-				nameHolder = name.nextLine();
-
-				if (nameHolder == "") {
-					System.out.println("You must enter a username to play this game.");
-				} else if (nameHolder.length() > 15) {
-					System.out.println("The username you entered is too long.");
-					username = null;
-				} else { // NEED TO INCLUDE FILE READING HERE!
-					username = nameHolder;
-					System.out.println("Your name has been registered as " + username + ".");
-
-					do {
-						System.out
-								.println("Is this correct? Type 'yes' if correct or 'no' if incorrect to enter again.");
-						confirmation = confirm.nextLine();
-
-						if (confirmation.equalsIgnoreCase("yes")) {
-							System.out.println("Thank you, your name has been confirmed as " + username + ".");
-						} else if (confirmation.equalsIgnoreCase("no")) {
-							System.out.println("Please try again and write your name below.");
-							nameHolder = name.nextLine();
-							confirmation = null;
-						} else if (!confirmation.equalsIgnoreCase("yes") || !confirmation.equalsIgnoreCase("no")) {
-							confirmation = null;
-							System.out.println("That is not an accepted response, please try again.");
-						}
-					} while (confirmation == null);
-				}
-			} while (confirmation.equalsIgnoreCase("no"));
-
-		} while (username == null);
-
-		players.add(username);
-
+	public void addEcoPoints(int ecoPoints) {
+		this.ecoPoints += ecoPoints;
 	}
 
-	/**
-	 * Method for displaying player number
-	 */
-	public void displayPlayerNum() { // ISSUES GOING FROM 0-5?!
-
-		for (int num = 1; num < players.size(); num++) {
-			playerNumber = num;
-		}
-
-		System.out.println("You are player number: " + playerNumber);
-
+	public void minusEcoPoints(int ecoPoints) {
+		this.ecoPoints -= ecoPoints;
 	}
 
-	/**
-	 * Method for confirming all players have been entered
-	 */
-	public void confirmAllPlayersEntered() {
-
-		System.out.println(
-				"A minimum of 2 players and a maximum of 4 players is allowed to play this game. Please enter information for the next player.");
-
-		do {
-			enterName();
-			displayPlayerNum();
-
-		} while (playerNumber <= 4);
-
-		System.out.println("This is the final player. No more players can be entered.");
-
-		// CALL START GAME METHOD HERE);
-
+	public void addPowerPoints(int powerPoints) {
+		this.powerPoints += powerPoints;
 	}
+
+	public void minusPowerPoints(int powerPoints) {
+		this.powerPoints -= powerPoints;
+	}
+
+	public void minusRent(Tile tile) {
+		this.powerPoints -= powerPoints;
+	}
+
+//	private void buyTile(Tile tile, Scanner scanner, Game game) {
+//
+//		System.out.println(tile.getName() + tile.getDescription() + tile.getEcoPointsBuy() + tile.getPowerPointsBuy());
+//
+//		boolean playerCanAffordTile = (this.getEcoPoints() > tile.getEcoPointsBuy()
+//				|| this.getPowerPoints() > tile.getPowerPointsBuy());
+//
+//		if (playerCanAffordTile) {
+//
+//			System.out.println("This tile is free to buy. Would you like to purchase it? Please enter 'yes' or 'no'. ");
+//
+//			String response = scanner.next();
+//
+//			if (response.equalsIgnoreCase("yes")) {
+//
+//				tile.setOwner(this.username);
+//				this.minusEcoPoints(tile.getEcoPointsBuy());
+//				this.minusPowerPoints(tile.getPowerPointsBuy());
+//
+//				System.out.println(
+//						"The owner of this tile is now: " + this.getUsername() + "\nYour balance is as follows:");
+//				this.displayBalance();
+//
+//			} else if (response.equalsIgnoreCase("no")) {
+//
+//				game.auctionTile(tile, this, scanner);
+//
+//			}
+//
+//		} else {
+//
+//			System.out.println("You do not have enough money to buy this tile. This tile will now go to auction.");
+//
+//			game.auctionTile(tile, this, scanner);
+//
+//		}
+//
+//	}
+//
+//	private void payRent(Tile tile) {
+//
+//		System.out.println("This tile is already owned.\nYou must pay rent of " + tile.getEcoPointsRent()
+//				+ " ecoPoints and " + tile.getPowerPointsRent() + " powerPoints to " + tile.getOwner());
+//
+//		this.minusEcoPoints(tile.getEcoPointsRent());
+//		this.minusPowerPoints(tile.getPowerPointsRent());
+//
+//		System.out.println("Your remaining balance:");
+//		this.displayBalance();
+//	}
+//
+//	public int buyTileInAuction(Tile tile, Scanner scanner) {
+//
+//		int playerBid = 0;
+//		boolean playerHasAnswered = false;
+//
+//		System.out.println(
+//				"This tile is now open for the rest of the players to buy in an auction.\nPlease enter whether you would like to bid ('yes') or not like to bid ('no')");
+//
+//		do {
+//
+//			String response = scanner.next();
+//
+//			if (response.equalsIgnoreCase("yes")) {
+//
+//				System.out.println("Please enter the amount you would like to bid:");
+//				playerBid = scanner.nextInt();
+//				playerHasAnswered = true;
+//
+//			} else if (response.equalsIgnoreCase("no")) {
+//				System.out.println("Okay, moving on to the next player.");
+//				playerHasAnswered = true;
+//				playerBid = 0;
+//
+//			} else {
+//				System.out.println("Sorry didn't catch that! What is your answer?");
+//			}
+//
+//		} while (playerHasAnswered == false);
+//
+//		return playerBid;
+//
+//	}
+//
+//	public void landsOnTile(Tile tile, Scanner scanner, Game game) {
+//
+//		if (tile.getOwner() != null) {
+//
+//			this.payRent(tile);
+//
+//		} else {
+//
+//			this.buyTile(tile, scanner, game);
+//		}
+//	}
+
 }
-

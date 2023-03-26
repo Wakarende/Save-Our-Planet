@@ -7,35 +7,36 @@ package saveourplanet;
  *
  */
 
-public class Tile extends Field{
+public class Tile {
     
 	// instance variables
     private int number;
     private String name; 
     private String description;
 
-    /*
+
+    // Default Constructor
+
+	/*
      * Default Constructor
      */
     public Tile() {
 
     }
 
-	/**
-	 * Constructor with arguments for the Tile class. 
-	 * Uses the Field class as a super class
-	 * @param fieldName
-	 * @param isFieldOwned
-	 * @param number
-	 * @param name
-	 * @param description
-	 */
-	public Tile(String fieldName, boolean isFieldOwned, int number, String name, String description) {
-		super(fieldName, isFieldOwned);
-		this.number = number;
-		this.name = name;
-		this.description = description;
-	}
+    /**
+     * Constructor with args
+     * @param number
+     * @param name
+     * @param description
+     */
+    public Tile(int number, String name, String description) {
+
+        this.number = number;
+        this.name = name;
+        this.description = description;
+
+    }
 
 	// GETTERS AND SETTERS
 	
@@ -88,5 +89,6 @@ public class Tile extends Field{
     public void setDescription(String description) {
         this.description = description;
     }
-
 }
+	
+	

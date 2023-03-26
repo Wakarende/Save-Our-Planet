@@ -21,18 +21,23 @@ public class Chance extends Tile {
 		
 	}
 
+	
+	
 	// METHODS
 	
+	
+
+
 	/**
-	 * @param fieldName
-	 * @param isFieldOwned
 	 * @param number
 	 * @param name
 	 * @param description
 	 */
-	public Chance(String fieldName, boolean isFieldOwned, int number, String name, String description) {
-		super(fieldName, isFieldOwned, number, name, description);
+	public Chance(int number, String name, String description) {
+		super(number, name, description);
 	}
+
+
 
 	/**
 	 * Method for printing information of the Chance tile, including its number, name and description.
