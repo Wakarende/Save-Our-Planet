@@ -91,7 +91,7 @@ public class Player {
 					System.out.println("Thank you, your name has been confirmed as " + newUsername + ".");
 
 				} else if (answer.equalsIgnoreCase("no")) {
-					System.out.println("Please try again and write your name below.");
+					System.out.println("Please try again and write your name below:");
 					validUsername = false;
 				} else {
 					System.out.println("That is not an accepted response, please try again.");
@@ -180,13 +180,13 @@ public class Player {
 		System.out.println("Your EcoPoints resource balance is " + this.getEcoPoints());
 		System.out.println("Your PowerPoints resource balance is " + this.getPowerPoints());
 
-		if (ecoPoints <= 0) {
-			System.out.println("You have run of ecoPoints! The game has ended.");
-			System.out.println("Let's see the final scores!");
-		} else if (powerPoints <= 0) {
-			System.out.println("You have run of powerPoints! The game has ended.");
-			System.out.println("Let's see the final scores!");
-		}
+//		if (ecoPoints <= 0) {
+//			System.out.println("You have run of ecoPoints! The game has ended.");
+//			System.out.println("Let's see the final scores!");
+//		} else if (powerPoints <= 0) {
+//			System.out.println("You have run of powerPoints! The game has ended.");
+//			System.out.println("Let's see the final scores!");
+//		}
 
 	}
 
