@@ -8,8 +8,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -34,15 +36,16 @@ public class Game {
 	 */
 	public static void main(String[] args) {
 
-		// create board
-		createBoard();
+//		// create board
+//		createBoard();
+//		
+//		// Ascii art
+//		asciiArt();
+//
+//		// Start menu
+//		mainMenu();
 		
-		// Ascii art
-		asciiArt();
-
-		// Start menu
-		mainMenu();
-
+		
 	}
 
 	/**
@@ -90,7 +93,6 @@ public class Game {
 		Area clothesApp = new Area("Technology", false, 3, "2nd-Hand Clothes App", "Invest in this start-up and become a champion for vintage fashionistas.", false, null, 0, 20, 30); 
 		Area socialMediaCampaign = new Area("Technology", false, 5, "Social-Media Campaign", "Use this social media campaign to spread awareness about the climate.", false, null, 0, 15, 20); 
 		
-		
 		// Tiles belonging to the Recycling field
 		
 		
@@ -104,12 +106,15 @@ public class Game {
 		
 		
 		// creating instances of the Chance tiles
+		Tile rest1 = new Tile(); 
 		Chance rest = new Chance("Chance", false, 2, "Rest", "You have landed on the Rest tile! Take a breather..."); 
 		Chance governmentGrant = new Chance("Chance", false, 4, "Government Grant", "To award you for your excellent work in the climate sector, the government is giving you a one-off grant. Enjoy!"); 
 		Chance governmentTax = new Chance("Chance", false, 7, "Government Tax", "To help fund climate projects elsewhere in the world, the Government is collecting tax. Sorry (not sorry)"); 
 		Chance give = new Chance("Chance", false, 10, "Sharing is Caring", "What is 'Our Planet' without eachother? Celebrate your differences by giving a fellow player some resources."); 
 		Chance take = new Chance("Chance", false, 12, "Make them Pay", "Your enemies deserve punishment. Take some hard-earned resources from them. Mwah-ha-ha-ha-haaaaaa..."); 
 		Chance skipAGo = new Chance("Chance", false, 16, "Skip-A-Go", "It's your favourite part of the game! Not playing. Skip-a-Go!"); 
+		
+		ArrayList<Tile> gameBoard = new ArrayList<>();  
 		
 	}
 	
@@ -296,6 +301,15 @@ public class Game {
 	 */
 	public static void displayLeaderboard(List<Player> players) {
 
+		// sort Players array list
+		Collections.sort(players, new CompareByEcoPoints());
+		
+		
+		for (int loop = 0; loop < players.size(); loop++) {
+			System.out.println(loop+1 + ": " + players.get(loop).getUsername() + " with " + players.get(loop).getEcoPoints() + " EcoPoints"); 
+		}
+		
+		
 	}
 
 }
