@@ -8,8 +8,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -21,25 +23,21 @@ import java.util.Scanner;
  */
 public class Game {
 	
+	public ArrayList<Tile> gameBoard = new ArrayList<>(); 
+	
 	public Game() {
 		
 	}
 
 	/*
-	 * Public ArrayList to store the players of the game Used to access the
-	 * Leaderboard
+	 * Public ArrayList to store the players of the game 
+	 * Used to access and create the leaderboard
 	 */
 	private List<Player> players = new ArrayList<>();
 
 	private List<String> playerUsernames = new ArrayList<>();
 
 	private List<Tile> allTiles = new ArrayList<>();
-
-		// create board
-//		createBoard();
-		
-		// Ascii art
-//		asciiArt();
 
 	public List<Player> getPlayers() {
 		return players;
@@ -63,14 +61,8 @@ public class Game {
 
 	public void setAllTiles(List<Tile> allTiles) {
 		this.allTiles = allTiles;
-
 	}
 
-	/**
-	 * Method to display Main Menu. 
-	 * Gives user option to create New Game or Quit application. 
-	 * If New Game is selected, user is moved on to tutorial screen -- not yet implemented. 
-	 */
 	/**
 	 * Create Ascii art at beginning of game
 	 */
@@ -103,38 +95,61 @@ public class Game {
 
 	
 	/**
-	 * This method creates the areas and tiles through which the game will be played. 
+	 * Creates the areas and tiles through which the game will be played. 
+	 * This includes four main fields - technology, recycling, energy and conservation.
+	 * Other tiles (Go and Rest) are also included
 	 */
-	//private void createBoard() {
+	private void createBoard() {
 		
-		// technology, recycling, energy and conservation
+		// Rest and Go tiles
+		Tile rest = new Tile(2, "Rest", "You landed on the 'Rest' tile! Take a breather - you earned it...");
+		Tile go = new Go(1, "Go", "You landed on the 'Go' tile! Pickup some PowerPoints to celebrate your progress! Lord knows you need it.");
+
+		// Chance tiles
+		Chance chance1 = new Chance(4, "Chance Card!", null);
+		Chance chance2 = new Chance(7, "Chance Card!", null);
+		Chance chance3 = new Chance(10, "Chance Card!", null);
+		Chance chance4 = new Chance(12, "Chance Card!", null);
+		Chance chance5 = new Chance(16, "Chance Card!", null);
 		
-//		// Tiles belonging to the Technology field - least expensive
-//		Area clothesApp = new Area("Technology", false, 3, "2nd-Hand Clothes App", "Invest in this start-up and become a champion for vintage fashionistas.", false, null, 0, 20, 30); 
-//		Area socialMediaCampaign = new Area("Technology", false, 5, "Social-Media Campaign", "Use this social media campaign to spread awareness about the climate.", false, null, 0, 15, 20); 
-//		
-//		
-//		// Tiles belonging to the Recycling field
-//		
-//		
-//		// Tiles belonging to the Energy field - most expensive
-//		
-//		
-//		// Tiles belonging to the Conservation field
-//		
-//		// tech is supposed to be cheapest
-//		// renewable energy the most expensive. 
-//		
-//		
-//		// creating instances of the Chance tiles
-//		Chance rest = new Chance("Chance", false, 2, "Rest", "You have landed on the Rest tile! Take a breather..."); 
-//		Chance governmentGrant = new Chance("Chance", false, 4, "Government Grant", "To award you for your excellent work in the climate sector, the government is giving you a one-off grant. Enjoy!"); 
-//		Chance governmentTax = new Chance("Chance", false, 7, "Government Tax", "To help fund climate projects elsewhere in the world, the Government is collecting tax. Sorry (not sorry)"); 
-//		Chance give = new Chance("Chance", false, 10, "Sharing is Caring", "What is 'Our Planet' without eachother? Celebrate your differences by giving a fellow player some resources."); 
-//		Chance take = new Chance("Chance", false, 12, "Make them Pay", "Your enemies deserve punishment. Take some hard-earned resources from them. Mwah-ha-ha-ha-haaaaaa..."); 
-//		Chance skipAGo = new Chance("Chance", false, 16, "Skip-A-Go", "It's your favourite part of the game! Not playing. Skip-a-Go!"); 
+		// Tiles belonging to the Technology field - least expensive
+		Area clothesApp = new Area(3, "2nd-Hand Clothes App", "Invest in this innovative app and become a leading vintage fashionista!", null, 15, 30, 10, 3, 5, 2, "Partner with popular clothing brands to expand your app and its influence."); 
+		Area socialMediaCamp = new Area(5, "Social-Media Campaign", "Utilise the power of social media to spread climate awareness!", null, 10, 25, 5, 2, 3, 1, "Run advertisements to increase engagement and improve your campaign's scalability.");
+
+		// Tiles belonging to the Recycling field
+		Area bottleFarm = new Area(6, "Bottle Farm", "Buy this bottle farm to improve recycling and waste.", null, 20, 40, 15, 4, 8, 3, "Franchise your bottle farm to open multiple locations and increase clients."); 
+		Area foodBank = new Area(8, "Food Waste Bank", "Invest in this food waste bank and help combat unnecessary waste.", null, 25, 50, 20, 6, 10, 5, "Hire additional workers so that the bank can operate on a 24-hour cycle."); 
+		Area supermarket = new Area(9, "Sustainable Supermarket", "Buy this trendy new supermaket and offer sustainable eating options!", null, 30, 60, 25, 8, 12, 7, "Work with local traders to reduce your carbon footprint and provide top-quality groceries."); 
 		
-	//}
+		// Tiles belonging to the Energy field - most expensive
+		Area solarFarm = new Area(11, "Solar Farm", "Utilise the power of the sun to create energy for your local community.", null, 40, 80, 25, 15, 17, 10, "Invest in research to optimise the farm and improve its solar technology."); 
+		Area windFarm = new Area(13, "Wind Farm", "By buying this farm, you can invest in wind as a sustainable form of energy.", null, 60, 100, 30, 17, 20, 13, "Buy more wind turbines to allow your farm to maximise its potential in harnessing sustainable energy."); 
+		
+		// Tiles belonging to the Conservation field
+		Area beach = new Area(14, "Beach", "Invest in a beach nourishment plan to protect our coasts!", null, 20, 40, 15, 4, 8, 3, "Hire volunteers to create a litter-picking program."); 
+		Area sanctuary = new Area(15, "Wildlife Sanctuary", "Purchase this wildlife sanctuary to save endangered animals.", null, 25, 50, 20, 6, 10, 5, "Open the sanctuary to the public to educate people on wildlife conservation issues."); 
+		Area forest = new Area(17, "Forest", "Invest in this tree-protection scheme to protect a local forest", null, 30, 60, 25, 8, 12, 7, "Hire tree-surgeons to combat disease and pests in your forest."); 
+		
+		// populate gameBoard with tiles
+		gameBoard.add(go); 
+		gameBoard.add(rest); 
+		gameBoard.add(clothesApp); 
+		gameBoard.add(chance1); 
+		gameBoard.add(socialMediaCamp); 
+		gameBoard.add(bottleFarm); 
+		gameBoard.add(chance2); 
+		gameBoard.add(foodBank); 
+		gameBoard.add(supermarket); 
+		gameBoard.add(chance3); 
+		gameBoard.add(solarFarm); 
+		gameBoard.add(chance4); 
+		gameBoard.add(windFarm); 
+		gameBoard.add(beach); 
+		gameBoard.add(sanctuary); 
+		gameBoard.add(chance5); 
+		gameBoard.add(forest); 
+		 
+	}
 	
 	/**
 	 * Method to call the opening main menu.
@@ -144,7 +159,6 @@ public class Game {
 	 * At each stage in their decision, the user is asked to confirm their choice. 
 	 */
 	public void mainMenu(Scanner scanner) {
-
 
 		try {
 
@@ -214,12 +228,7 @@ public class Game {
 	/**
 	 * Displays tutorial for user
 	 */
-
-//	private void tutorial(Scanner scanner) {
-
 	private void tutorial(Scanner scanner) {
-		
-//		Scanner scanner = new Scanner(System.in);
 
 		int choice;
 
@@ -233,13 +242,12 @@ public class Game {
 
 			choice = scanner.nextInt();
 
-
 			switch (choice) {
 			case 1:
 				displayRules();
 				break;
 			case 2:
-	          startGame(scanner);
+				startGame(scanner);
 				break;
 			case 3:
 				System.out.println("Exiting Tutorial!");
@@ -249,15 +257,11 @@ public class Game {
 				System.out.println("Invalid choice. Please try again.");
 			}
 		} while (choice != 3);
-  
-			
-//			scanner.close();
 
-		}
-	
+	}
 	
 	/**
-	 * Quits the game/application. 
+	 * Quits the game
 	 */
 	private void quit() {
 		// inform the user they have quit the game
@@ -305,19 +309,25 @@ public class Game {
 		System.out.print(" ");
 	}
 
-	
 
 	/**
-	 * Shows players scores and sorts them accordingly
-	 * 
+	 * Shows players scores and sorts them accordingly. 
 	 * @param players
 	 */
-	private void displayLeaderboard(List<Player> players) {
-
+	private void displayLeaderboard() {
+		
+		// sort Players array list
+//		Collections.sort(players, new CompareByEcoPoints());
+				
+		// iterating through player array list and calculating the winner	
+		for (int loop = 0; loop < players.size(); loop++) {
+			System.out.println(loop+1 + ": " + players.get(loop).getUsername() + " with " + players.get(loop).getEcoPoints() + " EcoPoints"); 
+		}
+				
 	}
 
 	/**
-	 * Method Start game method
+	 * Start game method
 	 */
 	private void startGame(Scanner scanner) {
 		System.out.println("\nStart game!");
@@ -416,6 +426,9 @@ public class Game {
 		players.add(newPlayer);
 	}
 
+	/**
+	 * Method to show all the information of all players in the game
+	 */
 	private void showAllPlayersInfo() {
 
 		for (Player player : players) {
@@ -427,6 +440,8 @@ public class Game {
 
 		List<Tile> gameTiles = new ArrayList();
 
+		
+		
 //		gameTiles.add(new Tile(1, "First", "first tile", 20, 20, 5, 5));
 		this.setAllTiles(gameTiles);
 	}
