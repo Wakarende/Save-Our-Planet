@@ -15,7 +15,7 @@ public class Main {
 		game.asciiArt();
 
 		// Start menu
-//		game.mainMenu(scanner);
+		game.mainMenu(scanner);
 		
 		
 	

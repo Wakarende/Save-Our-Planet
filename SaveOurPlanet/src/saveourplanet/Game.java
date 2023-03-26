@@ -139,7 +139,7 @@ public class Game {
 	 * If choosing to Quit the game, the user exits the application. 
 	 * At each stage in their decision, the user is asked to confirm their choice. 
 	 */
-	private void mainMenu(Scanner scanner) {
+	public void mainMenu(Scanner scanner) {
 
 
 		try {
