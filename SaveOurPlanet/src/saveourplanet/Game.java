@@ -93,22 +93,25 @@ public class Game {
 	 * This includes four main fields - technology, recycling, energy and conservation.
 	 * Other tiles (Go and Rest) are also included
 	 */
-	private void createBoard() {
+	private ArrayList<Tile> createBoard() {
 				
 		// Tiles belonging to the Technology field - least expensive
-		
+		Area clothesApp = new Area(3, "2nd-Hand Clothes App", "Invest in this innovative app and become a leading vintage fashionista!", null, 15, 30, 10, 3, 5, 2); 
+		Area socialMediaCamp = new Area(5, "Social-Media Campaign", "Utilise the power of social media to spread climate awareness!", null, 10, 25, 5, 2, 3, 1);
 		
 		// Tiles belonging to the Recycling field
-		
+		Area bottleFarm = new Area(6, "Bottle Farm", "Buy this bottle farm to improve recycling and waste.", null, 20, 40, 15, 4, 8, 3); 
+		Area foodBank = new Area(8, "Food Waste Bank", "Invest in this food waste bank and help combat unnecessary waste.", null, 25, 50, 20, 6, 10, 5); 
+		Area supermarket = new Area(9, "Sustainable Supermarket", "Buy this trendy new supermaket and offer sustainable eating options!", null, 30, 60, 25, 8, 12, 7); 
 		
 		// Tiles belonging to the Energy field - most expensive
-		
+		Area solarFarm = new Area(11, "Solar Farm", "Utilise the power of the sun to create energy for your local community.", null, 40, 80, 25, 15, 17, 10); 
+		Area windFarm = new Area(13, "Wind Farm", "By buying this farm, you can invest in wind as a sustainable form of energy.", null, 60, 100, 30, 17, 20, 13); 
 		
 		// Tiles belonging to the Conservation field
-		
-		
-		// tech is supposed to be cheapest
-		// renewable energy the most expensive. 
+		Area beach = new Area(14, "Beach", "Invest in a beach nourishment plan to protect our coasts!", null, 20, 40, 15, 4, 8, 3); 
+		Area sanctuary = new Area(15, "Wildlife Sanctuary", "Purchase this wildlife sanctuary to save endangered animals.", null, 25, 50, 20, 6, 10, 5); 
+		Area forest = new Area(17, "Forest", "Invest in this tree-protection scheme to protect a local forest", null, 30, 60, 25, 8, 12, 7); 
 		
 		// Rest and Go tiles
 		Tile rest = new Tile(2, "Rest", "You landed on the 'Rest' tile! Take a breather - you earnt it..."); 
@@ -121,7 +124,9 @@ public class Game {
 		Chance chance5 = new Chance(16, "Chance Card!", null); 
 		
 		
-		ArrayList<Tile> gameBoard = new ArrayList<>();  
+		ArrayList<Tile> gameBoard = new ArrayList<>();
+		
+		return gameBoard; 
 		
 	}
 	
