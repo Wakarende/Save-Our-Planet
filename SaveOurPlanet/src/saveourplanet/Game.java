@@ -20,6 +20,10 @@ import java.util.Scanner;
  *
  */
 public class Game {
+	
+	public Game() {
+		
+	}
 
 	/*
 	 * Public ArrayList to store the players of the game Used to access the
@@ -101,7 +105,7 @@ public class Game {
 	/**
 	 * This method creates the areas and tiles through which the game will be played. 
 	 */
-	private void createBoard() {
+	//private void createBoard() {
 		
 		// technology, recycling, energy and conservation
 		
@@ -130,7 +134,7 @@ public class Game {
 //		Chance take = new Chance("Chance", false, 12, "Make them Pay", "Your enemies deserve punishment. Take some hard-earned resources from them. Mwah-ha-ha-ha-haaaaaa..."); 
 //		Chance skipAGo = new Chance("Chance", false, 16, "Skip-A-Go", "It's your favourite part of the game! Not playing. Skip-a-Go!"); 
 		
-	}
+	//}
 	
 	/**
 	 * Method to call the opening main menu.
@@ -239,6 +243,7 @@ public class Game {
 				break;
 			case 3:
 				System.out.println("Exiting Tutorial!");
+				mainMenu(scanner);
 				return;
 			default:
 				System.out.println("Invalid choice. Please try again.");
@@ -318,13 +323,16 @@ public class Game {
 		System.out.println("\nStart game!");
 		setUpPlayer(scanner);
 		showAllPlayersInfo();  
-		this.initialisGameTiles();
-		List<Tile> allTiles = this.getAllTiles();
+//		this.initialisGameTiles();
+//		List<Tile> allTiles = this.getAllTiles();
 
-		for (Player player : this.getPlayers()) {
-//			player.landsOnTile(allTiles.get(0), scanner, this);
-		}
+//		for (Player player : this.getPlayers()) {
+////			player.landsOnTile(allTiles.get(0), scanner, this);
+//		}
 	}
+	
+	
+	
 
 	/**
 	 * Sets up the players for the game. Prompts the user to give the amount of
@@ -334,11 +342,11 @@ public class Game {
 	 */
 	private void setUpPlayer(Scanner scanner) {
 
-		int playerTot = this.chooseAmountOfPlayers(scanner);
+		int playerTotal = this.chooseAmountOfPlayers(scanner);
 
-		// Use playerTot int to decide how many times user can enter a name for a player
+		// Use playerTotal int to decide how many times user can enter a name for a player
 		// and to determine their player number.
-		for (int loop = 1; loop <= playerTot; loop++) {
+		for (int loop = 1; loop <= playerTotal; loop++) {
 
 			System.out.println("\nCreating a new player...");
 			this.createPlayer(scanner, loop);
@@ -355,19 +363,19 @@ public class Game {
   
 		// Confirm there are enough players to meet requirements for game (between 2 and
 		// 4)
-		int playerTot = 0;
+		int playerTotal = 0;
 
 		boolean correctAmountOfPlayers = false;
 
 		do {
 
-			// Ask user for number of players and save to int playerTot
+			// Ask user for number of players and save to int playerTotal
 			System.out.print(
 					"\nA minimum of 2 players and a maximum of 4 players is allowed to play this game.\nPlease enter the number of players you have for this game: ");
-			playerTot = scanner.nextInt();
+			playerTotal = scanner.nextInt();
 
-			if (playerTot >= 2 && playerTot <= 4) {
-				System.out.println("\nYou have chosen " + playerTot + " players. Now let's set the usernames.");
+			if (playerTotal >= 2 && playerTotal <= 4) {
+				System.out.println("\nYou have chosen " + playerTotal + " players. Now let's set the usernames.");
 				correctAmountOfPlayers = true;
 			} else {
 				System.out.println("\nNumber of players not allowed. Please try again.");
@@ -375,7 +383,7 @@ public class Game {
 
 		} while (correctAmountOfPlayers == false);
 
-		return playerTot;
+		return playerTotal;
 
 	}
 
@@ -406,7 +414,6 @@ public class Game {
 
 		// Add as a complete player in the array list
 		players.add(newPlayer);
-
 	}
 
 	private void showAllPlayersInfo() {

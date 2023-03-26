@@ -19,6 +19,7 @@ public class Area extends Tile {
 	private int buyingReward; // with eco-points MEDIUM
 	private int developmentReward; // with eco-points LARGE
 	private int rentReward; // with eco-points SMALL
+	private String developmentDescription; 
 	
 
 	// CONSTRUCTORS
@@ -30,6 +31,7 @@ public class Area extends Tile {
 
 	}
 	
+
 	/**
 	 * Constructor with arguments
 	 * @param number
@@ -42,9 +44,10 @@ public class Area extends Tile {
 	 * @param buyingReward
 	 * @param developmentReward
 	 * @param rentReward
+	 * @param developmentDescription
 	 */
 	public Area(int number, String name, String description, String ownerName, int buyingPrice, int developmentPrice,
-			int rentPrice, int buyingReward, int developmentReward, int rentReward) {
+			int rentPrice, int buyingReward, int developmentReward, int rentReward, String developmentDescription) {
 		super(number, name, description);
 		this.ownerName = ownerName;
 		this.buyingPrice = buyingPrice;
@@ -53,6 +56,22 @@ public class Area extends Tile {
 		this.buyingReward = buyingReward;
 		this.developmentReward = developmentReward;
 		this.rentReward = rentReward;
+		this.developmentDescription = developmentDescription;
+	}
+
+	
+	/**
+	 * @return the developmentDescription
+	 */
+	public String getDevelopmentDescription() {
+		return developmentDescription;
+	}
+
+	/**
+	 * @param developmentDescription the developmentDescription to set
+	 */
+	public void setDevelopmentDescription(String developmentDescription) {
+		this.developmentDescription = developmentDescription;
 	}
 
 	/**
@@ -152,6 +171,8 @@ public class Area extends Tile {
 	public void setRentReward(int rentReward) {
 		this.rentReward = rentReward;
 	}
+	
+	
 
 	/**
 	 * Method to display info about the area. Changes depending on whether or not the area is owned by another player. 
