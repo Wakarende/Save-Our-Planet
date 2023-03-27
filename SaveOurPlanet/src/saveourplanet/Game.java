@@ -180,6 +180,7 @@ public class Game {
 
 				// record the user's decision in the scanner
 				userInput = scanner.nextInt();
+				scanner.nextLine(); 
 
 				switch (userInput) {
 
@@ -418,7 +419,7 @@ public class Game {
 		System.out.println("\nYou are player number: " + playerNumber);
 
 		// Finally creating the player
-		Player newPlayer = new Player(newUsername, playerNumber, 100, 100);
+		Player newPlayer = new Player(newUsername, playerNumber, 0, 100);
 
 		newPlayer.displayBalance();
 
