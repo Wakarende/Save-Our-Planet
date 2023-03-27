@@ -248,10 +248,18 @@ public class Game {
 		showAllPlayersInfo();
 		this.initialisGameTiles();
 		List<Tile> allTiles = this.getAllTiles();
+		
+		int initialAmountOfPlayers = this.players.size();
 
+		// Continue game until there is only one player left standing
+				do {
 		for (Player player : this.getPlayers()) {
+			
+			System.out.println("\nIt is the turn of: " + player.getUsername() + ". Please enter a character to proceed. ");
+			scanner.next();
 			player.landsOnTile(allTiles.get(0), scanner, this);
 		}
+		} while(initialAmountOfPlayers == this.players.size());
 	}
 
 	/**
@@ -266,11 +274,13 @@ public class Game {
 
 		// Use playerTot int to decide how many times user can enter a name for a player
 		// and to determine their player number.
+		
 		for (int loop = 1; loop <= playerTot; loop++) {
 
 			System.out.println("\nCreating a new player...");
 			this.createPlayer(scanner, loop);
 		}
+		
 	}
 
 	/**
@@ -381,5 +391,19 @@ public class Game {
 				}
 			}
 		} while (newPlayerHighestBid == false);
+	}
+	
+	/**
+	 * Ends a game by deleting the current player from the list - thereby
+	 * stopping the do while loop in the start game method
+	 */
+	public void endGame(Player player) {
+		
+		this.players.remove(player);
+		
+		System.out.println("\nGame has ended because "+ player.getUsername() + " is broke\n"
+				+ "Their final totals are  " + player.getEcoPoints() + " ecopoints and " + player.getPowerPoints() + " power points");
+		
+		
 	}
 }

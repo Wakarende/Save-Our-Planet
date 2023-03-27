@@ -212,7 +212,13 @@ public class Player {
 
 	private void buyTile(Tile tile, Scanner scanner, Game game) {
 
-		System.out.println(tile.getName() + tile.getDescription() + tile.getEcoPointsBuy() + tile.getPowerPointsBuy());
+		System.out.println("Tile information: "
+				+ "Name: " + tile.getName() + 
+				" Description: " + tile.getDescription() + 
+				" Eco points cost: " + tile.getEcoPointsBuy() +
+				" Eco points rent: " + tile.getEcoPointsRent() +
+				" Power points cost: " + tile.getPowerPointsBuy() +
+				" Power points rent: " + tile.getPowerPointsRent());
 
 		boolean playerCanAffordTile = (this.getEcoPoints() > tile.getEcoPointsBuy()
 				|| this.getPowerPoints() > tile.getPowerPointsBuy());
@@ -254,6 +260,8 @@ public class Player {
 		System.out.println("This tile is already owned.\nYou must pay rent of " + tile.getEcoPointsRent()
 				+ " ecoPoints and " + tile.getPowerPointsRent() + " powerPoints to " + tile.getOwner());
 
+		
+		
 		this.minusEcoPoints(tile.getEcoPointsRent());
 		this.minusPowerPoints(tile.getPowerPointsRent());
 
@@ -275,7 +283,7 @@ public class Player {
 
 			if (response.equalsIgnoreCase("yes")) {
 
-				System.out.println("Please enter the amount you would like to bid:");
+				System.out.println( this.username + ", please enter the amount you would like to bid:");
 				playerBid = scanner.nextInt();
 				playerHasAnswered = true;
 
@@ -299,11 +307,15 @@ public class Player {
 		if (tile.getOwner() != null) {
 
 			this.payRent(tile);
+			
+			if(this.ecoPoints <= 0 || this.powerPoints <= 0) {
+				game.endGame(this);
+			}
 
 		} else {
 
 			this.buyTile(tile, scanner, game);
 		}
 	}
-
+	
 }
