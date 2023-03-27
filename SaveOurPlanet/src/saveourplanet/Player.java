@@ -207,10 +207,10 @@ public class Player {
 		this.powerPoints -= powerPoints;
 	}
 
-	private void buyTile(Tile tile, Area area, Scanner scanner, Game game) {
+	private void buyTile(Area area, Scanner scanner, Game game) {
 
-		System.out.println("Tile information: " + "\nName: " + tile.getName() + "\nDescription: "
-				+ tile.getDescription() + "\nCost: " + area.getBuyingPrice() + "\nEco Points Reward: "
+		System.out.println("Tile information: " + "\nName: " + area.getName() + "\nDescription: "
+				+ area.getDescription() + "\nCost: " + area.getBuyingPrice() + "\nEco Points Reward: "
 				+ area.getBuyingReward() + "\nRent Price: " + area.getRentPrice());
 
 		boolean playerCanAffordTile = (this.getPowerPoints() > area.getBuyingPrice());
@@ -233,7 +233,7 @@ public class Player {
 
 			} else if (response.equalsIgnoreCase("no")) {
 
-				game.auctionTile(area, tile, this, scanner);
+				game.auctionTile(area, this, scanner);
 
 			}
 
@@ -241,7 +241,7 @@ public class Player {
 
 			System.out.println("You do not have enough money to buy this tile. This tile will now go to auction.");
 
-			game.auctionTile(area, tile, this, scanner);
+			game.auctionTile(area, this, scanner);
 
 		}
 
@@ -259,7 +259,7 @@ public class Player {
 		this.displayBalance();
 	}
 
-	public int buyTileInAuction(Tile tile, Scanner scanner) {
+	public int buyTileInAuction(Scanner scanner) {
 
 		int playerBid = 0;
 		boolean playerHasAnswered = false;
@@ -292,8 +292,13 @@ public class Player {
 
 	}
 
-	public void landsOnTile(Area area, Tile tile, Scanner scanner, Game game) {
+	public void landsOnTile( Tile tile, Scanner scanner, Game game) {
 
+		
+		if(tile instanceof Area) {
+			
+			Area area = (Area) tile;
+			
 		if (area.getOwnerName() != null) {
 
 			this.payRent(area);
@@ -304,7 +309,8 @@ public class Player {
 
 		} else {
 
-			this.buyTile(tile, area, scanner, game);
+			this.buyTile( area, scanner, game);
+		}
 		}
 	}
 }

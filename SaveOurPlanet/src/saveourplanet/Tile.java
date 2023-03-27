@@ -14,7 +14,6 @@ public class Tile {
     private String name; 
     private String description;
 
-
     // Default Constructor
 
 	/*

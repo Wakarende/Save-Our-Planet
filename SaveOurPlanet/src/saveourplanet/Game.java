@@ -23,7 +23,8 @@ import java.util.Scanner;
  */
 public class Game {
 
-	public ArrayList<Tile> gameBoard = new ArrayList<>();
+	private ArrayList<Tile> gameBoard = new ArrayList<>();
+
 
 	public Game() {
 
@@ -37,7 +38,6 @@ public class Game {
 
 	private List<String> playerUsernames = new ArrayList<>();
 
-	private List<Tile> allTiles = new ArrayList<>();
 
 	public List<Player> getPlayers() {
 		return players;
@@ -54,14 +54,15 @@ public class Game {
 	public void addToPlayerUsernames(String newUsername) {
 		this.playerUsernames.add(newUsername);
 	}
-
-	public List<Tile> getAllTiles() {
-		return allTiles;
+	
+	public ArrayList<Tile> getGameBoard() {
+		return gameBoard;
 	}
 
-	public void setAllTiles(List<Tile> allTiles) {
-		this.allTiles = allTiles;
+	public void setGameBoard(ArrayList<Tile> gameBoard) {
+		this.gameBoard = gameBoard;
 	}
+
 
 	/**
 	 * Create Ascii art at beginning of game
@@ -342,13 +343,11 @@ public class Game {
 	 */
 	public void startGame(Scanner scanner) {
 		
-		Area area = null;
-
 		System.out.println("\nStart game!");
 		setUpPlayer(scanner);
 		showAllPlayersInfo();
-		this.initialisGameTiles();
-		List<Tile> allTiles = this.getAllTiles();
+		this.createBoard();
+		List<Tile> allTiles = this.getGameBoard();
 
 		int initialAmountOfPlayers = this.players.size();
 
@@ -359,7 +358,7 @@ public class Game {
 				System.out.println(
 						"\nIt is the turn of: " + player.getUsername() + ". Please enter a character to proceed. ");
 				scanner.next();
-				player.landsOnTile(area, allTiles.get(0), scanner, this);
+				player.landsOnTile(allTiles.get(0), scanner, this);
 			}
 		} while (initialAmountOfPlayers == this.players.size());
 
@@ -468,14 +467,8 @@ public class Game {
 		}
 	}
 
-	private void initialisGameTiles() {
 
-		List<Tile> gameTiles = new ArrayList();
-
-		this.setAllTiles(gameTiles);
-	}
-
-	public void auctionTile(Area area, Tile tile, Player currentPlayer, Scanner scanner) {
+	public void auctionTile(Area area, Player currentPlayer, Scanner scanner) {
 
 		int highestBid = 0;
 		boolean newPlayerHighestBid = false;
@@ -491,7 +484,7 @@ public class Game {
 
 					if (playerCanAffordTile) {
 
-						int playerBid = player.buyTileInAuction(tile, scanner);
+						int playerBid = player.buyTileInAuction( scanner);
 
 						if (playerBid > highestBid) {
 							playerBid = highestBid;
