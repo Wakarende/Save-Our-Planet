@@ -91,7 +91,7 @@ public class Player {
 					System.out.println("Thank you, your name has been confirmed as " + newUsername + ".");
 
 				} else if (answer.equalsIgnoreCase("no")) {
-					System.out.println("Please try again and write your name below.");
+					System.out.println("Please try again and write your name below:");
 					validUsername = false;
 				} else {
 					System.out.println("That is not an accepted response, please try again.");
@@ -180,10 +180,7 @@ public class Player {
 		System.out.println("Your EcoPoints resource balance is " + this.getEcoPoints());
 		System.out.println("Your PowerPoints resource balance is " + this.getPowerPoints());
 
-		if (ecoPoints <= 0) {
-			System.out.println("You have run of ecoPoints! The game has ended.");
-			System.out.println("Let's see the final scores!");
-		} else if (powerPoints <= 0) {
+		if (powerPoints <= 0) {
 			System.out.println("You have run of powerPoints! The game has ended.");
 			System.out.println("Let's see the final scores!");
 		}
@@ -210,100 +207,110 @@ public class Player {
 		this.powerPoints -= powerPoints;
 	}
 
-//	private void buyTile(Tile tile, Scanner scanner, Game game) {
-//
-//		System.out.println(tile.getName() + tile.getDescription() + tile.getEcoPointsBuy() + tile.getPowerPointsBuy());
-//
-//		boolean playerCanAffordTile = (this.getEcoPoints() > tile.getEcoPointsBuy()
-//				|| this.getPowerPoints() > tile.getPowerPointsBuy());
-//
-//		if (playerCanAffordTile) {
-//
-//			System.out.println("This tile is free to buy. Would you like to purchase it? Please enter 'yes' or 'no'. ");
-//
-//			String response = scanner.next();
-//
-//			if (response.equalsIgnoreCase("yes")) {
-//
-//				tile.setOwner(this.username);
-//				this.minusEcoPoints(tile.getEcoPointsBuy());
-//				this.minusPowerPoints(tile.getPowerPointsBuy());
-//
-//				System.out.println(
-//						"The owner of this tile is now: " + this.getUsername() + "\nYour balance is as follows:");
-//				this.displayBalance();
-//
-//			} else if (response.equalsIgnoreCase("no")) {
-//
-//				game.auctionTile(tile, this, scanner);
-//
-//			}
-//
-//		} else {
-//
-//			System.out.println("You do not have enough money to buy this tile. This tile will now go to auction.");
-//
-//			game.auctionTile(tile, this, scanner);
-//
-//		}
-//
-//	}
-//
-//	private void payRent(Tile tile) {
-//
-//		System.out.println("This tile is already owned.\nYou must pay rent of " + tile.getEcoPointsRent()
-//				+ " ecoPoints and " + tile.getPowerPointsRent() + " powerPoints to " + tile.getOwner());
-//
-//		this.minusEcoPoints(tile.getEcoPointsRent());
-//		this.minusPowerPoints(tile.getPowerPointsRent());
-//
-//		System.out.println("Your remaining balance:");
-//		this.displayBalance();
-//	}
-//
-//	public int buyTileInAuction(Tile tile, Scanner scanner) {
-//
-//		int playerBid = 0;
-//		boolean playerHasAnswered = false;
-//
-//		System.out.println(
-//				"This tile is now open for the rest of the players to buy in an auction.\nPlease enter whether you would like to bid ('yes') or not like to bid ('no')");
-//
-//		do {
-//
-//			String response = scanner.next();
-//
-//			if (response.equalsIgnoreCase("yes")) {
-//
-//				System.out.println("Please enter the amount you would like to bid:");
-//				playerBid = scanner.nextInt();
-//				playerHasAnswered = true;
-//
-//			} else if (response.equalsIgnoreCase("no")) {
-//				System.out.println("Okay, moving on to the next player.");
-//				playerHasAnswered = true;
-//				playerBid = 0;
-//
-//			} else {
-//				System.out.println("Sorry didn't catch that! What is your answer?");
-//			}
-//
-//		} while (playerHasAnswered == false);
-//
-//		return playerBid;
-//
-//	}
-//
-//	public void landsOnTile(Tile tile, Scanner scanner, Game game) {
-//
-//		if (tile.getOwner() != null) {
-//
-//			this.payRent(tile);
-//
-//		} else {
-//
-//			this.buyTile(tile, scanner, game);
-//		}
-//	}
+	private void buyTile(Area area, Scanner scanner, Game game) {
 
+		System.out.println("Tile information: " + "\nName: " + area.getName() + "\nDescription: "
+				+ area.getDescription() + "\nCost: " + area.getBuyingPrice() + "\nEco Points Reward: "
+				+ area.getBuyingReward() + "\nRent Price: " + area.getRentPrice());
+
+		boolean playerCanAffordTile = (this.getPowerPoints() > area.getBuyingPrice());
+
+		if (playerCanAffordTile) {
+
+			System.out.println("This tile is free to buy. Would you like to purchase it? Please enter 'yes' or 'no'. ");
+
+			String response = scanner.next();
+
+			if (response.equalsIgnoreCase("yes")) {
+
+				area.setOwnerName(this.username);
+				this.minusPowerPoints(area.getBuyingPrice());
+				this.addEcoPoints(area.getBuyingReward());
+
+				System.out.println(
+						"The owner of this tile is now: " + this.getUsername() + "\nYour balance is as follows:");
+				this.displayBalance();
+
+			} else if (response.equalsIgnoreCase("no")) {
+
+				game.auctionTile(area, this, scanner);
+
+			}
+
+		} else {
+
+			System.out.println("You do not have enough money to buy this tile. This tile will now go to auction.");
+
+			game.auctionTile(area, this, scanner);
+
+		}
+
+	}
+
+	private void payRent(Area area) {
+
+		System.out.println("This tile is already owned.\nYou must pay rent of " + area.getRentPrice()
+				+ " powerPoints to " + area.getOwnerName());
+
+		this.minusPowerPoints(area.getRentPrice());
+		
+
+		System.out.println("Your remaining balance:");
+		this.displayBalance();
+	}
+
+	public int buyTileInAuction(Scanner scanner) {
+
+		int playerBid = 0;
+		boolean playerHasAnswered = false;
+
+		System.out.println(
+				"This tile is now open for the rest of the players to buy in an auction.\nPlease enter whether you would like to bid ('yes') or not like to bid ('no')");
+
+		do {
+
+			String response = scanner.next();
+
+			if (response.equalsIgnoreCase("yes")) {
+
+				System.out.println(this.username + ", please enter the amount you would like to bid:");
+				playerBid = scanner.nextInt();
+				playerHasAnswered = true;
+
+			} else if (response.equalsIgnoreCase("no")) {
+				System.out.println("Okay, moving on to the next player.");
+				playerHasAnswered = true;
+				playerBid = 0;
+
+			} else {
+				System.out.println("Sorry didn't catch that! What is your answer?");
+			}
+
+		} while (playerHasAnswered == false);
+
+		return playerBid;
+
+	}
+
+	public void landsOnTile( Tile tile, Scanner scanner, Game game) {
+
+		
+		if(tile instanceof Area) {
+			
+			Area area = (Area) tile;
+			
+		if (area.getOwnerName() != null) {
+
+			this.payRent(area);
+
+			if (this.powerPoints <= 0) {
+				game.endGame(this);
+			}
+
+		} else {
+
+			this.buyTile( area, scanner, game);
+		}
+		}
+	}
 }

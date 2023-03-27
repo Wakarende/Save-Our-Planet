@@ -6,7 +6,10 @@ package saveourplanet;
 import java.util.Scanner;
 
 /**
- * @author kudzaivellem, phil
+ * @author Phil
+ * @author joy
+ * @author fiona
+ * @author kudzai
  *
  */
 public class Area extends Tile {

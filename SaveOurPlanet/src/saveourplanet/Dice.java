@@ -54,16 +54,14 @@ public class Dice {
 	 */
 	public void rollDice() {
 		Random random = new Random();
-		int die1 = random.nextInt(6) + 1;
-		int die2 = random.nextInt(6) + 1;
+		int dice = random.nextInt(6) + 1;
 
-		int roll = (die1 + die2);
+		int roll = dice;
 
-		System.out.println("Dice 1: " + die1);
-		System.out.println("Dice 2: " + die2);
 		System.out.println("Total roll: " + roll);
 
 	}
 
+	
 }
 
