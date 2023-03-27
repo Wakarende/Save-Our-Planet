@@ -259,7 +259,7 @@ public class Game {
 				displayRules();
 				break;
 			case 2:
-				startGame(scanner);
+				playGame(scanner);
 				break;
 			case 3:
 				System.out.println("Exiting Tutorial!");
@@ -341,12 +341,17 @@ public class Game {
 	/**
 	 * Start game method
 	 */
-	public void startGame(Scanner scanner) {
+	public void playGame(Scanner scanner) {
 		
 		System.out.println("\nStart game!");
+		//set up player
 		setUpPlayer(scanner);
+		
+		//show players info
 		showAllPlayersInfo();
+		//create board
 		this.createBoard();
+		
 		List<Tile> allTiles = this.getGameBoard();
 
 		int initialAmountOfPlayers = this.players.size();
@@ -364,6 +369,9 @@ public class Game {
 
 		System.out.println("Let the games begin!");
 		System.out.println("Player:" + getPlayerUsernames().get(1) + " turn.");
+		
+		//take turn
+		
 	}
 
 	/**
