@@ -91,7 +91,7 @@ public class Player {
 					System.out.println("Thank you, your name has been confirmed as " + newUsername + ".");
 
 				} else if (answer.equalsIgnoreCase("no")) {
-					System.out.println("Please try again and write your name below.");
+					System.out.println("Please try again and write your name below:");
 					validUsername = false;
 				} else {
 					System.out.println("That is not an accepted response, please try again.");
@@ -180,10 +180,7 @@ public class Player {
 		System.out.println("Your EcoPoints resource balance is " + this.getEcoPoints());
 		System.out.println("Your PowerPoints resource balance is " + this.getPowerPoints());
 
-		if (ecoPoints <= 0) {
-			System.out.println("You have run of ecoPoints! The game has ended.");
-			System.out.println("Let's see the final scores!");
-		} else if (powerPoints <= 0) {
+		if (powerPoints <= 0) {
 			System.out.println("You have run of powerPoints! The game has ended.");
 			System.out.println("Let's see the final scores!");
 		}
@@ -210,18 +207,13 @@ public class Player {
 		this.powerPoints -= powerPoints;
 	}
 
-	private void buyTile(Tile tile, Scanner scanner, Game game) {
+	private void buyTile(Tile tile, Area area, Scanner scanner, Game game) {
 
-		System.out.println("Tile information: "
-				+ "Name: " + tile.getName() + 
-				" Description: " + tile.getDescription() + 
-				" Eco points cost: " + tile.getEcoPointsBuy() +
-				" Eco points rent: " + tile.getEcoPointsRent() +
-				" Power points cost: " + tile.getPowerPointsBuy() +
-				" Power points rent: " + tile.getPowerPointsRent());
+		System.out.println("Tile information: " + "\nName: " + tile.getName() + "\nDescription: "
+				+ tile.getDescription() + "\nCost: " + area.getBuyingPrice() + "\nEco Points Reward: "
+				+ area.getBuyingReward() + "\nRent Price: " + area.getRentPrice());
 
-		boolean playerCanAffordTile = (this.getEcoPoints() > tile.getEcoPointsBuy()
-				|| this.getPowerPoints() > tile.getPowerPointsBuy());
+		boolean playerCanAffordTile = (this.getPowerPoints() > area.getBuyingPrice());
 
 		if (playerCanAffordTile) {
 
@@ -231,9 +223,9 @@ public class Player {
 
 			if (response.equalsIgnoreCase("yes")) {
 
-				tile.setOwner(this.username);
-				this.minusEcoPoints(tile.getEcoPointsBuy());
-				this.minusPowerPoints(tile.getPowerPointsBuy());
+				area.setOwnerName(this.username);
+				this.minusPowerPoints(area.getBuyingPrice());
+				this.addEcoPoints(area.getBuyingReward());
 
 				System.out.println(
 						"The owner of this tile is now: " + this.getUsername() + "\nYour balance is as follows:");
@@ -241,7 +233,7 @@ public class Player {
 
 			} else if (response.equalsIgnoreCase("no")) {
 
-				game.auctionTile(tile, this, scanner);
+				game.auctionTile(area, tile, this, scanner);
 
 			}
 
@@ -249,21 +241,19 @@ public class Player {
 
 			System.out.println("You do not have enough money to buy this tile. This tile will now go to auction.");
 
-			game.auctionTile(tile, this, scanner);
+			game.auctionTile(area, tile, this, scanner);
 
 		}
 
 	}
 
-	private void payRent(Tile tile) {
+	private void payRent(Area area) {
 
-		System.out.println("This tile is already owned.\nYou must pay rent of " + tile.getEcoPointsRent()
-				+ " ecoPoints and " + tile.getPowerPointsRent() + " powerPoints to " + tile.getOwner());
+		System.out.println("This tile is already owned.\nYou must pay rent of " + area.getRentPrice()
+				+ " powerPoints to " + area.getOwnerName());
 
+		this.minusPowerPoints(area.getRentPrice());
 		
-		
-		this.minusEcoPoints(tile.getEcoPointsRent());
-		this.minusPowerPoints(tile.getPowerPointsRent());
 
 		System.out.println("Your remaining balance:");
 		this.displayBalance();
@@ -283,7 +273,7 @@ public class Player {
 
 			if (response.equalsIgnoreCase("yes")) {
 
-				System.out.println( this.username + ", please enter the amount you would like to bid:");
+				System.out.println(this.username + ", please enter the amount you would like to bid:");
 				playerBid = scanner.nextInt();
 				playerHasAnswered = true;
 
@@ -302,20 +292,19 @@ public class Player {
 
 	}
 
-	public void landsOnTile(Tile tile, Scanner scanner, Game game) {
+	public void landsOnTile(Area area, Tile tile, Scanner scanner, Game game) {
 
-		if (tile.getOwner() != null) {
+		if (area.getOwnerName() != null) {
 
-			this.payRent(tile);
-			
-			if(this.ecoPoints <= 0 || this.powerPoints <= 0) {
+			this.payRent(area);
+
+			if (this.powerPoints <= 0) {
 				game.endGame(this);
 			}
 
 		} else {
 
-			this.buyTile(tile, scanner, game);
+			this.buyTile(tile, area, scanner, game);
 		}
 	}
-	
 }
