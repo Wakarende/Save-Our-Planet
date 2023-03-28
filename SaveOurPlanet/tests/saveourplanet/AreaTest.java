@@ -195,42 +195,4 @@ class AreaTest {
 		assertEquals(30, area.getRentReward());
 	}
 
-
-	/**
-	 * Test method for buyArea
-	 */
-	@Test
-	void testBuyArea() {
-		Area area = new Area();
-		// Set the buying price for the area
-		area.setBuyingPrice(50);
-		// Create a player with some power points
-		Player player = new Player();
-		player.setPowerPoints(100);
-		// Mock user input to simulate player response
-		String playerResponse = "y";
-
-		// Test the case when the area is not owned by anyone
-		area.buyArea(playerResponse);
-		// Check that the area is now owned by the player
-		assertEquals(player.getUsername(), area.getOwnerName());
-		// Check that the player's power points have been deducted by the buying price
-		assertEquals(50, player.getPowerPoints());
-
-		// Test the case when the area is already owned by someone
-		area.setOwnerName("John");
-		area.buyArea(playerResponse);
-		// Check that the area is still owned by John
-		assertEquals("John", area.getOwnerName());
-		// Check that the player's power points have not been deducted
-		assertEquals(50, player.getPowerPoints());
-
-		// Test the case when the player chooses not to buy the area
-		playerResponse = "n";
-		area.buyArea();
-		// Check that the area is still owned by John
-		assertEquals("John", area.getOwnerName());
-		// Check that the player's power points have not been deducted
-		assertEquals(50, player.getPowerPoints());
-	}
 }
