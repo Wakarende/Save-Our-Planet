@@ -23,22 +23,25 @@ import java.util.Scanner;
  */
 public class Game {
 
+	// ArrayList to store the tiles which make up the game board. 
 	private ArrayList<Tile> gameBoard = new ArrayList<>();
 
+	// Arraylist to store the players of the game. Used to access and create the leaderboard.
+	private List<Player> players = new ArrayList<>();
+		
+	// ArrayList to store the usernames of the players. 
+	private List<String> playerUsernames = new ArrayList<>();
+	
 
+	/**
+	 * Default constructor for the Game class
+	 */
 	public Game() {
 
 	}
 
-	/*
-	 * ArrayList to store the players of the game Used to access and create
-	 * the leaderboard
-	 */
-	private List<Player> players = new ArrayList<>();
-
-	private List<String> playerUsernames = new ArrayList<>();
-
-
+	
+	// GETTERS AND SETTER for the above ArrayLists. 
 	public List<Player> getPlayers() {
 		return players;
 	}
@@ -349,7 +352,7 @@ public class Game {
 		this.createBoard();
 		List<Tile> allTiles = this.getGameBoard();
 
-		int initialAmountOfPlayers = this.players.size();
+		int initialAmountOfPlayers = players.size();
 
 		// Continue game until there is only one player left standing
 		do {
@@ -360,11 +363,65 @@ public class Game {
 				scanner.next();
 				player.landsOnTile(allTiles.get(0), scanner, this);
 			}
-		} while (initialAmountOfPlayers == this.players.size());
+		} while (initialAmountOfPlayers == players.size());
+		
+		// Continue game until there is only one player left standing
+//		do {
+//			for (Player player : this.getPlayers()) {
+//
+//				System.out.println(
+//						"\nIt is the turn of: " + player.getUsername() + ". Press x to roll dice. ");
+//				scanner.nextLine();
+//				userInput = scanner.nextLine();
+//				if (userInput.equalsIgnoreCase("x")) {
+//					dice.rollDice();
+//		//		}
+//				player.landsOnTile(allTiles.get(0), scanner, this);
+//			}
+//		}
+//		} while (initialAmountOfPlayers == this.players.size());
+//
+//		System.out.println("Let the games begin!");
+//		System.out.println("Player:" + getPlayerUsernames().get(1) + " turn.");
+
+		// take turn
 
 		System.out.println("Let the games begin!");
 		System.out.println("Player:" + getPlayerUsernames().get(1) + " turn.");
 	}
+	
+//	public void takeTurn(Player player) {
+//		Scanner scanner = new Scanner(System.in);
+//		Random random = new Random();
+//	//	Dice dice = new Dice();
+//		String userInput;
+//		int currentPlayer = players.indexOf(player);
+////		int currentPosition = player.getPosition();
+//		int diceRoll = random.nextInt(6) + 1;
+////		for (Player p : this.getPlayers())
+//		do {
+////			System.out.println("It's : "+ p.getUsername() + "'s turn.");
+//			System.out.println("Please enter 'x' to roll the dice");
+//			scanner.nextLine();
+//			userInput = scanner.nextLine();
+//			if (userInput.equalsIgnoreCase("x")) {
+//				System.out.println("You've rolled: " + diceRoll);
+//			}
+//			System.out.println("Starting tile: " + currentPosition);
+//			int newPosition = currentPosition + diceRoll;
+//			if (newPosition > gameBoard.size() - 1) {
+//				newPosition = gameBoard.size() - 1;
+//			}
+//			player.setPosition(newPosition);
+//			System.out.println("You are now on tile: " + newPosition);
+//			if (currentPlayer == players.size() - 1) {
+//				takeTurn(players.get(0));
+//			} else {
+//				takeTurn(players.get(currentPlayer + 1));
+//			}
+//		} while (players != null);
+//		scanner.close();
+//	}
 
 	/**
 	 * Sets up the players for the game. Prompts the user to give the amount of
@@ -374,7 +431,7 @@ public class Game {
 	 */
 	private void setUpPlayer(Scanner scanner) {
 
-		int playerTotal = this.chooseAmountOfPlayers(scanner);
+		int playerTotal = chooseAmountOfPlayers(scanner);
 
 		// Use playerTotal int to decide how many times user can enter a name for a
 		// player

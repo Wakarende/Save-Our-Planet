@@ -54,11 +54,9 @@ public class Dice {
 	 */
 	public void rollDice() {
 		Random random = new Random();
-		int dice = random.nextInt(6) + 1;
+		int roll = random.nextInt(6) + 1;
 
-		int roll = dice;
-
-		System.out.println("Total roll: " + roll);
+		System.out.println("You've rolled: " + roll);
 
 	}
 
