@@ -52,11 +52,12 @@ public class Dice {
 	/**
 	 * method to simulate dice roll
 	 */
-	public void rollDice() {
+	public int rollDice() {
+		
 		Random random = new Random();
 		int roll = random.nextInt(6) + 1;
-
-		System.out.println("You've rolled: " + roll);
+		
+		return roll; 
 
 	}
 

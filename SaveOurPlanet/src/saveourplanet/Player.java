@@ -38,12 +38,13 @@ public class Player {
 	 * @param powerPoints
 	 * @param days
 	 */
-	public Player(String username, int playerNumber, int ecoPoints, int powerPoints) {
+	public Player(String username, int playerNumber, int ecoPoints, int powerPoints, int position) {
 		super();
 		this.username = username;
 		this.playerNumber = playerNumber;
 		this.ecoPoints = ecoPoints;
 		this.powerPoints = powerPoints;
+		this.position = position; 
 
 	}
 
@@ -162,6 +163,20 @@ public class Player {
 	 */
 	public void setPowerPoints(int powerPoints) {
 		this.powerPoints = powerPoints;
+	}
+
+	/**
+	 * @return the position
+	 */
+	public int getPosition() {
+		return position;
+	}
+
+	/**
+	 * @param position the position to set
+	 */
+	public void setPosition(int position) {
+		this.position = position;
 	}
 
 	/**
@@ -292,25 +307,24 @@ public class Player {
 
 	}
 
-	public void landsOnTile( Tile tile, Scanner scanner, Game game) {
+	public void landsOnTile(Tile tile, Scanner scanner, Game game) {
 
-		
-		if(tile instanceof Area) {
-			
+		if (tile instanceof Area) {
+
 			Area area = (Area) tile;
-			
-		if (area.getOwnerName() != null) {
 
-			this.payRent(area);
+			if (area.getOwnerName() != null) {
 
-			if (this.powerPoints <= 0) {
-				game.endGame(this);
+				this.payRent(area);
+
+				if (this.powerPoints <= 0) {
+					game.endGame(this);
+				}
+
+			} else {
+
+				this.buyTile(area, scanner, game);
 			}
-
-		} else {
-
-			this.buyTile( area, scanner, game);
-		}
 		}
 	}
 }

@@ -104,51 +104,51 @@ public class Game {
 	private void createBoard() {
 
 		// Rest and Go tiles
-		Tile rest = new Tile(2, "Rest", "You landed on the 'Rest' tile! Take a breather - you earned it...");
-		Tile go = new Go(1, "Go",
+		Tile rest = new Tile(1, "Rest", "You landed on the 'Rest' tile! Take a breather - you earned it...");
+		Tile go = new Go(0, "Go",
 				"You landed on the 'Go' tile! Pickup some PowerPoints to celebrate your progress! Lord knows you need it.");
 
 		// Chance tiles
-		Chance chance1 = new Chance(4, "Chance Card!", null);
-		Chance chance2 = new Chance(7, "Chance Card!", null);
-		Chance chance3 = new Chance(10, "Chance Card!", null);
-		Chance chance4 = new Chance(12, "Chance Card!", null);
-		Chance chance5 = new Chance(16, "Chance Card!", null);
+		Chance chance1 = new Chance(3, "Chance Card!", null);
+		Chance chance2 = new Chance(6, "Chance Card!", null);
+		Chance chance3 = new Chance(9, "Chance Card!", null);
+		Chance chance4 = new Chance(11, "Chance Card!", null);
+		Chance chance5 = new Chance(15, "Chance Card!", null);
 
 		// Tiles belonging to the Technology field - least expensive
-		Area clothesApp = new Area(3, "2nd-Hand Clothes App",
+		Area clothesApp = new Area(2, "2nd-Hand Clothes App",
 				"Invest in this innovative app and become a leading vintage fashionista!", null, 15, 30, 10, 3, 5, 2,
 				"Partner with popular clothing brands to expand your app and its influence.");
-		Area socialMediaCamp = new Area(5, "Social-Media Campaign",
+		Area socialMediaCamp = new Area(4, "Social-Media Campaign",
 				"Utilise the power of social media to spread climate awareness!", null, 10, 25, 5, 2, 3, 1,
 				"Run advertisements to increase engagement and improve your campaign's scalability.");
 
 		// Tiles belonging to the Recycling field
-		Area bottleFarm = new Area(6, "Bottle Farm", "Buy this bottle farm to improve recycling and waste.", null, 20,
+		Area bottleFarm = new Area(5, "Bottle Farm", "Buy this bottle farm to improve recycling and waste.", null, 20,
 				40, 15, 4, 8, 3, "Franchise your bottle farm to open multiple locations and increase clients.");
-		Area foodBank = new Area(8, "Food Waste Bank",
+		Area foodBank = new Area(7, "Food Waste Bank",
 				"Invest in this food waste bank and help combat unnecessary waste.", null, 25, 50, 20, 6, 10, 5,
 				"Hire additional workers so that the bank can operate on a 24-hour cycle.");
-		Area supermarket = new Area(9, "Sustainable Supermarket",
+		Area supermarket = new Area(8, "Sustainable Supermarket",
 				"Buy this trendy new supermaket and offer sustainable eating options!", null, 30, 60, 25, 8, 12, 7,
 				"Work with local traders to reduce your carbon footprint and provide top-quality groceries.");
 
 		// Tiles belonging to the Energy field - most expensive
-		Area solarFarm = new Area(11, "Solar Farm",
+		Area solarFarm = new Area(10, "Solar Farm",
 				"Utilise the power of the sun to create energy for your local community.", null, 40, 80, 25, 15, 17, 10,
 				"Invest in research to optimise the farm and improve its solar technology.");
-		Area windFarm = new Area(13, "Wind Farm",
+		Area windFarm = new Area(12, "Wind Farm",
 				"By buying this farm, you can invest in wind as a sustainable form of energy.", null, 60, 100, 30, 17,
 				20, 13,
 				"Buy more wind turbines to allow your farm to maximise its potential in harnessing sustainable energy.");
 
 		// Tiles belonging to the Conservation field
-		Area beach = new Area(14, "Beach", "Invest in a beach nourishment plan to protect our coasts!", null, 20, 40,
+		Area beach = new Area(13, "Beach", "Invest in a beach nourishment plan to protect our coasts!", null, 20, 40,
 				15, 4, 8, 3, "Hire volunteers to create a litter-picking program.");
-		Area sanctuary = new Area(15, "Wildlife Sanctuary",
+		Area sanctuary = new Area(14, "Wildlife Sanctuary",
 				"Purchase this wildlife sanctuary to save endangered animals.", null, 25, 50, 20, 6, 10, 5,
 				"Open the sanctuary to the public to educate people on wildlife conservation issues.");
-		Area forest = new Area(17, "Forest", "Invest in this tree-protection scheme to protect a local forest", null,
+		Area forest = new Area(16, "Forest", "Invest in this tree-protection scheme to protect a local forest", null,
 				30, 60, 25, 8, 12, 7, "Hire tree-surgeons to combat disease and pests in your forest.");
 
 		// populate gameBoard with tiles
@@ -281,7 +281,6 @@ public class Game {
 	public void quit() {
 		// inform the user they have quit the game
 		System.out.println("You have quit the game. Thank you for playing 'Save Our Planet'.");
-
 	}
 
 	/**
@@ -348,22 +347,54 @@ public class Game {
 		
 		System.out.println("\nStart game!");
 		setUpPlayer(scanner);
+		
+		System.out.println("\nHere is everyone's info:\n");
 		showAllPlayersInfo();
-		this.createBoard();
-		List<Tile> allTiles = this.getGameBoard();
+		
+		createBoard();
 
-		int initialAmountOfPlayers = players.size();
-
-		// Continue game until there is only one player left standing
+		// Continue game until a player has run out of PowerPoints
 		do {
-			for (Player player : this.getPlayers()) {
+			for (Player player : players) {
 
-				System.out.println(
-						"\nIt is the turn of: " + player.getUsername() + ". Please enter a character to proceed. ");
+				// Informing the correct player that it is their turn
+				System.out.println("\nIt is: " + player.getUsername() + "'s turn! Please enter a character to roll the dice.");
 				scanner.next();
-				player.landsOnTile(allTiles.get(0), scanner, this);
+				
+				// rolling dice and storing number in roll var
+				Dice d = new Dice(); 
+				int roll = d.rollDice(); 
+				
+				// getting the current position of the player
+				int currentPosition = player.getPosition(); 
+				
+				// set the new position of the player based on the dice roll
+				player.setPosition(currentPosition + roll);
+				
+				// assign this new position to a var
+				int newPosition = player.getPosition(); 
+	
+				// calculating the position if the roll exceeds the game board
+				if (newPosition > gameBoard.size()) {
+					newPosition -= gameBoard.size(); 
+					player.setPosition(newPosition);
+				}
+				
+				// finding the tile which matches the players current position
+				Tile currentTile = new Tile(); 
+				for (Tile tile : gameBoard) {
+					if (newPosition == tile.getNumber()) {
+						currentTile = tile; 
+					}
+				}
+				
+				System.out.println("You rolled a " + roll + " and have landed on Tile " + currentTile.getNumber() + "!\n");
+				
+				player.landsOnTile(currentTile, scanner, this);
+				
+				
 			}
-		} while (initialAmountOfPlayers == players.size());
+		} while (players!=null);
 		
 		// Continue game until there is only one player left standing
 //		do {
@@ -390,38 +421,7 @@ public class Game {
 		System.out.println("Player:" + getPlayerUsernames().get(1) + " turn.");
 	}
 	
-//	public void takeTurn(Player player) {
-//		Scanner scanner = new Scanner(System.in);
-//		Random random = new Random();
-//	//	Dice dice = new Dice();
-//		String userInput;
-//		int currentPlayer = players.indexOf(player);
-////		int currentPosition = player.getPosition();
-//		int diceRoll = random.nextInt(6) + 1;
-////		for (Player p : this.getPlayers())
-//		do {
-////			System.out.println("It's : "+ p.getUsername() + "'s turn.");
-//			System.out.println("Please enter 'x' to roll the dice");
-//			scanner.nextLine();
-//			userInput = scanner.nextLine();
-//			if (userInput.equalsIgnoreCase("x")) {
-//				System.out.println("You've rolled: " + diceRoll);
-//			}
-//			System.out.println("Starting tile: " + currentPosition);
-//			int newPosition = currentPosition + diceRoll;
-//			if (newPosition > gameBoard.size() - 1) {
-//				newPosition = gameBoard.size() - 1;
-//			}
-//			player.setPosition(newPosition);
-//			System.out.println("You are now on tile: " + newPosition);
-//			if (currentPlayer == players.size() - 1) {
-//				takeTurn(players.get(0));
-//			} else {
-//				takeTurn(players.get(currentPlayer + 1));
-//			}
-//		} while (players != null);
-//		scanner.close();
-//	}
+
 
 	/**
 	 * Sets up the players for the game. Prompts the user to give the amount of
@@ -505,7 +505,7 @@ public class Game {
 		System.out.println("\nYou are player number: " + playerNumber);
 
 		// Finally creating the player
-		Player newPlayer = new Player(newUsername, playerNumber, 0, 100);
+		Player newPlayer = new Player(newUsername, playerNumber, 0, 100, 0);
 
 		newPlayer.displayBalance();
 
