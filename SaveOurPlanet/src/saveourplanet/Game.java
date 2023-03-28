@@ -31,7 +31,7 @@ public class Game {
 	}
 
 	/*
-	 * Public ArrayList to store the players of the game Used to access and create
+	 * ArrayList to store the players of the game Used to access and create
 	 * the leaderboard
 	 */
 	private List<Player> players = new ArrayList<>();
@@ -184,11 +184,7 @@ public class Game {
 		// boolean to record the player's choice
 		boolean tutorial = false;
 
-		do {
-
-			// record the user's decision in the scanner
-			userInput = scanner.nextInt();
-			scanner.nextLine(); 
+		do { 
 			
 			// Main Menu text
 			System.out.println("Welcome to Save Our Planet.");
@@ -332,7 +328,7 @@ public class Game {
 	private void displayLeaderboard() {
 
 		// sort Players array list
-//		Collections.sort(players, new CompareByEcoPoints());
+		Collections.sort(players, new CompareByEcoPoints());
 
 		// iterating through player array list and calculating the winner
 		for (int loop = 0; loop < players.size(); loop++) {
@@ -409,8 +405,7 @@ public class Game {
 		do {
 
 			// Ask user for number of players and save to int playerTotal
-			System.out.print(
-					"\nA minimum of 2 players and a maximum of 4 players is allowed to play this game.\nPlease enter the number of players you have for this game: ");
+			System.out.print("\nA minimum of 2 players and a maximum of 4 players is allowed to play this game.\nPlease enter the number of players you have for this game: ");
 
 			if (scanner.hasNextInt()) {
 				playerTotal = scanner.nextInt();
