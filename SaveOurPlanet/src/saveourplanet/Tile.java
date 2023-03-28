@@ -34,6 +34,8 @@ public class Tile {
         this.number = number;
         this.name = name;
         this.description = description;
+        
+        
 
     }
 
