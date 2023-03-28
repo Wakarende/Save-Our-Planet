@@ -52,13 +52,14 @@ public class Dice {
 	/**
 	 * method to simulate dice roll
 	 */
-	public void rollDice() {
+	public int rollDice() {
 		Random random = new Random();
 		int dice = random.nextInt(6) + 1;
 
 		int roll = dice;
 
-		System.out.println("Total roll: " + roll);
+//		System.out.println("Total roll: " + roll);
+		return roll;
 
 	}
 
