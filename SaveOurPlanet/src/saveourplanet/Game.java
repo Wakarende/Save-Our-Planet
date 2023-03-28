@@ -367,9 +367,9 @@ public class Game {
 			}
 		} while (initialAmountOfPlayers == this.players.size());
 
-		System.out.println("Let the games begin!");
-		System.out.println("Player:" + getPlayerUsernames().get(1) + " turn.");
-		
+//		System.out.println("Let the games begin!");
+//		System.out.println("Player:" + getPlayerUsernames().get(1) + " turn.");
+//		
 		//take turn
 		
 	}

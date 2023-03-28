@@ -227,7 +227,7 @@ class AreaTest {
 
 		// Test the case when the player chooses not to buy the area
 		playerResponse = "n";
-		area.buyArea(playerResponse);
+		area.buyArea();
 		// Check that the area is still owned by John
 		assertEquals("John", area.getOwnerName());
 		// Check that the player's power points have not been deducted
