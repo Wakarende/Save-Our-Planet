@@ -31,7 +31,7 @@ public class Go extends Tile {
 	 * Method that adds powerpoints every time the player lands on the Go tile.
 	 * @param player
 	 */
-	public static void goTile(Player player) {
+	public void goTile(Player player) {
 		int powerPointRewards = 20;
 		
 		player.addPowerPoints(powerPointRewards);

@@ -64,7 +64,7 @@ public class Player {
 	 * 
 	 * @param username
 	 */
-	public static String createUsername(List<String> currentPlayerUsernames, Scanner scanner) {
+	public String createUsername(List<String> currentPlayerUsernames, Scanner scanner) {
 		boolean validUsername = false;
 		String newUsername;
 		System.out.print("\nPlease enter a username: ");
@@ -191,9 +191,6 @@ public class Player {
 		this.ecoPoints += ecoPoints;
 	}
 
-	public void minusEcoPoints(int ecoPoints) {
-		this.ecoPoints -= ecoPoints;
-	}
 
 	public void addPowerPoints(int powerPoints) {
 		this.powerPoints += powerPoints;

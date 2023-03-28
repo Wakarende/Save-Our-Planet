@@ -87,8 +87,8 @@ public class Area extends Tile {
 	/**
 	 * @param ownerName the ownerName to set
 	 */
-	public void setOwnerName(String ownerName) {
-		this.ownerName = ownerName;
+	public String setOwnerName(String ownerName) {
+		return this.ownerName = ownerName;
 	}
 
 	/**
