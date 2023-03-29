@@ -207,7 +207,7 @@ public class Player {
 		this.powerPoints -= powerPoints;
 	}
 
-	private void buyTile(Area area, Scanner scanner, Game game) {
+	private void buyArea(Area area, Scanner scanner, Game game) {
 
 		System.out.println("Tile information: " + "\nName: " + area.getName() + "\nDescription: "
 				+ area.getDescription() + "\nCost: " + area.getBuyingPrice() + "\nEco Points Reward: "
@@ -259,7 +259,7 @@ public class Player {
 		this.displayBalance();
 	}
 
-	public int buyTileInAuction(Scanner scanner) {
+	public int buyAreaInAuction(Scanner scanner) {
 
 		int playerBid = 0;
 		boolean playerHasAnswered = false;
@@ -309,7 +309,7 @@ public class Player {
 
 		} else {
 
-			this.buyTile( area, scanner, game);
+			this.buyArea( area, scanner, game);
 		}
 		}
 	}

@@ -25,7 +25,6 @@ public class Game {
 
 	private ArrayList<Tile> gameBoard = new ArrayList<>();
 
-
 	public Game() {
 
 	}
@@ -37,7 +36,6 @@ public class Game {
 	private List<Player> players = new ArrayList<>();
 
 	private List<String> playerUsernames = new ArrayList<>();
-
 
 	public List<Player> getPlayers() {
 		return players;
@@ -54,7 +52,7 @@ public class Game {
 	public void addToPlayerUsernames(String newUsername) {
 		this.playerUsernames.add(newUsername);
 	}
-	
+
 	public ArrayList<Tile> getGameBoard() {
 		return gameBoard;
 	}
@@ -63,9 +61,8 @@ public class Game {
 		this.gameBoard = gameBoard;
 	}
 
-
 	/**
-	 * Create Ascii art at beginning of game
+	 * @author Joy Create Ascii art at beginning of game
 	 */
 	public void asciiArt() {
 		try {
@@ -94,9 +91,10 @@ public class Game {
 	}
 
 	/**
-	 * Creates the areas and tiles through which the game will be played. This
-	 * includes four main fields - technology, recycling, energy and conservation.
-	 * Other tiles (Go and Rest) are also included
+	 * @author Joy
+	 * @author Phil Creates the areas and tiles through which the game will be
+	 *         played. This includes four main fields - technology, recycling,
+	 *         energy and conservation. Other tiles (Go and Rest) are also included
 	 */
 	private void createBoard() {
 
@@ -170,10 +168,12 @@ public class Game {
 	}
 
 	/**
-	 * Method to call the opening main menu. User is given choice to start New Game
-	 * (1) or Quit (2). If choosing to start a New Game, the user is brought to the
-	 * tutorial level. If choosing to Quit the game, the user exits the application.
-	 * At each stage in their decision, the user is asked to confirm their choice.
+	 * @author Joy
+	 * @author Phil Method to call the opening main menu. User is given choice to
+	 *         start New Game (1) or Quit (2). If choosing to start a New Game, the
+	 *         user is brought to the tutorial level. If choosing to Quit the game,
+	 *         the user exits the application. At each stage in their decision, the
+	 *         user is asked to confirm their choice.
 	 */
 	public void mainMenu(Scanner scanner) {
 
@@ -238,7 +238,7 @@ public class Game {
 	}
 
 	/**
-	 * Displays tutorial for user
+	 * @author Joy Displays tutorial for user
 	 */
 	private void tutorial(Scanner scanner) {
 
@@ -273,7 +273,7 @@ public class Game {
 	}
 
 	/**
-	 * Quits the game
+	 * @author Joy Quits the game
 	 */
 	public void quit() {
 		// inform the user they have quit the game
@@ -282,7 +282,7 @@ public class Game {
 	}
 
 	/**
-	 * Displays game rules
+	 * @author Joy Displays game rules
 	 */
 	public void displayRules() {
 		try {
@@ -321,14 +321,14 @@ public class Game {
 	}
 
 	/**
-	 * Shows players scores and sorts them accordingly.
+	 * @author Phil Shows players scores and sorts them accordingly.
 	 * 
 	 * @param players
 	 */
 	private void displayLeaderboard() {
 
 		// sort Players array list
-//		Collections.sort(players, new CompareByEcoPoints());
+		Collections.sort(players, new CompareByEcoPoints());
 
 		// iterating through player array list and calculating the winner
 		for (int loop = 0; loop < players.size(); loop++) {
@@ -342,7 +342,7 @@ public class Game {
 	 * Start game method
 	 */
 	public void startGame(Scanner scanner) {
-		
+
 		System.out.println("\nStart game!");
 		setUpPlayer(scanner);
 		showAllPlayersInfo();
@@ -389,8 +389,8 @@ public class Game {
 	}
 
 	/**
-	 * Prompts user to choose amount of players and keeps them in a loop until they
-	 * choose the right amount of players
+	 * @author Fiona Prompts user to choose amount of players and keeps them in a
+	 *         loop until they choose the right amount of players
 	 * 
 	 * @return amount of players chosen
 	 */
@@ -429,6 +429,7 @@ public class Game {
 	}
 
 	/**
+	 *
 	 * Creates a player, validating that their username - making sure it's within
 	 * the character limits and hasn't been chosen yet. Also sets the player's
 	 * initial score
@@ -458,7 +459,7 @@ public class Game {
 	}
 
 	/**
-	 * Method to show all the information of all players in the game
+	 * @author Fiona Method to show all the information of all players in the game
 	 */
 	private void showAllPlayersInfo() {
 
@@ -467,7 +468,13 @@ public class Game {
 		}
 	}
 
-
+	/**
+	 * @author Fiona Function to auction a tile to the highest bidder by taking in a
+	 *         player's individual bid from player class method
+	 * @param area
+	 * @param currentPlayer
+	 * @param scanner
+	 */
 	public void auctionTile(Area area, Player currentPlayer, Scanner scanner) {
 
 		int highestBid = 0;
@@ -484,7 +491,7 @@ public class Game {
 
 					if (playerCanAffordTile) {
 
-						int playerBid = player.buyTileInAuction( scanner);
+						int playerBid = player.buyAreaInAuction(scanner);
 
 						if (playerBid > highestBid) {
 							playerBid = highestBid;
@@ -504,11 +511,22 @@ public class Game {
 	 */
 	public void endGame(Player player) {
 
-		this.players.remove(player);
+		System.out.println(player.getUsername()
+				+ " has run out of resources! The game has now ended.\n The following scores are: ");
 
-		System.out
-				.println("\nGame has ended because " + player.getUsername() + " is broke\n" + "Their final totals are  "
-						+ player.getEcoPoints() + " ecopoints and " + player.getPowerPoints() + " power points");
+		displayLeaderboard();
+
+		Player topPlayer = players.get(0);
+
+		System.out.println("\nCongratulations " + topPlayer + "! You have won!\n Now let's return to the main menu.");
+		
+		try {
+			Thread.sleep(5);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 
 	}
 
