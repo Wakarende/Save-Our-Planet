@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.InputMismatchException;
@@ -26,7 +27,7 @@ public class Game {
 	// ArrayList to store the tiles which make up the game board. 
 	private ArrayList<Tile> gameBoard = new ArrayList<>();
 
-	// Arraylist to store the players of the game. Used to access and create the leaderboard.
+	// Arraylist to store the players of the game
 	private List<Player> players = new ArrayList<>();
 		
 	// ArrayList to store the usernames of the players. 
@@ -40,7 +41,6 @@ public class Game {
 
 	}
 
-	
 	// GETTERS AND SETTER for the above ArrayLists. 
 	public List<Player> getPlayers() {
 		return players;
@@ -65,7 +65,6 @@ public class Game {
 	public void setGameBoard(ArrayList<Tile> gameBoard) {
 		this.gameBoard = gameBoard;
 	}
-
 
 	/**
 	 * Create Ascii art at beginning of game
@@ -327,15 +326,15 @@ public class Game {
 	 * 
 	 * @param players
 	 */
-	private void displayLeaderboard() {
-
+	private void displayLeaderboard(List<Player> playersCopy) {
+		
 		// sort Players array list
-		Collections.sort(players, new CompareByEcoPoints());
+		Collections.sort(playersCopy, new CompareByEcoPoints());
 
 		// iterating through player array list and calculating the winner
-		for (int loop = 0; loop < players.size(); loop++) {
-			System.out.println(loop + 1 + ": " + players.get(loop).getUsername() + " with "
-					+ players.get(loop).getEcoPoints() + " EcoPoints");
+		for (int loop = 0; loop < playersCopy.size(); loop++) {
+			System.out.println(loop + 1 + ": " + playersCopy.get(loop).getUsername() + " with "
+					+ playersCopy.get(loop).getEcoPoints() + " EcoPoints");
 		}
 
 	}
@@ -351,10 +350,17 @@ public class Game {
 		System.out.println("\nHere is everyone's info:\n");
 		showAllPlayersInfo();
 		
+		// create board
 		createBoard();
+		
+		
 
 		// Continue game until a player has run out of PowerPoints
 		do {
+			
+			// create copy of players to use in leaderboard method
+			ArrayList<Player> playersCopy = new ArrayList<>(players);
+			
 			for (Player player : players) {
 
 				// Informing the correct player that it is their turn
@@ -388,41 +394,28 @@ public class Game {
 					}
 				}
 				
+				// informs player of where they landed
 				System.out.println("You rolled a " + roll + " and have landed on Tile " + currentTile.getNumber() + "!\n");
 				
-				player.landsOnTile(currentTile, scanner, this);
+				// responds dynamically according to which tile the player has landed on
+				if (currentTile instanceof Area) {
+					player.landsOnTile(currentTile, scanner, this);
+				} else if (currentTile instanceof Chance) {
+					((Chance) currentTile).pullChanceCard(player, players.get(1));
+				} else if (currentTile instanceof Go) {
+					((Go) currentTile).goTile(player);
+				} else {
+					currentTile.getDescription(); 
+				}
 				
+				// display leaderboard at the end of every turn
+				displayLeaderboard(playersCopy);
 				
 			}
 		} while (players!=null);
 		
-		// Continue game until there is only one player left standing
-//		do {
-//			for (Player player : this.getPlayers()) {
-//
-//				System.out.println(
-//						"\nIt is the turn of: " + player.getUsername() + ". Press x to roll dice. ");
-//				scanner.nextLine();
-//				userInput = scanner.nextLine();
-//				if (userInput.equalsIgnoreCase("x")) {
-//					dice.rollDice();
-//		//		}
-//				player.landsOnTile(allTiles.get(0), scanner, this);
-//			}
-//		}
-//		} while (initialAmountOfPlayers == this.players.size());
-//
-//		System.out.println("Let the games begin!");
-//		System.out.println("Player:" + getPlayerUsernames().get(1) + " turn.");
-
-		// take turn
-
-		System.out.println("Let the games begin!");
-		System.out.println("Player:" + getPlayerUsernames().get(1) + " turn.");
 	}
 	
-
-
 	/**
 	 * Sets up the players for the game. Prompts the user to give the amount of
 	 * players and uses a for loop to create these players
@@ -523,7 +516,12 @@ public class Game {
 		}
 	}
 
-
+	/**
+	 * Method to auction tile
+	 * @param area
+	 * @param currentPlayer
+	 * @param scanner
+	 */
 	public void auctionTile(Area area, Player currentPlayer, Scanner scanner) {
 
 		int highestBid = 0;
