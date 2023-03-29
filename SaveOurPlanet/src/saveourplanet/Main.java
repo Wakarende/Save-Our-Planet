@@ -12,10 +12,10 @@ public class Main {
 		Game game = new Game();
 		
 		// Ascii art
-		// game.asciiArt();
+		game.asciiArt();
 
 		// Start menu
-		// game.mainMenu(scanner);
+		game.mainMenu(scanner);
 		
 		game.startGame(scanner);
 		

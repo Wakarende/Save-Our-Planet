@@ -317,9 +317,9 @@ public class Player {
 
 				this.payRent(area);
 
-				if (this.powerPoints <= 0) {
-					game.endGame(this);
-				}
+//				if (this.powerPoints <= 0) {
+//					game.endGame(this);
+//				}
 
 			} else {
 

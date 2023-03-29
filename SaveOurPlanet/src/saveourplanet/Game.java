@@ -27,9 +27,9 @@ public class Game {
 	// ArrayList to store the tiles which make up the game board. 
 	private ArrayList<Tile> gameBoard = new ArrayList<>();
 
-	// Arraylist to store the players of the game
+	// ArrayList to store the players of the game
 	private List<Player> players = new ArrayList<>();
-		
+		 
 	// ArrayList to store the usernames of the players. 
 	private List<String> playerUsernames = new ArrayList<>();
 	
@@ -330,6 +330,8 @@ public class Game {
 		
 		// sort Players array list
 		Collections.sort(playersCopy, new CompareByEcoPoints());
+		
+		System.out.println("\nLeaderboard:\n");
 
 		// iterating through player array list and calculating the winner
 		for (int loop = 0; loop < playersCopy.size(); loop++) {
@@ -347,22 +349,32 @@ public class Game {
 		System.out.println("\nStart game!");
 		setUpPlayer(scanner);
 		
-		System.out.println("\nHere is everyone's info:\n");
+		System.out.println("\nHere is everyone's info:");
 		showAllPlayersInfo();
 		
 		// create board
 		createBoard();
 		
+		// boolean to track game progress
+		boolean gameOver = false; 
 		
-
 		// Continue game until a player has run out of PowerPoints
 		do {
 			
 			// create copy of players to use in leaderboard method
 			ArrayList<Player> playersCopy = new ArrayList<>(players);
 			
-			for (Player player : players) {
+			for (int loop = 0; loop < players.size(); loop++) {
 
+				// get current player at loop
+				Player player = players.get(loop); 
+				
+				// evaluates whether game should continue
+				if (player.getPowerPoints() <= 0) {
+					System.out.println(player.getUsername() + " has ran out of powerpoints.");
+					gameOver = true; 
+				}
+				
 				// Informing the correct player that it is their turn
 				System.out.println("\nIt is: " + player.getUsername() + "'s turn! Please enter a character to roll the dice.");
 				scanner.next();
@@ -401,7 +413,9 @@ public class Game {
 				if (currentTile instanceof Area) {
 					player.landsOnTile(currentTile, scanner, this);
 				} else if (currentTile instanceof Chance) {
-					((Chance) currentTile).pullChanceCard(player, players.get(1));
+					// accesses next player in loop and passes them into the pull chance card
+					Player nextPlayer = players.get((loop + 1) % players.size()); 
+					((Chance) currentTile).pullChanceCard(player, nextPlayer);
 				} else if (currentTile instanceof Go) {
 					((Go) currentTile).goTile(player);
 				} else {
@@ -412,7 +426,11 @@ public class Game {
 				displayLeaderboard(playersCopy);
 				
 			}
-		} while (players!=null);
+		} while (gameOver==false);
+		
+		// Calling end game
+		System.out.println("Now displaying finals scores...\n");
+		endGame(players);
 		
 	}
 	
@@ -556,14 +574,23 @@ public class Game {
 	 * Ends a game by deleting the current player from the list - thereby stopping
 	 * the do while loop in the start game method
 	 */
-	public void endGame(Player player) {
+	public void endGame(List<Player> players) {
 
-		this.players.remove(player);
+		displayLeaderboard(players);
 
-		System.out
-				.println("\nGame has ended because " + player.getUsername() + " is broke\n" + "Their final totals are  "
-						+ player.getEcoPoints() + " ecopoints and " + player.getPowerPoints() + " power points");
+		Player topPlayer = players.get(0);
+
+		System.out.println("\nCongratulations " + topPlayer + "! You have won!\n Now let's return to the main menu.");
+		
+		try {
+			Thread.sleep(5);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 
 	}
+
 
 }
