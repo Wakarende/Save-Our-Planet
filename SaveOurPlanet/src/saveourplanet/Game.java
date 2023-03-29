@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.InputMismatchException;
@@ -23,22 +24,24 @@ import java.util.Scanner;
  */
 public class Game {
 
+	// ArrayList to store the tiles which make up the game board. 
 	private ArrayList<Tile> gameBoard = new ArrayList<>();
 
+	// ArrayList to store the players of the game
+	private List<Player> players = new ArrayList<>();
+		 
+	// ArrayList to store the usernames of the players. 
+	private List<String> playerUsernames = new ArrayList<>();
+	
 
+	/**
+	 * Default constructor for the Game class
+	 */
 	public Game() {
 
 	}
 
-	/*
-	 * Public ArrayList to store the players of the game Used to access and create
-	 * the leaderboard
-	 */
-	private List<Player> players = new ArrayList<>();
-
-	private List<String> playerUsernames = new ArrayList<>();
-
-
+	// GETTERS AND SETTER for the above ArrayLists. 
 	public List<Player> getPlayers() {
 		return players;
 	}
@@ -62,7 +65,6 @@ public class Game {
 	public void setGameBoard(ArrayList<Tile> gameBoard) {
 		this.gameBoard = gameBoard;
 	}
-
 
 	/**
 	 * Create Ascii art at beginning of game
@@ -101,51 +103,51 @@ public class Game {
 	private void createBoard() {
 
 		// Rest and Go tiles
-		Tile rest = new Tile(2, "Rest", "You landed on the 'Rest' tile! Take a breather - you earned it...");
-		Tile go = new Go(1, "Go",
+		Tile rest = new Tile(1, "Rest", "You landed on the 'Rest' tile! Take a breather - you earned it...");
+		Tile go = new Go(0, "Go",
 				"You landed on the 'Go' tile! Pickup some PowerPoints to celebrate your progress! Lord knows you need it.");
 
 		// Chance tiles
-		Chance chance1 = new Chance(4, "Chance Card!", null);
-		Chance chance2 = new Chance(7, "Chance Card!", null);
-		Chance chance3 = new Chance(10, "Chance Card!", null);
-		Chance chance4 = new Chance(12, "Chance Card!", null);
-		Chance chance5 = new Chance(16, "Chance Card!", null);
+		Chance chance1 = new Chance(3, "Chance Card!", null);
+		Chance chance2 = new Chance(6, "Chance Card!", null);
+		Chance chance3 = new Chance(9, "Chance Card!", null);
+		Chance chance4 = new Chance(11, "Chance Card!", null);
+		Chance chance5 = new Chance(15, "Chance Card!", null);
 
 		// Tiles belonging to the Technology field - least expensive
-		Area clothesApp = new Area(3, "2nd-Hand Clothes App",
+		Area clothesApp = new Area(2, "2nd-Hand Clothes App",
 				"Invest in this innovative app and become a leading vintage fashionista!", null, 15, 30, 10, 3, 5, 2,
 				"Partner with popular clothing brands to expand your app and its influence.");
-		Area socialMediaCamp = new Area(5, "Social-Media Campaign",
+		Area socialMediaCamp = new Area(4, "Social-Media Campaign",
 				"Utilise the power of social media to spread climate awareness!", null, 10, 25, 5, 2, 3, 1,
 				"Run advertisements to increase engagement and improve your campaign's scalability.");
 
 		// Tiles belonging to the Recycling field
-		Area bottleFarm = new Area(6, "Bottle Farm", "Buy this bottle farm to improve recycling and waste.", null, 20,
+		Area bottleFarm = new Area(5, "Bottle Farm", "Buy this bottle farm to improve recycling and waste.", null, 20,
 				40, 15, 4, 8, 3, "Franchise your bottle farm to open multiple locations and increase clients.");
-		Area foodBank = new Area(8, "Food Waste Bank",
+		Area foodBank = new Area(7, "Food Waste Bank",
 				"Invest in this food waste bank and help combat unnecessary waste.", null, 25, 50, 20, 6, 10, 5,
 				"Hire additional workers so that the bank can operate on a 24-hour cycle.");
-		Area supermarket = new Area(9, "Sustainable Supermarket",
+		Area supermarket = new Area(8, "Sustainable Supermarket",
 				"Buy this trendy new supermaket and offer sustainable eating options!", null, 30, 60, 25, 8, 12, 7,
 				"Work with local traders to reduce your carbon footprint and provide top-quality groceries.");
 
 		// Tiles belonging to the Energy field - most expensive
-		Area solarFarm = new Area(11, "Solar Farm",
+		Area solarFarm = new Area(10, "Solar Farm",
 				"Utilise the power of the sun to create energy for your local community.", null, 40, 80, 25, 15, 17, 10,
 				"Invest in research to optimise the farm and improve its solar technology.");
-		Area windFarm = new Area(13, "Wind Farm",
+		Area windFarm = new Area(12, "Wind Farm",
 				"By buying this farm, you can invest in wind as a sustainable form of energy.", null, 60, 100, 30, 17,
 				20, 13,
 				"Buy more wind turbines to allow your farm to maximise its potential in harnessing sustainable energy.");
 
 		// Tiles belonging to the Conservation field
-		Area beach = new Area(14, "Beach", "Invest in a beach nourishment plan to protect our coasts!", null, 20, 40,
+		Area beach = new Area(13, "Beach", "Invest in a beach nourishment plan to protect our coasts!", null, 20, 40,
 				15, 4, 8, 3, "Hire volunteers to create a litter-picking program.");
-		Area sanctuary = new Area(15, "Wildlife Sanctuary",
+		Area sanctuary = new Area(14, "Wildlife Sanctuary",
 				"Purchase this wildlife sanctuary to save endangered animals.", null, 25, 50, 20, 6, 10, 5,
 				"Open the sanctuary to the public to educate people on wildlife conservation issues.");
-		Area forest = new Area(17, "Forest", "Invest in this tree-protection scheme to protect a local forest", null,
+		Area forest = new Area(16, "Forest", "Invest in this tree-protection scheme to protect a local forest", null,
 				30, 60, 25, 8, 12, 7, "Hire tree-surgeons to combat disease and pests in your forest.");
 
 		// populate gameBoard with tiles
@@ -184,8 +186,8 @@ public class Game {
 		// boolean to record the player's choice
 		boolean tutorial = false;
 
-		do {
-
+		do { 
+			
 			// Main Menu text
 			System.out.println("Welcome to Save Our Planet.");
 			System.out.println("Main Menu: \n");
@@ -259,7 +261,7 @@ public class Game {
 				displayRules();
 				break;
 			case 2:
-				playGame(scanner);
+				startGame(scanner);
 				break;
 			case 3:
 				System.out.println("Exiting Tutorial!");
@@ -278,7 +280,6 @@ public class Game {
 	public void quit() {
 		// inform the user they have quit the game
 		System.out.println("You have quit the game. Thank you for playing 'Save Our Planet'.");
-
 	}
 
 	/**
@@ -325,15 +326,17 @@ public class Game {
 	 * 
 	 * @param players
 	 */
-	private void displayLeaderboard() {
-
+	private void displayLeaderboard(List<Player> playersCopy) {
+		
 		// sort Players array list
-//		Collections.sort(players, new CompareByEcoPoints());
+		Collections.sort(playersCopy, new CompareByEcoPoints());
+		
+		System.out.println("\nLeaderboard:\n");
 
 		// iterating through player array list and calculating the winner
-		for (int loop = 0; loop < players.size(); loop++) {
-			System.out.println(loop + 1 + ": " + players.get(loop).getUsername() + " with "
-					+ players.get(loop).getEcoPoints() + " EcoPoints");
+		for (int loop = 0; loop < playersCopy.size(); loop++) {
+			System.out.println(loop + 1 + ": " + playersCopy.get(loop).getUsername() + " with "
+					+ playersCopy.get(loop).getEcoPoints() + " EcoPoints");
 		}
 
 	}
@@ -341,39 +344,96 @@ public class Game {
 	/**
 	 * Start game method
 	 */
-	public void playGame(Scanner scanner) {
+	public void startGame(Scanner scanner) {
 		
 		System.out.println("\nStart game!");
-		//set up player
 		setUpPlayer(scanner);
 		
-		//show players info
+		System.out.println("\nHere is everyone's info:");
 		showAllPlayersInfo();
-		//create board
-		this.createBoard();
 		
-		List<Tile> allTiles = this.getGameBoard();
-
-		int initialAmountOfPlayers = this.players.size();
-
-		// Continue game until there is only one player left standing
+		// create board
+		createBoard();
+		
+		// boolean to track game progress
+		boolean gameOver = false; 
+		
+		// Continue game until a player has run out of PowerPoints
 		do {
-			for (Player player : this.getPlayers()) {
+			
+			// create copy of players to use in leaderboard method
+			ArrayList<Player> playersCopy = new ArrayList<>(players);
+			
+			for (int loop = 0; loop < players.size(); loop++) {
 
-				System.out.println(
-						"\nIt is the turn of: " + player.getUsername() + ". Please enter a character to proceed. ");
+				// get current player at loop
+				Player player = players.get(loop); 
+				
+				// evaluates whether game should continue
+				if (player.getPowerPoints() <= 0) {
+					System.out.println(player.getUsername() + " has ran out of powerpoints.");
+					gameOver = true; 
+				}
+				
+				// Informing the correct player that it is their turn
+				System.out.println("\nIt is: " + player.getUsername() + "'s turn! Please enter a character to roll the dice.");
 				scanner.next();
-				player.landsOnTile(allTiles.get(0), scanner, this);
+				
+				// rolling dice and storing number in roll var
+				Dice d = new Dice(); 
+				int roll = d.rollDice(); 
+				
+				// getting the current position of the player
+				int currentPosition = player.getPosition(); 
+				
+				// set the new position of the player based on the dice roll
+				player.setPosition(currentPosition + roll);
+				
+				// assign this new position to a var
+				int newPosition = player.getPosition(); 
+	
+				// calculating the position if the roll exceeds the game board
+				if (newPosition > gameBoard.size()) {
+					newPosition -= gameBoard.size(); 
+					player.setPosition(newPosition);
+				}
+				
+				// finding the tile which matches the players current position
+				Tile currentTile = new Tile(); 
+				for (Tile tile : gameBoard) {
+					if (newPosition == tile.getNumber()) {
+						currentTile = tile; 
+					}
+				}
+				
+				// informs player of where they landed
+				System.out.println("You rolled a " + roll + " and have landed on Tile " + currentTile.getNumber() + "!\n");
+				
+				// responds dynamically according to which tile the player has landed on
+				if (currentTile instanceof Area) {
+					player.landsOnTile(currentTile, scanner, this);
+				} else if (currentTile instanceof Chance) {
+					// accesses next player in loop and passes them into the pull chance card
+					Player nextPlayer = players.get((loop + 1) % players.size()); 
+					((Chance) currentTile).pullChanceCard(player, nextPlayer);
+				} else if (currentTile instanceof Go) {
+					((Go) currentTile).goTile(player);
+				} else {
+					currentTile.getDescription(); 
+				}
+				
+				// display leaderboard at the end of every turn
+				displayLeaderboard(playersCopy);
+				
 			}
-		} while (initialAmountOfPlayers == this.players.size());
-
-//		System.out.println("Let the games begin!");
-//		System.out.println("Player:" + getPlayerUsernames().get(1) + " turn.");
-//		
-		//take turn
+		} while (gameOver==false);
+		
+		// Calling end game
+		System.out.println("Now displaying finals scores...\n");
+		endGame(players);
 		
 	}
-
+	
 	/**
 	 * Sets up the players for the game. Prompts the user to give the amount of
 	 * players and uses a for loop to create these players
@@ -382,7 +442,7 @@ public class Game {
 	 */
 	private void setUpPlayer(Scanner scanner) {
 
-		int playerTotal = this.chooseAmountOfPlayers(scanner);
+		int playerTotal = chooseAmountOfPlayers(scanner);
 
 		// Use playerTotal int to decide how many times user can enter a name for a
 		// player
@@ -413,8 +473,7 @@ public class Game {
 		do {
 
 			// Ask user for number of players and save to int playerTotal
-			System.out.print(
-					"\nA minimum of 2 players and a maximum of 4 players is allowed to play this game.\nPlease enter the number of players you have for this game: ");
+			System.out.print("\nA minimum of 2 players and a maximum of 4 players is allowed to play this game.\nPlease enter the number of players you have for this game: ");
 
 			if (scanner.hasNextInt()) {
 				playerTotal = scanner.nextInt();
@@ -457,7 +516,7 @@ public class Game {
 		System.out.println("\nYou are player number: " + playerNumber);
 
 		// Finally creating the player
-		Player newPlayer = new Player(newUsername, playerNumber, 0, 100);
+		Player newPlayer = new Player(newUsername, playerNumber, 0, 100, 0);
 
 		newPlayer.displayBalance();
 
@@ -475,7 +534,12 @@ public class Game {
 		}
 	}
 
-
+	/**
+	 * Method to auction tile
+	 * @param area
+	 * @param currentPlayer
+	 * @param scanner
+	 */
 	public void auctionTile(Area area, Player currentPlayer, Scanner scanner) {
 
 		int highestBid = 0;
@@ -510,14 +574,24 @@ public class Game {
 	 * Ends a game by deleting the current player from the list - thereby stopping
 	 * the do while loop in the start game method
 	 */
-	public void endGame(Player player) {
+	public void endGame(List<Player> players) {
 
-		this.players.remove(player);
+		displayLeaderboard(players);
 
-		System.out
-				.println("\nGame has ended because " + player.getUsername() + " is broke\n" + "Their final totals are  "
-						+ player.getEcoPoints() + " ecopoints and " + player.getPowerPoints() + " power points");
+		Player topPlayer = players.get(0);
+
+		System.out.println("\nCongratulations " + topPlayer + "! You have won!\n Now let's return to the main menu.");
+		
+		try {
+			Thread.sleep(5);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 
 	}
 
+
 }
+

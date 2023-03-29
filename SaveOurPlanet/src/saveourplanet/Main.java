@@ -17,6 +17,8 @@ public class Main {
 		// Start menu
 		game.mainMenu(scanner);
 		
+		game.startGame(scanner);
+		
 		
 	
 		scanner.close();
