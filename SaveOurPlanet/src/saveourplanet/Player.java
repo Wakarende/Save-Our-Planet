@@ -233,7 +233,7 @@ public class Player {
 
 			} else if (response.equalsIgnoreCase("no")) {
 
-				game.auctionTile(area, this, scanner);
+				game.auctionArea(area, this, scanner);
 
 			}
 
@@ -241,7 +241,7 @@ public class Player {
 
 			System.out.println("You do not have enough money to buy this tile. This tile will now go to auction.");
 
-			game.auctionTile(area, this, scanner);
+			game.auctionArea(area, this, scanner);
 
 		}
 
@@ -259,7 +259,7 @@ public class Player {
 		this.displayBalance();
 	}
 
-	public int buyAreaInAuction(Scanner scanner) {
+	public int bidAForAreaInAuction(Scanner scanner) {
 
 		int playerBid = 0;
 		boolean playerHasAnswered = false;

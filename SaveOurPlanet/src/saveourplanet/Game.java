@@ -475,7 +475,7 @@ public class Game {
 	 * @param currentPlayer
 	 * @param scanner
 	 */
-	public void auctionTile(Area area, Player currentPlayer, Scanner scanner) {
+	public void auctionArea(Area area, Player currentPlayer, Scanner scanner) {
 
 		int highestBid = 0;
 		boolean newPlayerHighestBid = false;
@@ -491,7 +491,7 @@ public class Game {
 
 					if (playerCanAffordTile) {
 
-						int playerBid = player.buyAreaInAuction(scanner);
+						int playerBid = player.bidAForAreaInAuction(scanner);
 
 						if (playerBid > highestBid) {
 							playerBid = highestBid;
@@ -510,6 +510,7 @@ public class Game {
 	 * the do while loop in the start game method
 	 */
 	public void endGame(Player player) {
+		
 
 		System.out.println(player.getUsername()
 				+ " has run out of resources! The game has now ended.\n The following scores are: ");
