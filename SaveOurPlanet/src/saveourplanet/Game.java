@@ -247,7 +247,7 @@ public class Game {
 		if (tutorial == true) {
 			tutorial(scanner);
 		} else {
-			quit();
+			scanner.close();
 		}
 	}
 
@@ -377,9 +377,11 @@ public class Game {
 		// boolean to track game progress
 		boolean gameOver = false; 
 		
+		
+		
 		// Continue game until a player has run out of PowerPoints
 		do {
-			
+			boolean firstIteration = true;
 			// create copy of players to use in leaderboard method
 			ArrayList<Player> playersCopy = new ArrayList<>(players);
 			
@@ -387,6 +389,7 @@ public class Game {
 
 				// get current player at loop
 				Player player = players.get(loop); 
+				
 				
 				// evaluates whether game should continue
 				if (player.getPowerPoints() <= 0) {
