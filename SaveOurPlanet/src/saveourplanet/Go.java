@@ -4,7 +4,7 @@
 package saveourplanet;
 
 /**
- * @author joyki
+ * @author joy
  *
  */
 public class Go extends Tile {

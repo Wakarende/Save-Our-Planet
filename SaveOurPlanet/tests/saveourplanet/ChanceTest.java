@@ -11,7 +11,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * @author joyki
+ * @author joy
+ * Unit Tests for Chance class
  *
  */
 class ChanceTest {

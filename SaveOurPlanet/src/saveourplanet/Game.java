@@ -252,7 +252,8 @@ public class Game {
 	}
 
 	/**
-	 * @author Joy Displays tutorial for user
+	 * @author Joy 
+	 * Displays tutorial for user
 	 */
 	private void tutorial(Scanner scanner) {
 
@@ -287,7 +288,8 @@ public class Game {
 	}
 
 	/**
-	 * @author Joy Quits the game
+	 * @author Joy 
+	 * Quits the game
 	 */
 	public void quit() {
 		// inform the user they have quit the game
@@ -295,7 +297,8 @@ public class Game {
 	}
 
 	/**
-	 * @author Joy Displays game rules
+	 * @author Joy 
+	 * Displays game rules
 	 */
 	public void displayRules() {
 		try {
@@ -321,7 +324,7 @@ public class Game {
 
 	/**
 	 * Method that prints rules of game with a delay
-	 * 
+	 * @author joy
 	 * @param str
 	 * @throws InterruptedException
 	 */
@@ -434,6 +437,7 @@ public class Game {
 					((Chance) currentTile).pullChanceCard(player, nextPlayer);
 				} else if (currentTile instanceof Go) {
 					((Go) currentTile).goTile(player);
+					System.out.println("You have landed on a Go Tile! 20 PowerPoints reward! Woohoo!");
 				} else {
 					currentTile.getDescription(); 
 				}
@@ -636,6 +640,7 @@ public class Game {
 
 	}
 
+	
 
 }
 
