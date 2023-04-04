@@ -44,7 +44,7 @@ public class Player {
 		this.playerNumber = playerNumber;
 		this.ecoPoints = ecoPoints;
 		this.powerPoints = powerPoints;
-		this.position = position; 
+		this.position = position;
 
 	}
 
@@ -219,7 +219,7 @@ public class Player {
 		this.powerPoints -= powerPoints;
 	}
 
-	private void buyTile(Area area, Scanner scanner, Game game) {
+	public void buyArea(Area area, Scanner scanner, Game game) {
 
 		System.out.println("Tile information: " + "\nName: " + area.getName() + "\nDescription: "
 				+ area.getDescription() + "\nCost: " + area.getBuyingPrice() + "\nEco Points Reward: "
@@ -261,23 +261,26 @@ public class Player {
 
 	private void payRent(Area area) {
 
-		System.out.println("This tile is already owned.\nYou must pay rent of " + area.getRentPrice()
-				+ " powerPoints to " + area.getOwnerName());
-
-		this.minusPowerPoints(area.getRentPrice());
+		System.out.println("This tile is already owned by"+area.getOwnerName());
 		
+		if (this.getUsername() == area.getOwnerName()) {
+			System.out.println("Since you are the owner of this tile, no further action is needed. Next turn!");
+		} else {
+			System.out.println("\nYou must pay rent of " + area.getRentPrice() + " powerPoints to " + area.getOwnerName());
+			this.minusPowerPoints(area.getRentPrice());
+			System.out.println("Your remaining balance:");
+			this.displayBalance();
+		}
 
-		System.out.println("Your remaining balance:");
-		this.displayBalance();
+
 	}
 
-	public int buyTileInAuction(Scanner scanner) {
+	public int bidAForAreaInAuction(Scanner scanner) {
 
 		int playerBid = 0;
 		boolean playerHasAnswered = false;
 
-		System.out.println(
-				"This tile is now open for the rest of the players to buy in an auction.\nPlease enter whether you would like to bid ('yes') or not like to bid ('no')");
+		System.out.println(this.username + " would you like to bid? Please enter 'yes' or 'no':");
 
 		do {
 
@@ -320,8 +323,9 @@ public class Player {
 
 			} else {
 
-				this.buyTile(area, scanner, game);
+				this.buyArea(area, scanner, game);
 			}
+
 		}
 	}
 }
