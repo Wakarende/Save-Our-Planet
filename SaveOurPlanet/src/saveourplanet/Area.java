@@ -228,9 +228,49 @@ public class Area extends Tile {
 	}
 
 
-	public void develop() {
+//	/**
+//	 * method that checks if player owns entire field
+//	 * 
+//	 * @return
+//	 */
+//	private boolean ownsField() {
+//
+//		List<Area> ownedAreas = new ArrayList<>(playerAreas);
+//		if (ownedAreas.isEmpty()) {
+//			return false;
+//
+//		}
+//		String field = playerAreas.get(0).getFieldName();
+//		for (Area a : playerAreas) {
+//			if (!a.getFieldName().equals(fieldName)) {
+//				return false;
+//			}
+//
+//		}
+//		return true;
+//	}
 
-	}
+//	/**
+//	 * method that allows a player to develop an area if they own the entire field
+//	 */
+//	public void develop() {
+//		Scanner scanner = new Scanner(System.in);
+//		Player player = new Player();
+//		String userResponse;
+//
+//		if (ownsField() == true) {
+//			System.out.println("Would you like to develop this area? It will cost you 100 powerpoints!");
+//			userResponse = scanner.nextLine();
+//			if (userResponse.equalsIgnoreCase("yes") || userResponse.equalsIgnoreCase("y")) {
+//				player.minusPowerPoints(developmentPrice);
+//				player.addEcoPoints(developmentReward);
+//				System.out.println(ownerName + " remaining resources: " + player.getEcoPoints() + " ecopoints and "
+//						+ player.getPowerPoints() + " powerpoints remaining");
+//			}
+//		}
+//		scanner.close();
+//
+//	}
 
 } // end of class
 
