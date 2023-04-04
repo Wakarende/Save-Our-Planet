@@ -59,7 +59,7 @@ class ChanceTest {
 	 */
 	@Test
 	void testGovernmentGrant() {
-		Player player = new Player("jk", 1, 0, 30);
+		Player player = new Player("jk", 1, 0, 30,1);
 		chance.governmentGrant(player);
 		assertTrue(player.getPowerPoints() >=0);
 		
@@ -70,7 +70,7 @@ class ChanceTest {
 	 */
 	@Test
 	void testGovernmentTax() {
-		Player player = new Player("test", 1, 0, 30);
+		Player player = new Player("test", 1, 0, 30,1);
 	    chance.governmentTax(player);
 	    assertTrue(player.getPowerPoints() >= 0);
 	}

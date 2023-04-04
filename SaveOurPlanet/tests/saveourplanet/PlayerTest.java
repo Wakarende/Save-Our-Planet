@@ -21,7 +21,7 @@ class PlayerTest {
 
 	//variables
 	String username;
-	int playerNumber, ecoPoints, powerPoints;
+	int playerNumber, ecoPoints, powerPoints, position;
 	int invalidPlayerNumberLow, invalidPlayerNumberHigh, invalidEcoPoints, invalidPowerPointsLow, invalidPowerPointsHigh;
 	
 	
@@ -41,6 +41,7 @@ class PlayerTest {
 		invalidEcoPoints = -1;
 		invalidPowerPointsLow = -1;
 		invalidPowerPointsHigh = 101;
+		position = 2;
 	}
 
 	/**
@@ -56,7 +57,7 @@ class PlayerTest {
 	 */
 	@Test
 	void testPlayerConstructorWithArgs() {
-		player = new Player(username, playerNumber, ecoPoints, powerPoints);
+		player = new Player(username, playerNumber, ecoPoints, powerPoints, position);
 		assertEquals(username, player.getUsername());
 		assertEquals(playerNumber, player.getPlayerNumber());
 		assertEquals(ecoPoints, player.getEcoPoints());
@@ -68,7 +69,7 @@ class PlayerTest {
 	 */
 	@Test
 	void testGetSetPlayerNumber() {
-		player = new Player(username, playerNumber, ecoPoints, powerPoints);
+		player = new Player(username, playerNumber, ecoPoints, powerPoints, position);
 		
 		player.setPlayerNumber(3);
 		assertEquals(3, player.getPlayerNumber());
@@ -81,7 +82,7 @@ class PlayerTest {
 	 */
 	@Test
 	void testGetSetEcoPoints() {
-		player = new Player(username, invalidPlayerNumberHigh, ecoPoints, invalidPowerPointsHigh);
+		player = new Player(username, invalidPlayerNumberHigh, ecoPoints, invalidPowerPointsHigh, position);
 		
 		player.setEcoPoints(10);
 		assertEquals(10, player.getEcoPoints());
@@ -93,7 +94,7 @@ class PlayerTest {
 	 */
 	@Test
 	void testGetSetPowerPoints() {
-		player = new Player(username, playerNumber, ecoPoints, powerPoints);
+		player = new Player(username, playerNumber, ecoPoints, powerPoints, position);
 		player.setPowerPoints(90);
 		
 		assertEquals(90, player.getPowerPoints());
@@ -106,7 +107,7 @@ class PlayerTest {
 		
 		    int pointsToAdd = 10;
 		    
-		    player = new Player(username, playerNumber, ecoPoints, powerPoints);
+		    player = new Player(username, playerNumber, ecoPoints, powerPoints, position);
 		    
 		    player.addEcoPoints(pointsToAdd);
 		    
@@ -122,7 +123,7 @@ class PlayerTest {
 	void testAddPowerPoints() {
 		int addPowerPoints = 10;
 		
-		player = new Player(username, playerNumber, ecoPoints, powerPoints);
+		player = new Player(username, playerNumber, ecoPoints, powerPoints, position);
 		
 		player.addPowerPoints(addPowerPoints);
 		assertEquals(powerPoints + addPowerPoints, player.getPowerPoints());
@@ -136,7 +137,7 @@ class PlayerTest {
 	@Test
 	void testMinusPowerPoints() {
 		int minusPowerPoints =  10;
-		player = new Player(username, playerNumber, ecoPoints, powerPoints);
+		player = new Player(username, playerNumber, ecoPoints, powerPoints, position);
 		
 		player.minusPowerPoints(minusPowerPoints);
 		assertEquals(powerPoints - minusPowerPoints, player.getPowerPoints());

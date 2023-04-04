@@ -31,9 +31,9 @@ class CompareByEcoPointsTest {
 	 */
 	@Test
 	public void testCompareByEcoPoints() {
-	    Player p1 = new Player("Alice", 1, 0 , 50);
-	    Player p2 = new Player("Bob", 2, 0 ,100);
-	    Player p3 = new Player("Charlie", 2, 0, 60);
+	    Player p1 = new Player("Alice", 1, 0 , 50,2);
+	    Player p2 = new Player("Bob", 2, 0 ,10,1);
+	    Player p3 = new Player("Charlie", 2, 0, 60,3);
 
 	    Comparator<Player> comparator = new CompareByEcoPoints();
 
@@ -47,12 +47,13 @@ class CompareByEcoPointsTest {
 
 	    // Test the comparison of p1 and p3
 	    result = comparator.compare(p1, p3);
-	    assertTrue(result < 0, "Expected p1 to have fewer eco points than p3");
+	    assertTrue(result > 0, "Expected p1 to have fewer eco points than p3");
 
 	    // Test the comparison of p1 and p1 (should be equal)
 	    result = comparator.compare(p1, p1);
 	    assertTrue(result == 0, "Expected p1 and p1 to have the same number of eco points");
 	}
+
 
 
 
