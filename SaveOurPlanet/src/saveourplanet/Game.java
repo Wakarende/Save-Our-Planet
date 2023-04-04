@@ -248,6 +248,7 @@ public class Game {
 			tutorial(scanner);
 		} else {
 			scanner.close();
+			quit();
 		}
 	}
 
@@ -341,23 +342,39 @@ public class Game {
 	 * 
 	 * @param players
 	 */
-	private void displayLeaderboard(List<Player> playersCopy) {
-		
-		// sort Players array list
+//	private void displayLeaderboard(List<Player> playersCopy) {
+//		
+//		// sort Players array list
+//
+//		Collections.sort(players, new CompareByEcoPoints());
+//
+//		Collections.sort(playersCopy, new CompareByEcoPoints());
+//		
+//		System.out.println("\nLeaderboard:\n");
+//
+//
+//		// iterating through player array list and calculating the winner
+//		for (int loop = 0; loop < playersCopy.size(); loop++) {
+//			System.out.println(loop + 1 + ": " + playersCopy.get(loop).getUsername() + " with "
+//					+ playersCopy.get(loop).getEcoPoints() + " EcoPoints");
+//		}
+//
+//	}
+	
+	private void displayLeaderboard(List<Player> players) {
+	    // Create a new list to avoid modifying the original list
+	    ArrayList<Player> playersCopy = new ArrayList<>(players);
 
-		Collections.sort(players, new CompareByEcoPoints());
+	    // Sort the playersCopy list by EcoPoints
+	    Collections.sort(playersCopy, new CompareByEcoPoints());
 
-		Collections.sort(playersCopy, new CompareByEcoPoints());
-		
-		System.out.println("\nLeaderboard:\n");
+	    System.out.println("\nLeaderboard:\n");
 
-
-		// iterating through player array list and calculating the winner
-		for (int loop = 0; loop < playersCopy.size(); loop++) {
-			System.out.println(loop + 1 + ": " + playersCopy.get(loop).getUsername() + " with "
-					+ playersCopy.get(loop).getEcoPoints() + " EcoPoints");
-		}
-
+	    // Display the sorted leaderboard
+	    for (int loop = 0; loop < playersCopy.size(); loop++) {
+	        System.out.println(loop + 1 + ": " + playersCopy.get(loop).getUsername() + " with "
+	                + playersCopy.get(loop).getEcoPoints() + " EcoPoints");
+	    }
 	}
 
 	/**
@@ -383,7 +400,7 @@ public class Game {
 		do {
 			boolean firstIteration = true;
 			// create copy of players to use in leaderboard method
-			ArrayList<Player> playersCopy = new ArrayList<>(players);
+//			ArrayList<Player> playersCopy = new ArrayList<>(players);
 			
 			for (int loop = 0; loop < players.size(); loop++) {
 
@@ -445,10 +462,14 @@ public class Game {
 					currentTile.getDescription(); 
 				}
 				
+//				ArrayList<Player> playersCopyForLeaderboard = copyPlayers(players);
 				// display leaderboard at the end of every turn
-				displayLeaderboard(playersCopy);
-				
+				displayLeaderboard(players);
+//				displayLeaderboard(playersCopy);
 			}
+
+
+			
 		} while (gameOver==false);
 		
 		// Calling end game
@@ -456,6 +477,8 @@ public class Game {
 		endGame(players);
 		
 	}
+	
+
 	
 	/**
 	 * Sets up the players for the game. Prompts the user to give the amount of
