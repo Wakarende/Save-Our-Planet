@@ -114,7 +114,7 @@ public class Game {
 
 		// Rest and Go tiles
 		Tile rest = new Tile(1, "Rest", "You landed on the 'Rest' tile! Take a breather - you earned it...");
-		Tile go = new Go(0, "Go",
+		Go go = new Go(0, "Go",
 				"You landed on the 'Go' tile! Pickup some PowerPoints to celebrate your progress! Lord knows you need it.");
 
 		// Chance tiles
@@ -450,19 +450,32 @@ public class Game {
 				System.out.println("You rolled a " + roll + " and have landed on Tile " + currentTile.getNumber() + "!\n");
 				
 				// responds dynamically according to which tile the player has landed on
-				if (currentTile instanceof Area) {
-					player.landsOnTile(currentTile, scanner, this);
-				} else if (currentTile instanceof Chance) {
-					// accesses next player in loop and passes them into the pull chance card
-					Player nextPlayer = players.get((loop + 1) % players.size()); 
-					((Chance) currentTile).pullChanceCard(player, nextPlayer);
-				} else if (currentTile instanceof Go) {
-					((Go) currentTile).goTile(player);
-					System.out.println("You have landed on a Go Tile! 20 PowerPoints reward! Woohoo!");
-				} else {
-					currentTile.getDescription(); 
-				}
+//				if (currentTile instanceof Area) {
+//					player.landsOnTile(currentTile, scanner, this);
+//				} else if (currentTile instanceof Chance) {
+//					// accesses next player in loop and passes them into the pull chance card
+//					Player nextPlayer = players.get((loop + 1) % players.size()); 
+//					((Chance) currentTile).pullChanceCard(player, nextPlayer);
+//				} else if (currentTile instanceof Go) {
+//					((Go) currentTile).goTile(player);
+//					System.out.println("You have landed on a Go Tile! 20 PowerPoints reward! Woohoo!");
+//				} else {
+////					currentTile.getDescription(); 
+//					System.out.println(currentTile.getDescription());
+//				}
 				
+				if (currentTile instanceof Area) {
+				    player.landsOnTile(currentTile, scanner, this);
+				} else if (currentTile instanceof Chance) {
+				    // accesses next player in loop and passes them into the pull chance card
+				    Player nextPlayer = players.get((loop + 1) % players.size()); 
+				    ((Chance) currentTile).pullChanceCard(player, nextPlayer);
+				} else if (currentTile instanceof Go) {
+				    ((Go) currentTile).goTile(player);
+				    System.out.println(currentTile.getDescription()); // Add this line
+				} else {
+				    System.out.println(currentTile.getDescription()); // Modify this line
+				}
 //				
 				// display leaderboard at the end of every turn
 				displayLeaderboard(players);
