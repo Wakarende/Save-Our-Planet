@@ -655,7 +655,7 @@ public class Game {
 
 		Player topPlayer = players.get(0);
 
-		System.out.println("\nCongratulations " + topPlayer + "! You have won!\n Now let's return to the main menu.");
+		System.out.println("\nCongratulations " + topPlayer.getUsername() + "! You have won!\n Now let's return to the main menu.");
 		
 		try {
 			Thread.sleep(5);
