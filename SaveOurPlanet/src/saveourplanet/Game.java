@@ -398,7 +398,7 @@ public class Game {
 		
 		// Continue game until a player has run out of PowerPoints
 		do {
-			boolean firstIteration = true;
+//		
 			// create copy of players to use in leaderboard method
 //			ArrayList<Player> playersCopy = new ArrayList<>(players);
 			
@@ -412,6 +412,7 @@ public class Game {
 				if (player.getPowerPoints() <= 0) {
 					System.out.println(player.getUsername() + " has ran out of powerpoints.");
 					gameOver = true; 
+					break;
 				}
 				
 				// Informing the correct player that it is their turn
@@ -462,10 +463,10 @@ public class Game {
 					currentTile.getDescription(); 
 				}
 				
-//				ArrayList<Player> playersCopyForLeaderboard = copyPlayers(players);
+//				
 				// display leaderboard at the end of every turn
 				displayLeaderboard(players);
-//				displayLeaderboard(playersCopy);
+//				
 			}
 
 
