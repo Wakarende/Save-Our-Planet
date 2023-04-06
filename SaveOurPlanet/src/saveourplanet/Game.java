@@ -337,25 +337,6 @@ public class Game {
 	 * 
 	 * @param players
 	 */
-//	private void displayLeaderboard(List<Player> playersCopy) {
-//		
-//		// sort Players array list
-//
-//		Collections.sort(players, new CompareByEcoPoints());
-//
-//		Collections.sort(playersCopy, new CompareByEcoPoints());
-//		
-//		System.out.println("\nLeaderboard:\n");
-//
-//
-//		// iterating through player array list and calculating the winner
-//		for (int loop = 0; loop < playersCopy.size(); loop++) {
-//			System.out.println(loop + 1 + ": " + playersCopy.get(loop).getUsername() + " with "
-//					+ playersCopy.get(loop).getEcoPoints() + " EcoPoints");
-//		}
-//
-//	}
-
 	private void displayLeaderboard(List<Player> players) {
 		// Create a new list to avoid modifying the original list
 		ArrayList<Player> playersCopy = new ArrayList<>(players);
@@ -407,10 +388,10 @@ public class Game {
 					break gameLoop;
 				}
 
-				// Informing the correct player t1hat it is their turn
+				// Informing the correct player t111hat it is their turn
 				System.out.println(
 						"\nIt is: " + player.getUsername() + "'s turn! Please enter a character to roll the dice.");
-				scanner.next();
+				String userInput = scanner.nextLine();
 
 				// rolling dice and storing number in roll var
 				Dice d = new Dice();
@@ -445,7 +426,7 @@ public class Game {
 
 				// responds dynamically according to which tile the player has landed on
 				if (currentTile instanceof Area) {
-					player.landsOnTile(currentTile, scanner, this);
+					player.landsOnTile(currentTile, scanner, this, userInput);
 				} else if (currentTile instanceof Chance) {
 					// accesses next player in loop and passes them into the pull chance card
 					Player nextPlayer = players.get((loop + 1) % players.size());
@@ -584,58 +565,65 @@ public class Game {
 	 * @param scanner
 	 */
 	public void auctionTile(Area area, Player currentPlayer, Scanner scanner) {
+		System.out.println("Auction tile called twice");
+	    int highestBid = 0;
+	    System.out.println("This tile is now open for the rest of the players to buy in an auction.\n");
+	    Player highestBiddingPlayer = null;
 
-		int highestBid = 0;
-		System.out.println("This tile is now open for the rest of the players to buy in an auction.\n");
-		Player highestBiddingPlayer = new Player();
+	    for (Player player : this.getPlayers()) {
+	        // Don't want to ask the player who is auctioning tile to bid
+	        if (!player.getUsername().equals(currentPlayer.getUsername())) {
+	            boolean playerCanAffordTile = (player.getPowerPoints() > area.getBuyingPrice());
 
-		for (Player player : this.getPlayers()) {
+	            if (playerCanAffordTile) {
+	                int playerBid = -1;
+	                while (true) {
+	                    System.out.println(player.getUsername() + ", would you like to bid? Please enter a numeric value or 'no':");
+	                    String input = scanner.nextLine().trim();
+	                    if(input.isEmpty()) {
+	                    	continue;
+	                    }
+	                    if (input.equalsIgnoreCase("no")) {
+	                        break;
+	                    }
+	                    try {
+	                        playerBid = Integer.parseInt(input);
+	                        if (playerBid <= highestBid) {
+	                            System.out.println("Your bid must be higher than the current highest bid. Please try again.");
+	                        } else {
+	                            break;
+	                        }
+	                    } catch (NumberFormatException e) {
+	                        System.out.println("Sorry didn't catch that! What is your answer?");
+	                    }
+//	                   
+	                }
 
-			// Don't want to ask the player who is auctioning tile to bid
-			if (!(player.getUsername() == currentPlayer.getUsername())) {
+	                if (playerBid > highestBid) {
+	                    // Keeping record of highest bid by number
+	                    highestBid = playerBid;
 
-				boolean playerCanAffordTile = (player.getPowerPoints() > area.getBuyingPrice());
+	                    // Keeping record of highest bidding player
+	                    highestBiddingPlayer = player;
+	                }
+	            }
+	        }
+	    }
 
-				if (playerCanAffordTile) {
-
-					int playerBid = player.bidAForAreaInAuction(scanner);
-
-					if (playerBid > highestBid) {
-
-						// Keeping record of highest bid by number
-						playerBid = highestBid;
-
-						// Keeping record of highest bidding player
-						highestBiddingPlayer = player;
-
-					}
-
-				}
-
-			}
-		}
-
-		System.out.println("Congratulations " + highestBiddingPlayer.getUsername() + ". You now own this tile!");
-		highestBiddingPlayer.addEcoPoints(area.getBuyingReward());
-		highestBiddingPlayer.minusPowerPoints(area.getBuyingPrice());
-		area.setOwnerName(highestBiddingPlayer.getUsername());
-
+	    if (highestBiddingPlayer != null) {
+	        System.out.println("Congratulations " + highestBiddingPlayer.getUsername() + ". You now own this tile!");
+	        highestBiddingPlayer.addEcoPoints(area.getBuyingReward());
+	        highestBiddingPlayer.minusPowerPoints(highestBid); // Use highestBid instead of area.getBuyingPrice()
+	        area.setOwnerName(highestBiddingPlayer.getUsername());
+	    } else {
+	        System.out.println("No one placed a valid bid. The tile remains unowned.");
+	    }
 	}
 
-//	/**
-//	 * Ends a game by deleting the current player from the list - thereby stopping
-//	 * the do while loop in the start game method
-//	 */
-//
-//	public void endGame(Player player) {
-//		
-//
-//		System.out.println(player.getUsername()
-//				+ " has run out of resources! The game has now ended.\n The following scores are: ");
-//
-//		displayLeaderboard(players);
-//	}
-
+	/**
+	 * @author joy, Fiona
+	 * @param players
+	 */
 	public void endGame(List<Player> players) {
 
 		displayLeaderboard(players);

@@ -307,7 +307,7 @@ public class Player {
 
 	}
 
-	public void landsOnTile(Tile tile, Scanner scanner, Game game) {
+	public void landsOnTile(Tile tile, Scanner scanner, Game game, String userInput) {
 
 		if (tile instanceof Area) {
 
