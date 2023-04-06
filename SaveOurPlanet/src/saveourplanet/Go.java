@@ -40,7 +40,13 @@ public class Go extends Tile {
 	}
 	
 	
-	
-	
+	@Override
+	public String toString() {
+	    return "Go{" +
+	            "number=" + getNumber() +
+	            ", name='" + getName() + '\'' +
+	            ", description='" + getDescription() + '\'' +
+	            '}';
+	}
 
 }

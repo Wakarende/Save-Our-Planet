@@ -24,9 +24,8 @@ import java.util.Scanner;
  */
 public class Game {
 
-	// ArrayList to store the tiles which make up the game board. 
+	// ArrayList to store the tiles which make up the game board.
 	private ArrayList<Tile> gameBoard = new ArrayList<>();
-
 
 	/*
 	 * Public ArrayList to store the players of the game Used to access and create
@@ -35,10 +34,9 @@ public class Game {
 
 	// ArrayList to store the players of the game
 	private List<Player> players = new ArrayList<>();
-		 
-	// ArrayList to store the usernames of the players. 
+
+	// ArrayList to store the usernames of the players.
 	private List<String> playerUsernames = new ArrayList<>();
-	
 
 	/**
 	 * Default constructor for the Game class
@@ -48,8 +46,7 @@ public class Game {
 
 	}
 
-
-	// GETTERS AND SETTER for the above ArrayLists. 
+	// GETTERS AND SETTER for the above ArrayLists.
 
 	public List<Player> getPlayers() {
 		return players;
@@ -115,7 +112,7 @@ public class Game {
 		// Rest and Go tiles
 		Tile rest = new Tile(1, "Rest", "You landed on the 'Rest' tile! Take a breather - you earned it...");
 		Go go = new Go(0, "Go",
-				"You landed on the 'Go' tile! Pickup some PowerPoints to celebrate your progress! Lord knows you need it.");
+				"You landed on the \"Go\" tile! Pickup some PowerPoints to celebrate your progress! Lord knows you need it.");
 
 		// Chance tiles
 		Chance chance1 = new Chance(3, "Chance Card!", null);
@@ -198,8 +195,8 @@ public class Game {
 		// boolean to record the player's choice
 		boolean tutorial = false;
 
-		do { 
-			
+		do {
+
 			// Main Menu text
 			System.out.println("Welcome to Save Our Planet.");
 			System.out.println("Main Menu: \n");
@@ -253,8 +250,7 @@ public class Game {
 	}
 
 	/**
-	 * @author Joy 
-	 * Displays tutorial for user
+	 * @author Joy Displays tutorial for user
 	 */
 	private void tutorial(Scanner scanner) {
 
@@ -289,8 +285,7 @@ public class Game {
 	}
 
 	/**
-	 * @author Joy 
-	 * Quits the game
+	 * @author Joy Quits the game
 	 */
 	public void quit() {
 		// inform the user they have quit the game
@@ -298,8 +293,7 @@ public class Game {
 	}
 
 	/**
-	 * @author Joy 
-	 * Displays game rules
+	 * @author Joy Displays game rules
 	 */
 	public void displayRules() {
 		try {
@@ -325,6 +319,7 @@ public class Game {
 
 	/**
 	 * Method that prints rules of game with a delay
+	 * 
 	 * @author joy
 	 * @param str
 	 * @throws InterruptedException
@@ -360,21 +355,21 @@ public class Game {
 //		}
 //
 //	}
-	
+
 	private void displayLeaderboard(List<Player> players) {
-	    // Create a new list to avoid modifying the original list
-	    ArrayList<Player> playersCopy = new ArrayList<>(players);
+		// Create a new list to avoid modifying the original list
+		ArrayList<Player> playersCopy = new ArrayList<>(players);
 
-	    // Sort the playersCopy list by EcoPoints
-	    Collections.sort(playersCopy, new CompareByEcoPoints());
+		// Sort the playersCopy list by EcoPoints
+		Collections.sort(playersCopy, new CompareByEcoPoints());
 
-	    System.out.println("\nLeaderboard:\n");
+		System.out.println("\nLeaderboard:\n");
 
-	    // Display the sorted leaderboard
-	    for (int loop = 0; loop < playersCopy.size(); loop++) {
-	        System.out.println(loop + 1 + ": " + playersCopy.get(loop).getUsername() + " with "
-	                + playersCopy.get(loop).getEcoPoints() + " EcoPoints");
-	    }
+		// Display the sorted leaderboard
+		for (int loop = 0; loop < playersCopy.size(); loop++) {
+			System.out.println(loop + 1 + ": " + playersCopy.get(loop).getUsername() + " with "
+					+ playersCopy.get(loop).getEcoPoints() + " EcoPoints");
+		}
 	}
 
 	/**
@@ -384,97 +379,82 @@ public class Game {
 
 		System.out.println("\nStart game!");
 		setUpPlayer(scanner);
-		
+
 		System.out.println("\nHere is everyone's info:");
 		showAllPlayersInfo();
-		
+
 		// create board
 		createBoard();
-		
+
 		// boolean to track game progress
-		boolean gameOver = false; 
-		
-		
-		
+		boolean gameOver = false;
+
 		// Continue game until a player has run out of PowerPoints
-		do {
+		gameLoop: do {
 //		
 			// create copy of players to use in leaderboard method
 //			ArrayList<Player> playersCopy = new ArrayList<>(players);
-			
+
 			for (int loop = 0; loop < players.size(); loop++) {
 
 				// get current player at loop
-				Player player = players.get(loop); 
-				
-				
+				Player player = players.get(loop);
+
 				// evaluates whether game should continue
 				if (player.getPowerPoints() <= 0) {
 					System.out.println(player.getUsername() + " has ran out of powerpoints.");
-					gameOver = true; 
-					break;
+					gameOver = true;
+					break gameLoop;
 				}
-				
-				// Informing the correct player that it is their turn
-				System.out.println("\nIt is: " + player.getUsername() + "'s turn! Please enter a character to roll the dice.");
+
+				// Informing the correct player t1hat it is their turn
+				System.out.println(
+						"\nIt is: " + player.getUsername() + "'s turn! Please enter a character to roll the dice.");
 				scanner.next();
-				
+
 				// rolling dice and storing number in roll var
-				Dice d = new Dice(); 
-				int roll = d.rollDice(); 
-				
+				Dice d = new Dice();
+				int roll = d.rollDice();
+
 				// getting the current position of the player
-				int currentPosition = player.getPosition(); 
-				
+				int currentPosition = player.getPosition();
+
 				// set the new position of the player based on the dice roll
 				player.setPosition(currentPosition + roll);
-				
+
 				// assign this new position to a var
-				int newPosition = player.getPosition(); 
-	
+				int newPosition = player.getPosition();
+
 				// calculating the position if the roll exceeds the game board
 				if (newPosition > gameBoard.size()) {
-					newPosition -= gameBoard.size(); 
+					newPosition -= gameBoard.size();
 					player.setPosition(newPosition);
 				}
-				
+
 				// finding the tile which matches the players current position
-				Tile currentTile = new Tile(); 
+				Tile currentTile = new Tile();
 				for (Tile tile : gameBoard) {
 					if (newPosition == tile.getNumber()) {
-						currentTile = tile; 
+						currentTile = tile;
 					}
 				}
-				
+
 				// informs player of where they landed
-				System.out.println("You rolled a " + roll + " and have landed on Tile " + currentTile.getNumber() + "!\n");
-				
+				System.out.println(
+						"You rolled a " + roll + " and have landed on Tile " + currentTile.getNumber() + "!\n");
+
 				// responds dynamically according to which tile the player has landed on
-//				if (currentTile instanceof Area) {
-//					player.landsOnTile(currentTile, scanner, this);
-//				} else if (currentTile instanceof Chance) {
-//					// accesses next player in loop and passes them into the pull chance card
-//					Player nextPlayer = players.get((loop + 1) % players.size()); 
-//					((Chance) currentTile).pullChanceCard(player, nextPlayer);
-//				} else if (currentTile instanceof Go) {
-//					((Go) currentTile).goTile(player);
-//					System.out.println("You have landed on a Go Tile! 20 PowerPoints reward! Woohoo!");
-//				} else {
-////					currentTile.getDescription(); 
-//					System.out.println(currentTile.getDescription());
-//				}
-				
 				if (currentTile instanceof Area) {
-				    player.landsOnTile(currentTile, scanner, this);
+					player.landsOnTile(currentTile, scanner, this);
 				} else if (currentTile instanceof Chance) {
-				    // accesses next player in loop and passes them into the pull chance card
-				    Player nextPlayer = players.get((loop + 1) % players.size()); 
-				    ((Chance) currentTile).pullChanceCard(player, nextPlayer);
+					// accesses next player in loop and passes them into the pull chance card
+					Player nextPlayer = players.get((loop + 1) % players.size());
+					((Chance) currentTile).pullChanceCard(player, nextPlayer);
 				} else if (currentTile instanceof Go) {
-				    ((Go) currentTile).goTile(player);
-				    System.out.println(currentTile.getDescription()); // Add this line
+					((Go) currentTile).goTile(player);
+					System.out.println(currentTile); // Add this line
 				} else {
-				    System.out.println(currentTile.getDescription()); // Modify this line
+					System.out.println(currentTile.getDescription()); // Modify this line
 				}
 //				
 				// display leaderboard at the end of every turn
@@ -482,18 +462,14 @@ public class Game {
 //				
 			}
 
+		} while (gameOver == false);
 
-			
-		} while (gameOver==false);
-		
 		// Calling end game
 		System.out.println("Now displaying finals scores...\n");
 		endGame(players);
-		
-	}
-	
 
-	
+	}
+
 	/**
 	 * Sets up the players for the game. Prompts the user to give the amount of
 	 * players and uses a for loop to create these players
@@ -533,7 +509,8 @@ public class Game {
 		do {
 
 			// Ask user for number of players and save to int playerTotal
-			System.out.print("\nA minimum of 2 players and a maximum of 4 players is allowed to play this game.\nPlease enter the number of players you have for this game: ");
+			System.out.print(
+					"\nA minimum of 2 players and a maximum of 4 players is allowed to play this game.\nPlease enter the number of players you have for this game: ");
 
 			if (scanner.hasNextInt()) {
 				playerTotal = scanner.nextInt();
@@ -596,12 +573,12 @@ public class Game {
 	}
 
 	/**
-
+	 * 
 	 * @author Fiona Function to auction a tile to the highest bidder by taking in a
 	 *         player's individual bid from player class method
-
-	 * Method to auction tile
-
+	 * 
+	 *         Method to auction tile
+	 * 
 	 * @param area
 	 * @param currentPlayer
 	 * @param scanner
@@ -611,76 +588,70 @@ public class Game {
 		int highestBid = 0;
 		System.out.println("This tile is now open for the rest of the players to buy in an auction.\n");
 		Player highestBiddingPlayer = new Player();
-				
-			for (Player player : this.getPlayers()) {
- 	
-				// Don't want to ask the player who is auctioning tile to bid
-				if (!(player.getUsername() == currentPlayer.getUsername())) {
 
-					boolean playerCanAffordTile = (player.getPowerPoints() > area.getBuyingPrice());
+		for (Player player : this.getPlayers()) {
 
-					if (playerCanAffordTile) {
+			// Don't want to ask the player who is auctioning tile to bid
+			if (!(player.getUsername() == currentPlayer.getUsername())) {
 
-						int playerBid = player.bidAForAreaInAuction(scanner);
+				boolean playerCanAffordTile = (player.getPowerPoints() > area.getBuyingPrice());
 
-						if (playerBid > highestBid) {
-							
-							// Keeping record of highest bid by number
-							playerBid = highestBid;
-							
-							// Keeping record of highest bidding player
-							highestBiddingPlayer = player;
-							
-						}
+				if (playerCanAffordTile) {
+
+					int playerBid = player.bidAForAreaInAuction(scanner);
+
+					if (playerBid > highestBid) {
+
+						// Keeping record of highest bid by number
+						playerBid = highestBid;
+
+						// Keeping record of highest bidding player
+						highestBiddingPlayer = player;
 
 					}
 
 				}
+
 			}
-				
-			
-			System.out.println("Congratulations "+ highestBiddingPlayer.getUsername()+ ". You now own this tile!");
-			highestBiddingPlayer.addEcoPoints(area.getBuyingReward());
-			highestBiddingPlayer.minusPowerPoints(area.getBuyingPrice());
-			area.setOwnerName(highestBiddingPlayer.getUsername());
-		
-		
+		}
+
+		System.out.println("Congratulations " + highestBiddingPlayer.getUsername() + ". You now own this tile!");
+		highestBiddingPlayer.addEcoPoints(area.getBuyingReward());
+		highestBiddingPlayer.minusPowerPoints(area.getBuyingPrice());
+		area.setOwnerName(highestBiddingPlayer.getUsername());
+
 	}
 
-	/**
-	 * Ends a game by deleting the current player from the list - thereby stopping
-	 * the do while loop in the start game method
-	 */
-
-	public void endGame(Player player) {
-		
-
-		System.out.println(player.getUsername()
-				+ " has run out of resources! The game has now ended.\n The following scores are: ");
-
-		displayLeaderboard(players);
-	}
+//	/**
+//	 * Ends a game by deleting the current player from the list - thereby stopping
+//	 * the do while loop in the start game method
+//	 */
+//
+//	public void endGame(Player player) {
+//		
+//
+//		System.out.println(player.getUsername()
+//				+ " has run out of resources! The game has now ended.\n The following scores are: ");
+//
+//		displayLeaderboard(players);
+//	}
 
 	public void endGame(List<Player> players) {
 
 		displayLeaderboard(players);
 
-
 		Player topPlayer = players.get(0);
 
-		System.out.println("\nCongratulations " + topPlayer.getUsername() + "! You have won!\n Now let's return to the main menu.");
-		
+		System.out.println("\nCongratulations " + topPlayer.getUsername()
+				+ "! You have won!\n Now let's return to the main menu.");
+
 		try {
 			Thread.sleep(5);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 
 	}
 
-	
-
 }
-

@@ -10,9 +10,9 @@ package saveourplanet;
 public class Tile {
     
 	// instance variables
-    private int number;
-    private String name; 
-    private String description;
+    protected int number;
+    protected String name; 
+    protected String description;
 
     // Default Constructor
 
@@ -89,6 +89,15 @@ public class Tile {
      */
     public void setDescription(String description) {
         this.description = description;
+    }
+    
+    @Override
+    public String toString() {
+        return "Tile{" +
+                "number=" + number +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 }
 	
